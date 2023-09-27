@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: ncvetinovic
-Build-Jdk: 18.0.1
+Built-By: Pro 10
+Build-Jdk: 17.0.3
 Created-By: Maven Integration for Eclipse
 
