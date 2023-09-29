@@ -1,8 +1,8 @@
 package com.generator.model.enums;
 
 public enum FetchType {
-	LAZY("lazy", ""),
-	EAGER("eager", "");
+	LAZY("lazy", "fetch =  FetchType.LAZY"),
+	EAGER("eager", "fetch =  FetchType.EAGER");
 	
 	private String code;
 	private String annotationCode;

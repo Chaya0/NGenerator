@@ -35,16 +35,15 @@ public class SpringProperties {
 		language = "java";
 		packaging = "jar";
 		dependencies = Arrays.asList("lombok");
-		bootVersion = properties.getProperty("bootVersion");
-		baseDir = properties.getProperty("baseDir");
-		groupId = properties.getProperty("groupId");
-		artifactId = properties.getProperty("artifactId");
-		name = properties.getProperty("name");
-		description = properties.getProperty("description");
-		packageName = properties.getProperty("packageName");
-		javaVersion = properties.getProperty("javaVersion");
+		bootVersion = properties.getProperty("bootVersion", "3.1.4");
+		baseDir = properties.getProperty("baseDir", "myApp");
+		groupId = properties.getProperty("groupId", "com.myApp");
+		artifactId = properties.getProperty("artifactId","myApp");
+		name = properties.getProperty("name", "myApp");
+		description = properties.getProperty("description", "");
+		packageName = properties.getProperty("packageName", "com.myApp.myApp");
+		javaVersion = properties.getProperty("javaVersion", "11");
 		projectPath = properties.getProperty("projectPath");
-
 	}
 
 	public String getType() {
@@ -97,6 +96,30 @@ public class SpringProperties {
 
 	public String getProjectPath() {
 		return projectPath;
+	}
+	
+	public String getSpringAppDownloadUrl() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("https://start.spring.io/starter.zip?type=" + getType());
+		stringBuilder.append("&language=" + getLanguage());
+		stringBuilder.append("&bootVersion=" + getBootVersion());
+		stringBuilder.append("&baseDir=" + getBaseDir());
+		stringBuilder.append("&groupId=" + getGroupId());
+		stringBuilder.append("&artifactId=" + getArtifactId());
+		stringBuilder.append("&name=" + getName());
+		stringBuilder.append("&description=" + getDescription());
+		stringBuilder.append("&packageName=" + getPackageName());
+		stringBuilder.append("&packaging=" + getPackaging());
+		stringBuilder.append("&javaVersion=" + getJavaVersion());
+		stringBuilder.append("&dependencies=");
+		if (!getDependencies().isEmpty()) {
+			for (String dependency : getDependencies()) {
+				stringBuilder.append(dependency + ",");
+			}
+		}
+		stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+
+		return stringBuilder.toString();
 	}
 
 }

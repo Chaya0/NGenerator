@@ -9,12 +9,10 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "app")
 public class AppModel {
 	private List<Entity> entities;
-	private SpringProperties springProperties;
 	
-	public AppModel(List<Entity> entities, SpringProperties springProperties) {
+	public AppModel(List<Entity> entities) {
 		super();
 		this.entities = entities;
-		this.springProperties = springProperties;
 	}
 
 	@XmlElementWrapper(name = "entities")
@@ -26,16 +24,5 @@ public class AppModel {
 	public void setEntities(List<Entity> entities) {
 		this.entities = entities;
 	}
-
-	@XmlElement(name = "spring-properties")
-	public SpringProperties getSpringProperties() {
-		return springProperties;
-	}
-
-	public void setSpringProperties(SpringProperties springProperties) {
-		this.springProperties = springProperties;
-	}
-
-	
 	
 }

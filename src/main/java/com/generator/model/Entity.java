@@ -18,10 +18,10 @@ public class Entity {
 	@XmlAttribute(name = "inherits", required = false)
 	private Class<?> inherits;
 	@XmlElementWrapper(name = "relations", required = false)
-    @XmlElement(name = "relation")
+    @XmlElement(name = "relations")
 	private List<Relation> relations;
 	@XmlElementWrapper(name = "attributes", required = false)
-    @XmlElement(name = "attribute")
+    @XmlElement(name = "attributes")
 	private List<Attribute> attributes;
 	@XmlAttribute(name = "inheritance-type", required = false)
 	private InheritanceType inheritanceType;

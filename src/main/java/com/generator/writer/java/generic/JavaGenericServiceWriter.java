@@ -3,8 +3,8 @@ package com.generator.writer.java.generic;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
-import com.generator.util.Utils;
-import com.generator.writer.BuilderOutputFile;
+import com.generator.writer.GeneratorOutputFile;
+import com.generator.writer.Utils;
 import com.generator.writer.Writer;
 
 public class JavaGenericServiceWriter implements Writer {
@@ -18,19 +18,16 @@ public class JavaGenericServiceWriter implements Writer {
 
 	@Override
 	public void create(Entity entity) throws Exception {
-		if (Utils.classExsists()) {
+		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
+		if (Utils.fileExists(Utils.getServicePackagePath(true), upperCaseName + "GenericService.java")) {
 			return;
 		}
-
-		String upercaseName = StringUtils.uppercaseFirst(entity.getName());
-		String outputPackage = "";
-		try (BuilderOutputFile file = Utils.getOutputResource(Utils.getPackageName(properties.getControllerPackageName(), outputPackage), StringUtils.uppercaseFirst(entity.getName()) + "BusinessService.java",
-				false)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(true), upperCaseName + "GenericService.java")) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
 
-			file.writeln(0, "package " + ";");
+			file.writeln(0, "package " + Utils.getImportServicePackageName(true) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import javax.persistence.*");
 			file.writeln(0, "import org.springframework.data.domain.Page;");
@@ -40,39 +37,39 @@ public class JavaGenericServiceWriter implements Writer {
 			file.writeln(0, "import java.util.*");
 			file.writeln(0, "");
 			file.writeln(0, "@Service");
-			file.writeln(0, "public class " + uperCaseName + "GenericService {");
-			file.writeln(1, "private final " + uperCaseName + "GenericRepository repository;");
+			file.writeln(0, "public class " + upperCaseName + "GenericService {");
+			file.writeln(1, "private final " + upperCaseName + "GenericRepository repository;");
 			file.writeln(0, "");
 			file.writeln(1, "@Autowired");
-			file.writeln(1, "public " + uperCaseName + "Service(" + uperCaseName + "GenericRepository repository) {" );
+			file.writeln(1, "public " + upperCaseName + "Service(" + upperCaseName + "GenericRepository repository) {");
 			file.writeln(2, "this.repository = repository;");
 			file.writeln(1, "}");
 			/*
 			 * Creates findAll methods with different parameters;
 			 */
-			file.writeln(1, "public List<" + uperCaseName + "> findAll() {");
+			file.writeln(1, "public List<" + upperCaseName + "> findAll() {");
 			file.writeln(2, "return repository.findAll()");
 			file.writeln(1, "}");
 			file.writeln(0, "");
-			file.writeln(1, "public Page<" + uperCaseName + "> findAll(Pageable pageSort) {");
+			file.writeln(1, "public Page<" + upperCaseName + "> findAll(Pageable pageSort) {");
 			file.writeln(2, "return repository.findAll(pageSort)");
 			file.writeln(1, "}");
 			file.writeln(0, "");
-			file.writeln(1, "public List<" + uperCaseName + "> findAll(Specification<" + uperCaseName + "> specification) {");
+			file.writeln(1, "public List<" + upperCaseName + "> findAll(Specification<" + upperCaseName + "> specification) {");
 			file.writeln(2, "return repository.findAll(specification)");
 			file.writeln(1, "}");
 			file.writeln(0, "");
 			/*
 			 * Creates findById method;
 			 */
-			file.writeln(1, "public Optional<" + uperCaseName + "> findById(Long id) {");
+			file.writeln(1, "public Optional<" + upperCaseName + "> findById(Long id) {");
 			file.writeln(2, "return repository.findById(id)");
 			file.writeln(1, "}");
 			file.writeln(0, "");
 			/*
 			 * Creates save (update) method;
 			 */
-			file.writeln(1, "public " + uperCaseName + " save(" + uperCaseName + " " +  entity.getName() + ") {");
+			file.writeln(1, "public " + upperCaseName + " save(" + upperCaseName + " " + entity.getName() + ") {");
 			file.writeln(2, "return repository.findById(id)");
 			file.writeln(1, "}");
 			file.writeln(0, "");

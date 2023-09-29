@@ -5,8 +5,8 @@ import com.generator.model.Attribute;
 import com.generator.model.Entity;
 import com.generator.model.enums.AttributeType;
 import com.generator.util.StringUtils;
-import com.generator.util.Utils;
-import com.generator.writer.BuilderOutputFile;
+import com.generator.writer.GeneratorOutputFile;
+import com.generator.writer.Utils;
 import com.generator.writer.Writer;
 
 public class JavaEntityWriter implements Writer {
@@ -20,19 +20,16 @@ public class JavaEntityWriter implements Writer {
 
 	@Override
 	public void create(Entity entity) throws Exception {
-		if (Utils.classExsists()) {
+		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
+		if (Utils.fileExists(Utils.getServicePackagePath(false), upperCaseName + ".java")) {
 			return;
 		}
-
-		String upercaseName = StringUtils.uppercaseFirst(entity.getName());
-		String outputPackage = "";
-		try (BuilderOutputFile file = Utils.getOutputResource(Utils.getPackageName(properties.getControllerPackageName(), outputPackage), StringUtils.uppercaseFirst(entity.getName()) + "BusinessService.java",
-				false)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getModelPackagePath(), upperCaseName + ".java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
 			
-			file.writeln(0, "package " +";");
+			file.writeln(0, "package "+ Utils.getImportModelPackageName() +";");
 			file.writeln(0, "");
 			file.writeln(0, "import lombok.Data");
 			file.writeln(0, "import lombok.AllArgsConstructor");
@@ -56,7 +53,7 @@ public class JavaEntityWriter implements Writer {
 
 	}
 
-	private void writeAttributes(BuilderOutputFile file, Attribute attribute) throws Exception {
+	private void writeAttributes(GeneratorOutputFile file, Attribute attribute) throws Exception {
 		if(attribute.isNullable()) {
 			file.writeln(1, "@Column(nullable = true)");			
 		}else {

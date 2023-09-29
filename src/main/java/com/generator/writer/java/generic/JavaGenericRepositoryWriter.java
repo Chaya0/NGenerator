@@ -1,17 +1,11 @@
 package com.generator.writer.java.generic;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
-import com.generator.util.Utils;
-import com.generator.writer.BuilderOutputFile;
+import com.generator.writer.GeneratorOutputFile;
+import com.generator.writer.Utils;
 import com.generator.writer.Writer;
-
-import raf.si.racunovodstvo.knjizenje.model.Konto;
 
 public class JavaGenericRepositoryWriter implements Writer {
 
@@ -24,19 +18,16 @@ public class JavaGenericRepositoryWriter implements Writer {
 
 	@Override
 	public void create(Entity entity) throws Exception {
-		if (Utils.classExsists()) {
+		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
+		if (Utils.fileExists(Utils.getRepositoryPackagePath(true), upperCaseName + "GenericRepository.java")) {
 			return;
 		}
-
-		String upercaseName = StringUtils.uppercaseFirst(entity.getName());
-		String outputPackage = "";
-		try (BuilderOutputFile file = Utils.getOutputResource(Utils.getPackageName(properties.getControllerPackageName(), outputPackage), StringUtils.uppercaseFirst(entity.getName()) + "BusinessService.java",
-				false)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getRepositoryPackagePath(true), upperCaseName + "GenericRepository.java")) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
 
-			file.writeln(0, "package " + ";");
+			file.writeln(0, "package " + Utils.getImportRepositoryPackageName(true) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.data.jpa.domain.Specification;");
 			file.writeln(0, "import org.springframework.data.jpa.repository.JpaRepository;");
@@ -47,9 +38,9 @@ public class JavaGenericRepositoryWriter implements Writer {
 			file.writeln(0, "import java.util.List");
 			file.writeln(0, "");
 			file.writeln(0, "@Repository");
-			file.writeln(0, "public interface " + uperCaseName + "GenericRepository extends JpaRepository<" + uperCaseName + ", Long> {");
+			file.writeln(0, "public interface " + upperCaseName + "GenericRepository extends JpaRepository<" + upperCaseName + ", Long> {");
 			file.writeln(0, "");
-			file.writeln(1, "Page<" + uperCaseName + "> findAll(Specification<" + uperCaseName + "> spec, Pageable pageSort);");
+			file.writeln(1, "Page<" + upperCaseName + "> findAll(Specification<" + upperCaseName + "> spec, Pageable pageSort);");
 			file.writeln(0, "");
 			file.writeln(0, "}");
 		}
