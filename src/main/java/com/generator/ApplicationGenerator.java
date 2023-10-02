@@ -5,7 +5,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.generator.model.AppModel;
-import com.generator.writer.Utils;
+import com.generator.reader.ModelReader;
+import com.generator.writer.SpringStartExtractor;
 import com.generator.writer.Writer;
 import com.generator.writer.java.JavaControllerWriter;
 import com.generator.writer.java.JavaRepositoryWriter;
@@ -17,7 +18,19 @@ import com.generator.writer.java.generic.JavaGenericServiceWriter;
 
 public class ApplicationGenerator {
 	private static List<Writer> writers = initWriters();
-	private AppModel appModel;
+	private static AppModel appModel = ModelReader.readModel();
+
+	public static void generateApp() {
+		extractAppIfItDoesntExists();
+		for (Writer writer : writers) {
+			try {
+				writer.create(appModel);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 	private static List<Writer> initWriters() {
 		Writer entityWriter = new JavaEntityWriter();
@@ -30,15 +43,12 @@ public class ApplicationGenerator {
 
 		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter);
 	}
-	
-	private void extractAppIfItDoesntExists() {
+
+	private static void extractAppIfItDoesntExists() {
 		File file = new File(Application.getSpringProperties().getProjectPath() + Application.getSpringProperties().getArtifactId());
-		if(!file.exists()) {
+		if (!file.exists()) {
 			SpringStartExtractor.extractApp();
 		}
 	}
 
-	public AppModel getAppModel() {
-		return appModel;
-	}
 }

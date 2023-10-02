@@ -1,4 +1,4 @@
-package com.generator;
+package com.generator.writer;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +13,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+
+import com.generator.Application;
 
 public class SpringStartExtractor {
 	public static void main(String[] args) {
@@ -39,23 +41,23 @@ public class SpringStartExtractor {
 				}
 
 				// Extract the downloaded zip file
-				try (ZipInputStream zipIn = new ZipInputStream(new FileInputStream(tempFile))) {
+				try (ZipInputStream zipInput = new ZipInputStream(new FileInputStream(tempFile))) {
 					byte[] buffer = new byte[1024];
 					ZipEntry entry;
 
-					while ((entry = zipIn.getNextEntry()) != null) {
+					while ((entry = zipInput.getNextEntry()) != null) {
 						String filePath = extractPath + entry.getName();
 						System.out.println(filePath);
 						if (!entry.isDirectory()) {
 							new File(filePath).getParentFile().mkdirs();
 							try (FileOutputStream fos = new FileOutputStream(filePath)) {
 								int len;
-								while ((len = zipIn.read(buffer)) > 0) {
+								while ((len = zipInput.read(buffer)) > 0) {
 									fos.write(buffer, 0, len);
 								}
 							}
 						}
-						zipIn.closeEntry();
+						zipInput.closeEntry();
 					}
 				}
 

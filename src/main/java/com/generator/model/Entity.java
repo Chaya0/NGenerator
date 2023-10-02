@@ -13,10 +13,10 @@ import jakarta.xml.bind.annotation.XmlElementWrapper;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Entity {
-	@XmlAttribute
+	@XmlAttribute(name = "name", required = true)
 	private String name;
 	@XmlAttribute(name = "inherits", required = false)
-	private Class<?> inherits;
+	private String inherits;
 	@XmlElementWrapper(name = "relations", required = false)
     @XmlElement(name = "relations")
 	private List<Relation> relations;
@@ -68,11 +68,11 @@ public class Entity {
 		this.inheritanceType = inheritanceType;
 	}
 
-	public Class<?> getInherits() {
+	public String getInherits() {
 		return inherits;
 	}
 
-	public void setInherits(Class<?> inherits) {
+	public void setInherits(String inherits) {
 		this.inherits = inherits;
 	}
 

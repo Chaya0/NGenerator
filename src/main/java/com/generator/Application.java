@@ -10,6 +10,7 @@ public class Application {
 	private static SpringProperties springProperties = new SpringProperties(loadProperties());
 
 	public static void main(String[] args) {
+		ApplicationGenerator.generateApp();
 	}
 
 	private static Properties loadProperties() {

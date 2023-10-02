@@ -1,5 +1,6 @@
 package com.generator.model;
 
+import com.generator.model.enums.FetchType;
 import com.generator.model.enums.RelationType;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
@@ -13,16 +14,19 @@ public class Relation {
 	@XmlAttribute
 	private String joinColumn;
 	@XmlAttribute
-	private String entity;
+	private String entityName;
+	@XmlAttribute
+	private FetchType fetchType;
 
 	public Relation() {
 	}
 
-	public Relation(RelationType relationType, String joinColumn, String entity) {
+	public Relation(RelationType relationType, String joinColumn, String entityName, FetchType fetchType) {
 		super();
 		this.relationType = relationType;
 		this.joinColumn = joinColumn;
-		this.entity = entity;
+		this.entityName = entityName;
+		this.fetchType = fetchType;
 	}
 
 	public RelationType getRelationType() {
@@ -41,12 +45,20 @@ public class Relation {
 		this.joinColumn = joinColumn;
 	}
 
-	public String getEntity() {
-		return entity;
+	public String getEntityName() {
+		return entityName;
 	}
 
-	public void setEntity(String entity) {
-		this.entity = entity;
+	public void setEntityName(String entityName) {
+		this.entityName = entityName;
+	}
+
+	public FetchType getFetchType() {
+		return fetchType;
+	}
+
+	public void setFetchType(FetchType fetchType) {
+		this.fetchType = fetchType;
 	}
 
 }

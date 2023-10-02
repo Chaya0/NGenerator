@@ -3,6 +3,7 @@ package com.generator.model;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+
 /*
  * Might be advanced into loading properties from XML.
  */
@@ -11,23 +12,14 @@ public class SpringProperties {
 	private String language;
 	private String packaging;
 	private List<String> dependencies;
-//	@XmlAttribute(required =  true)
 	private String bootVersion;
-//	@XmlAttribute(required =  true)
 	private String baseDir;
-//	@XmlAttribute(required =  true)
 	private String groupId;
-//	@XmlAttribute(required =  true)
 	private String artifactId;
-//	@XmlAttribute(required =  true)
 	private String name;
-//	@XmlAttribute(required =  true)
 	private String description;
-//	@XmlAttribute(required =  true)
 	private String packageName;
-//	@XmlAttribute(required =  true)
 	private String javaVersion;
-//	@XmlAttribute(required =  true)
 	private String projectPath;
 
 	public SpringProperties(Properties properties) {
@@ -38,7 +30,7 @@ public class SpringProperties {
 		bootVersion = properties.getProperty("bootVersion", "3.1.4");
 		baseDir = properties.getProperty("baseDir", "myApp");
 		groupId = properties.getProperty("groupId", "com.myApp");
-		artifactId = properties.getProperty("artifactId","myApp");
+		artifactId = properties.getProperty("artifactId", "myApp");
 		name = properties.getProperty("name", "myApp");
 		description = properties.getProperty("description", "");
 		packageName = properties.getProperty("packageName", "com.myApp.myApp");
@@ -97,7 +89,7 @@ public class SpringProperties {
 	public String getProjectPath() {
 		return projectPath;
 	}
-	
+
 	public String getSpringAppDownloadUrl() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("https://start.spring.io/starter.zip?type=" + getType());
