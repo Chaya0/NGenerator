@@ -11,8 +11,10 @@ public class GeneratorOutputFile implements AutoCloseable {
 	private static final String indent = "\t";
 	private final File file;
 	private boolean alreadyExisted = true;
-	private String previousContentEnd = "";
 	private BufferedWriter writer = null;
+	private String previousContentEnd = "";
+	private String previousContentStart = "";
+
 
 	public GeneratorOutputFile(String filename, String charset, boolean overwrite) throws IOException {
 		file = new File(filename);
@@ -53,7 +55,6 @@ public class GeneratorOutputFile implements AutoCloseable {
 	 * prethodno postojeci sadrzaj treba da se sacuva (i da se ponovo upise u
 	 * izlazni fajl)
 	 */
-	private String previousContentStart = "";
 
 	/**
 	 * Sadrzaj fajla (ako je vec postojao) koji sledi sistemskim oznakama za pocetak

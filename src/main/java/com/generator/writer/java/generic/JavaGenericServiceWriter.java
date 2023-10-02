@@ -51,12 +51,16 @@ public class JavaGenericServiceWriter implements Writer {
 			file.writeln(2, "return repository.findAll()");
 			file.writeln(1, "}");
 			file.writeln(0, "");
-			file.writeln(1, "public Page<" + upperCaseName + "> findAll(Pageable pageSort) {");
-			file.writeln(2, "return repository.findAll(pageSort)");
+			file.writeln(1, "public Page<" + upperCaseName + "> findAll(Pageable pageable) {");
+			file.writeln(2, "return repository.findAll(pageable)");
 			file.writeln(1, "}");
 			file.writeln(0, "");
 			file.writeln(1, "public List<" + upperCaseName + "> findAll(Specification<" + upperCaseName + "> specification) {");
 			file.writeln(2, "return repository.findAll(specification)");
+			file.writeln(1, "}");
+			file.writeln(0, "");
+			file.writeln(1, "public Page<" + upperCaseName + "> findAll(Specification<" + upperCaseName + "> specification, Pageable pageable) {");
+			file.writeln(2, "return repository.findAll(specification, pageable)");
 			file.writeln(1, "}");
 			file.writeln(0, "");
 			/*
@@ -69,8 +73,8 @@ public class JavaGenericServiceWriter implements Writer {
 			/*
 			 * Creates save (update) method;
 			 */
-			file.writeln(1, "public " + upperCaseName + " save(" + upperCaseName + " " + entity.getName() + ") {");
-			file.writeln(2, "return repository.findById(id)");
+			file.writeln(1, "public " + upperCaseName + " save(" + upperCaseName + " object) {");
+			file.writeln(2, "return repository.save(object)");
 			file.writeln(1, "}");
 			file.writeln(0, "");
 			/*

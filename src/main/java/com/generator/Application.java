@@ -12,13 +12,10 @@ public class Application {
 	public static void main(String[] args) {
 	}
 
-
-
 	private static Properties loadProperties() {
 		Properties properties = new Properties();
 		try (InputStream input = new FileInputStream("./application.properties")) {
 			properties.load(input);
-			System.out.println(properties.get("bootVersion"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

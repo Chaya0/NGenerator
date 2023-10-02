@@ -29,10 +29,12 @@ public class JavaControllerWriter implements Writer {
 
 			file.writeln(0, "package " + Utils.getImportControllerPackageName(false) + ";");
 			file.writeln(0, "");
-			file.writeln(0, "@Controller");
+			file.writeln(0, "@CrossOrigin");
+			file.writeln(0, "@RestController");
+			file.writeln(0, "@SecurityRequirement(name = \"bearerAuth\")");
+			file.writeln(0, "@RequestMapping(\"/api/" + entity.getName() + "\")");
 			file.writeln(0, "public class " + upperCaseName + " extends " + upperCaseName + "GenericController {");
 			file.writeln(0, "");
-
 			file.writeln(0, "}");
 		}
 

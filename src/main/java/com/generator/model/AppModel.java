@@ -8,6 +8,8 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "app")
 public class AppModel {
+	@XmlElementWrapper(name = "entities")
+	@XmlElement(name = "entities")
 	private List<Entity> entities;
 	
 	public AppModel(List<Entity> entities) {
@@ -15,8 +17,6 @@ public class AppModel {
 		this.entities = entities;
 	}
 
-	@XmlElementWrapper(name = "entities")
-	@XmlElement(name = "entities")
 	public List<Entity> getEntities() {
 		return entities;
 	}

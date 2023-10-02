@@ -1,9 +1,11 @@
 package com.generator;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import com.generator.model.AppModel;
+import com.generator.writer.Utils;
 import com.generator.writer.Writer;
 import com.generator.writer.java.JavaControllerWriter;
 import com.generator.writer.java.JavaRepositoryWriter;
@@ -27,6 +29,13 @@ public class ApplicationGenerator {
 		Writer serviceWriter = new JavaServiceWriter();
 
 		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter);
+	}
+	
+	private void extractAppIfItDoesntExists() {
+		File file = new File(Application.getSpringProperties().getProjectPath() + Application.getSpringProperties().getArtifactId());
+		if(!file.exists()) {
+			SpringStartExtractor.extractApp();
+		}
 	}
 
 	public AppModel getAppModel() {

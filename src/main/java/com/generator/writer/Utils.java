@@ -25,27 +25,13 @@ public class Utils {
 
 		return new GeneratorOutputFile(fullPath, charset, overwrite);
 	}
-
-	public static GeneratorOutputFile getOutputResource(String folder, String filename) throws Exception {
-		return getOutputResource(folder, filename, "UTF-8", true);
-	}
-
+	
 	public static GeneratorOutputFile getOutputResource(String folder, String filename, boolean overwrite) throws Exception {
 		return getOutputResource(folder, filename, "UTF-8", overwrite);
 	}
 
-	public static GeneratorOutputFile createGenericOutputResource(int type, String baseFolder, String prefix, String filename, String suffix, String extension, boolean createJunction)
-			throws Exception {
-		GeneratorOutputFile file;
-		file = Utils.getOutputResource(baseFolder, prefix + filename + suffix + "." + extension, false);
-		file.close();
-
-		file = Utils.getOutputResource(baseFolder + "/generic", prefix + filename + suffix + "." + extension, true);
-		return file;
-	}
-
-	public static GeneratorOutputFile createGenericOutputResource(int type, String baseFolder, String filename, String suffix, String extension, boolean createJunction) throws Exception {
-		return createGenericOutputResource(type, baseFolder, "", filename, suffix, extension, createJunction);
+	public static GeneratorOutputFile getOutputResource(String folder, String filename) throws Exception {
+		return getOutputResource(folder, filename, "UTF-8", true);
 	}
 
 	public static String getCorrectPath(String pathWithDots) {
@@ -62,6 +48,9 @@ public class Utils {
 		return stringBuilder.toString();
 	}
 
+	public static String getImportDefaultPackage() {
+		return Application.getSpringProperties().getPackageName();
+	}
 	/**
 	 * @param generic
 	 *                true - returns generic package name
@@ -95,7 +84,7 @@ public class Utils {
 	 *                true - returns generic package name
 	 */
 	public static String getImportControllerPackageName(boolean generic) {
-		return generic ? Application.getSpringProperties().getPackageName() + ".controller.generic" : Application.getSpringProperties().getPackageName() + ".controller";
+		return generic ? getImportDefaultPackage() + ".controller.generic" : getImportDefaultPackage() + ".controller";
 	}
 
 	/**
@@ -103,7 +92,7 @@ public class Utils {
 	 *                true - returns generic package name
 	 */
 	public static String getImportServicePackageName(boolean generic) {
-		return generic ? Application.getSpringProperties().getPackageName() + ".service.generic" : Application.getSpringProperties().getPackageName() + ".service";
+		return generic ? getImportDefaultPackage() + ".service.generic" : getImportDefaultPackage() + ".service";
 
 	}
 
@@ -112,10 +101,10 @@ public class Utils {
 	 *                true - returns generic package name
 	 */
 	public static String getImportRepositoryPackageName(boolean generic) {
-		return generic ? Application.getSpringProperties().getPackageName() + ".repository.generic" : Application.getSpringProperties().getPackageName() + ".repository";
+		return generic ? getImportDefaultPackage() + ".repository.generic" : getImportDefaultPackage() + ".repository";
 	}
 
 	public static String getImportModelPackageName() {
-		return Application.getSpringProperties().getPackageName() + ".model";
+		return getImportDefaultPackage() + ".model";
 	}
 }
