@@ -79,6 +79,9 @@ public class Utils {
 		return getMainPackagePath() + "model/";
 	}
 
+	public static String getModelEnumsPackagePath() {
+		return getModelPackagePath() + "enums/";
+	}
 	/**
 	 * @param generic
 	 *                true - returns generic package name
@@ -106,5 +109,8 @@ public class Utils {
 
 	public static String getImportModelPackageName() {
 		return getImportDefaultPackage() + ".model";
+	}
+	public static String getImportModelEnumsPackageName() {
+		return getImportModelPackageName() + ".enums";
 	}
 }

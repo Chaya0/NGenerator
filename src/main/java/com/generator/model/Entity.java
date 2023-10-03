@@ -1,13 +1,16 @@
 package com.generator.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.generator.model.enums.AttributeType;
 import com.generator.model.enums.GenerationType;
 import com.generator.model.enums.InheritanceType;
 import com.generator.model.enums.RelationType;
 import com.generator.reader.adapter.GenerationTypeXmlAdapter;
 import com.generator.reader.adapter.InheritanceTypeXmlAdapter;
+import com.generator.util.StringUtils;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -28,7 +31,9 @@ public class Entity {
 	@XmlAttribute(name = "generationType", required = false)
 	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
 	private GenerationType generationType = GenerationType.IDENTITY;
-
+	/*
+	 * XmlElements
+	 */
 	@XmlElementWrapper(name = "relations", required = false)
 	@XmlElement(name = "relation")
 	private List<Relation> relations;
@@ -112,5 +117,15 @@ public class Entity {
 			if(relation.getEntityName().equals(entityName)) return true;
 		}
 		return false;
+	}
+	
+	public List<String> getEnumsForImport(){
+		List<String> enumsForImport = new ArrayList<>();
+		for(Attribute attribute : getAttributes()) {
+			if(attribute.getAttributeType().equals(AttributeType.ENUM)) {
+				enumsForImport.add(StringUtils.uppercaseFirst(attribute.getEnumName()));
+			}
+		}
+		return enumsForImport;
 	}
 }

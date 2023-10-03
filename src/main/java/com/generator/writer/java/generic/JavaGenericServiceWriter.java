@@ -19,14 +19,9 @@ public class JavaGenericServiceWriter implements Writer {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		if (Utils.fileExists(Utils.getServicePackagePath(true), upperCaseName + "GenericService.java")) {
-			return;
-		}
+		
 		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(true), upperCaseName + "GenericService.java")) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
-
+			
 			file.writeln(0, "package " + Utils.getImportServicePackageName(true) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import javax.persistence.*");
@@ -34,7 +29,9 @@ public class JavaGenericServiceWriter implements Writer {
 			file.writeln(0, "import org.springframework.data.domain.Pageable;");
 			file.writeln(0, "import org.springframework.beans.factory.annotation.Autowired;");
 			file.writeln(0, "import org.springframework.data.jpa.domain.Specification;");
-			file.writeln(0, "import java.util.*");
+			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
+			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(true) + "." + upperCaseName + "GenericRepository" + ";");
+			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "");
 			file.writeln(0, "@Service");
 			file.writeln(0, "public class " + upperCaseName + "GenericService {");

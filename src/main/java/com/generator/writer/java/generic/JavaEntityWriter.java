@@ -23,27 +23,26 @@ public class JavaEntityWriter implements Writer {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		if (Utils.fileExists(Utils.getServicePackagePath(false), upperCaseName + ".java")) {
-			return;
-		}
+
 		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getModelPackagePath(), upperCaseName + ".java", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
 
 			file.writeln(0, "package " + Utils.getImportModelPackageName() + ";");
 			file.writeln(0, "");
-			file.writeln(0, "import lombok.Data");
-			file.writeln(0, "import lombok.AllArgsConstructor");
-			file.writeln(0, "import lombok.NoArgsConstructor");
-			file.writeln(0, "import javax.persistence.*");
-			file.writeln(0, "import java.util.*");
-			file.writeln(0, "import java.time.*");
+			file.writeln(0, "import lombok.Data;");
+			file.writeln(0, "import lombok.AllArgsConstructor;");
+			file.writeln(0, "import lombok.NoArgsConstructor;");
+			file.writeln(0, "import javax.persistence.*;");
+			file.writeln(0, "import java.util.*;");
+			file.writeln(0, "import java.time.*;");
+			for(String enumToImort : entity.getEnumsForImport() ) {
+				file.writeln(0, "import " + Utils.getImportModelEnumsPackageName() + "." + enumToImort + ";");
+
+			}
 			file.writeln(0, "import com.fasterxml.jackson.annotation.JsonIgnore;");
+			file.writeln(0, "");
 			file.writeln(0, "@Data");
 			file.writeln(0, "@AllArgsConstructor");
 			file.writeln(0, "@NoArgsConstructor");
-			file.writeln(0, "");
 			if (entity.getInheritanceType() != null) {
 				file.writeln(0, entity.getInheritanceType().getGeneratorCode());
 			}
@@ -90,20 +89,21 @@ public class JavaEntityWriter implements Writer {
 		for (Relation relation : entity.getRelations()) {
 			switch (relation.getRelationType()) {
 			case ONE_TO_MANY:
-				file.writeln(1, relation.getRelationType().getGeneratorCode() + "@OneToMany(mappedBy = \"" + StringUtils.lowercaseFirst(entity.getName()) + ")");
+				file.writeln(1, relation.getRelationType().getGeneratorCode() + "(mappedBy = \"" + StringUtils.lowercaseFirst(entity.getName()) + ")");
 				file.writeln(1, "List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relation.getEntityName() + "List;");
 				file.writeln(0, "");
 				break;
 			case ONE_TO_ONE:
-				file.writeln(0, relation.getRelationType().getGeneratorCode() + "(cascade");
-				file.writeln(0, "");
-				file.writeln(0, "");
+				file.writeln(0, relation.getRelationType().getGeneratorCode());
+				file.writeln(1, "@JoinTable(name = \"" + StringUtils.lowercaseFirst(relation.getEntityName()) + "Id\")");
+				file.writeln(0, "private " + StringUtils.uppercaseFirst(relation.getEntityName()) + " " + relation.getEntityName() + ";");
 				file.writeln(0, "");
 				break;
 			case MANY_TO_MANY:
-				file.writeln(1, relation.getRelationType().getGeneratorCode() + "(mappedBy = \"" + entity.getName() + "List\")");
-				file.writeln(1, "@JsonIgnore");
-				file.writeln(1, "");
+				file.writeln(1, relation.getRelationType().getGeneratorCode());
+				file.writeln(1, "@JoinTable(name = \"" +  ";");
+				file.writeln(2, "joinColumns = @JoinColumn(name = \"");
+				file.writeln(1, "inverseJoinColumns = @JoinColumn(name = ");
 				file.writeln(0, "");
 				break;
 			case MANY_TO_ONE:
@@ -116,14 +116,16 @@ public class JavaEntityWriter implements Writer {
 		}
 	}
 
-	private void writeOtherSideRelations(GeneratorOutputFile file, Entity entity) {
+	private void writeOtherSideRelations(GeneratorOutputFile file, Entity entity) throws Exception{
 		for(String key : entity.getOwningSideRelationEntites().keySet()) {
 			if(entity.relationWithEntityNameExsists(key)) {
 				if(entity.getOwningSideRelationEntites().get(key).equals(RelationType.ONE_TO_MANY)) {
 					
 				}
 				if(entity.getOwningSideRelationEntites().get(key).equals(RelationType.MANY_TO_MANY)) {
-					
+					file.writeln(1, "@JsonIgnore");
+					file.writeln(1, "@JsonIgnore");
+
 				}
 			}
 		}

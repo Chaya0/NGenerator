@@ -19,13 +19,8 @@ public class JavaGenericControllerWriter implements Writer {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		if (Utils.fileExists(Utils.getControllerPackagePath(true), upperCaseName + "GenericController.java")) {
-			return;
-		}
+		
 		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getControllerPackagePath(true), upperCaseName + "GenericController.java")) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
 
 			file.writeln(0, "package " + Utils.getImportControllerPackageName(true) + ";");
 			file.writeln(0, "");
@@ -38,7 +33,9 @@ public class JavaGenericControllerWriter implements Writer {
 			file.writeln(0, "import javax.validation.constraints.Max;");
 			file.writeln(0, "import javax.validation.constraints.Min;");
 			file.writeln(0, "import javax.validation.Valid;");
+			file.writeln(0, "import " + Utils.getImportServicePackageName(true) + "." + upperCaseName + "GenericService" + ";");
 			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".utils.ApiUtil;");
+			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
 			file.writeln(0, "");
 			file.writeln(0, "@CrossOrigin");
 			file.writeln(0, "@RestController");

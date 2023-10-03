@@ -19,13 +19,8 @@ public class JavaGenericRepositoryWriter implements Writer {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		if (Utils.fileExists(Utils.getRepositoryPackagePath(true), upperCaseName + "GenericRepository.java")) {
-			return;
-		}
+		
 		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getRepositoryPackagePath(true), upperCaseName + "GenericRepository.java")) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
 
 			file.writeln(0, "package " + Utils.getImportRepositoryPackageName(true) + ";");
 			file.writeln(0, "");
@@ -33,9 +28,9 @@ public class JavaGenericRepositoryWriter implements Writer {
 			file.writeln(0, "import org.springframework.data.jpa.repository.JpaRepository;");
 			file.writeln(0, "import org.springframework.data.jpa.repository.Query;");
 			file.writeln(0, "import org.springframework.stereotype.Repository;");
-			file.writeln(0, "");
-			file.writeln(0, "import java.util.Optional");
-			file.writeln(0, "import java.util.List");
+			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
+			file.writeln(0, "import java.util.Optional;");
+			file.writeln(0, "import java.util.List;");
 			file.writeln(0, "");
 			file.writeln(0, "@Repository");
 			file.writeln(0, "public interface " + upperCaseName + "GenericRepository extends JpaRepository<" + upperCaseName + ", Long> {");

@@ -16,6 +16,7 @@ public class ModelReader {
 
 			File model = new File("./model.xml");
 			AppModel appModel = (AppModel) jaxbUnmarshaller.unmarshal(model);
+			Validator.validateModel(appModel);
 			return appModel;
 		} catch (Exception e) {
 			e.printStackTrace();

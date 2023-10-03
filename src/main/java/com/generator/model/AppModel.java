@@ -27,10 +27,14 @@ public class AppModel {
 	public void setEntities(List<Entity> entities) {
 		this.entities = entities;
 	}
-	
+
+	public List<EnumModel> getEnums() {
+		return enums;
+	}
+
 	public Entity getEntityByName(String entityName) {
-		for(Entity entity : entities) {
-			if(entity.getName().equals(entityName)) return entity;
+		for (Entity entity : entities) {
+			if (entity.getName().equals(entityName)) return entity;
 		}
 		return null;
 	}
