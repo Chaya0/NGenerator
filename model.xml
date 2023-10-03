@@ -1,9 +1,13 @@
 <app>
 	<entities>
-		<entity name = "">
+		<entity name="">
 			<attributes>
-			<attribute></attribute>
+				<attribute></attribute>
 			</attributes>
 		</entity>
 	</entities>
+	<enums>
+		<enum>
+		</enum>
+	</enums>
 </app>

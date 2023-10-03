@@ -1,26 +1,35 @@
 package com.generator.model.enums;
 
 public enum AttributeType {
-	STRING("String"),
-	INTEGER("Integer"),
-	DOUBLE("Double"),
-	LONG("Long"),
-	DATE("Date"),
-	BOOLEAN("Boolean"),
-	ENUM("");
+	STRING("string", "String"),
+	INTEGER("integer", "Integer"),
+	DOUBLE("double", "Double"),
+	LONG("long", "Long"),
+	DATE("date", "Date"),
+	LOCAL_DATE("localDate", "LocalDate"),
+	BOOLEAN("boolean", "Boolean"),
+	ENUM("enum", "");
 
 	private String code;
+	private String generatorCode;
 
-	private AttributeType(String code) {
+	private AttributeType(String code, String generatorCode) {
 		this.code = code;
+		this.generatorCode = generatorCode;
 	}
 
 	public String getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public String getGeneratorCode() {
+		return generatorCode;
 	}
 
+	public static AttributeType fromCode(String code) {
+		for (AttributeType attributeType : AttributeType.values()) {
+			if (attributeType.getCode().equals(code)) return attributeType;
+		}
+		return null;
+	}
 }

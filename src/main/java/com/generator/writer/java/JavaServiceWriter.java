@@ -29,7 +29,10 @@ public class JavaServiceWriter implements Writer {
 
 			file.writeln(0, "package " + Utils.getImportServicePackageName(false) + ";");
 			file.writeln(0, "");
+			file.writeln(0, "import javax.persistence.*");
+			file.writeln(0, "");
 			file.writeln(0, "@Service");
+			file.writeln(0, "@Primary");
 			file.writeln(0, "public class " + upperCaseName + " implements " + upperCaseName + "GenericService {");
 			file.writeln(0, "");
 

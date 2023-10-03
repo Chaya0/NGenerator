@@ -1,15 +1,20 @@
 package com.generator.model;
 
 import java.util.List;
+import java.util.Map;
 
+import com.generator.model.enums.GenerationType;
 import com.generator.model.enums.InheritanceType;
+import com.generator.model.enums.RelationType;
+import com.generator.reader.adapter.GenerationTypeXmlAdapter;
+import com.generator.reader.adapter.InheritanceTypeXmlAdapter;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
-
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Entity {
@@ -17,14 +22,24 @@ public class Entity {
 	private String name;
 	@XmlAttribute(name = "inherits", required = false)
 	private String inherits;
+	@XmlAttribute(name = "inheritance-type", required = false)
+	@XmlJavaTypeAdapter(InheritanceTypeXmlAdapter.class)
+	private InheritanceType inheritanceType;
+	@XmlAttribute(name = "generationType", required = false)
+	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
+	private GenerationType generationType = GenerationType.IDENTITY;
+
 	@XmlElementWrapper(name = "relations", required = false)
-    @XmlElement(name = "relations")
+	@XmlElement(name = "relation")
 	private List<Relation> relations;
 	@XmlElementWrapper(name = "attributes", required = false)
-    @XmlElement(name = "attributes")
+	@XmlElement(name = "attribute")
 	private List<Attribute> attributes;
-	@XmlAttribute(name = "inheritance-type", required = false)
-	private InheritanceType inheritanceType;
+	/*
+	 * Key - entityName
+	 * Value - relationType
+	 */
+	private Map<String, RelationType> owningSideRelationEntites;
 
 	public Entity() {
 	}
@@ -76,4 +91,26 @@ public class Entity {
 		this.inherits = inherits;
 	}
 
+	public GenerationType getGenerationType() {
+		return generationType;
+	}
+
+	public void setGenerationType(GenerationType generationType) {
+		this.generationType = generationType;
+	}
+
+	public Map<String, RelationType> getOwningSideRelationEntites() {
+		return owningSideRelationEntites;
+	}
+
+	public void setOwningSideRelationEntites(Map<String, RelationType> owningSideRelationEntites) {
+		this.owningSideRelationEntites = owningSideRelationEntites;
+	}
+	
+	public boolean relationWithEntityNameExsists(String entityName) {
+		for(Relation relation : getRelations()) {
+			if(relation.getEntityName().equals(entityName)) return true;
+		}
+		return false;
+	}
 }

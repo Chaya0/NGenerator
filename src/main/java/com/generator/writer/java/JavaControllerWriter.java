@@ -29,6 +29,9 @@ public class JavaControllerWriter implements Writer {
 
 			file.writeln(0, "package " + Utils.getImportControllerPackageName(false) + ";");
 			file.writeln(0, "");
+			file.writeln(0, "import javax.persistence.*");
+			file.writeln(0, "");
+			file.writeln(0, "@Primary");
 			file.writeln(0, "@CrossOrigin");
 			file.writeln(0, "@RestController");
 			file.writeln(0, "@SecurityRequirement(name = \"bearerAuth\")");

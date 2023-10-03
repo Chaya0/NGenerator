@@ -9,9 +9,12 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "app")
 public class AppModel {
 	@XmlElementWrapper(name = "entities")
-	@XmlElement(name = "entities")
+	@XmlElement(name = "entitie")
 	private List<Entity> entities;
-	
+	@XmlElementWrapper(name = "enums")
+	@XmlElement(name = "enum")
+	private List<EnumModel> enums;
+
 	public AppModel(List<Entity> entities) {
 		super();
 		this.entities = entities;
@@ -25,4 +28,11 @@ public class AppModel {
 		this.entities = entities;
 	}
 	
+	public Entity getEntityByName(String entityName) {
+		for(Entity entity : entities) {
+			if(entity.getName().equals(entityName)) return entity;
+		}
+		return null;
+	}
+
 }

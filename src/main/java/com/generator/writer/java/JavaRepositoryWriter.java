@@ -29,7 +29,10 @@ public class JavaRepositoryWriter implements Writer {
 
 			file.writeln(0, "package " + Utils.getImportRepositoryPackageName(false) + ";");
 			file.writeln(0, "");
+			file.writeln(0, "import javax.persistence.*");
+			file.writeln(0, "");
 			file.writeln(0, "@Repository");
+			file.writeln(0, "@Primary");
 			file.writeln(0, "public class " + upperCaseName + " implements " + upperCaseName + "GenericRepository {");
 			file.writeln(0, "");
 

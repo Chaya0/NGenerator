@@ -3,28 +3,27 @@ package com.generator.model.enums;
 public enum FetchType {
 	LAZY("lazy", "fetch =  FetchType.LAZY"),
 	EAGER("eager", "fetch =  FetchType.EAGER");
-	
+
 	private String code;
-	private String annotationCode;
-	
-	FetchType(String code, String annotationCode) {
+	private String generatorCode;
+
+	FetchType(String code, String generatorCode) {
 		this.code = code;
-		this.annotationCode = annotationCode;
+		this.generatorCode = generatorCode;
 	}
 
 	public String getCode() {
 		return code.toLowerCase();
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public String getGeneratorCode() {
+		return generatorCode;
 	}
 
-	public String getAnnotationCode() {
-		return annotationCode;
-	}
-
-	public void setAnnotationCode(String annotationCode) {
-		this.annotationCode = annotationCode;
+	public static FetchType fromCode(String code) {
+		for (FetchType fetchType : FetchType.values()) {
+			if (fetchType.getCode().equals(code)) return fetchType;
+		}
+		return null;
 	}
 }

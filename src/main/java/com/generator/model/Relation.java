@@ -2,21 +2,27 @@ package com.generator.model;
 
 import com.generator.model.enums.FetchType;
 import com.generator.model.enums.RelationType;
+import com.generator.reader.adapter.FetchTypeXmlAdapter;
+import com.generator.reader.adapter.RelationTypeXmlAdapter;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Relation {
-	@XmlAttribute
-	private RelationType relationType;
-	@XmlAttribute
+	@XmlAttribute(name = "joinColumn", required = false)
 	private String joinColumn;
-	@XmlAttribute
+	@XmlAttribute(name = "entityName", required = false)
 	private String entityName;
-	@XmlAttribute
+	@XmlAttribute(name = "relationType", required = false)
+	@XmlJavaTypeAdapter(RelationTypeXmlAdapter.class)
+	private RelationType relationType;
+	@XmlAttribute(name = "fetchType", required = false)
+	@XmlJavaTypeAdapter(FetchTypeXmlAdapter.class)
 	private FetchType fetchType;
+	
 
 	public Relation() {
 	}

@@ -1,32 +1,31 @@
 package com.generator.model.enums;
 
 public enum RelationType {
-	ONE_TO_MANY("oneToMany", "@OneToMny"), 
-	MANY_TO_MANY("manyToMany", "@ManyToMany"), 
-	MANY_TO_ONE("manyToOne", "@ManyToOne"), 
+	ONE_TO_MANY("oneToMany", "@OneToMny"),
+	MANY_TO_MANY("manyToMany", "@ManyToMany"),
+	MANY_TO_ONE("manyToOne", "@ManyToOne"),
 	ONE_TO_ONE("oneToOne", "@OneToOne");
-	
+
 	private String code;
-	private String annotationCode;
-	
-	RelationType(String code, String annotationCode) {
+	private String generatorCode;
+
+	RelationType(String code, String generatorCode) {
 		this.code = code;
-		this.annotationCode = annotationCode;
+		this.generatorCode = generatorCode;
 	}
 
 	public String getCode() {
 		return code.toLowerCase();
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public String getGeneratorCode() {
+		return generatorCode;
 	}
 
-	public String getAnnotationCode() {
-		return annotationCode;
-	}
-
-	public void setAnnotationCode(String annotationCode) {
-		this.annotationCode = annotationCode;
+	public static RelationType fromCode(String code) {
+		for (RelationType relationType : RelationType.values()) {
+			if (relationType.getCode().equals(code)) return relationType;
+		}
+		return null;
 	}
 }
