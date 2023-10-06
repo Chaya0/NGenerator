@@ -14,7 +14,7 @@ public enum FetchType {
 	}
 
 	public String getCode() {
-		return code.toLowerCase();
+		return code;
 	}
 
 	public String getGeneratorCode() {

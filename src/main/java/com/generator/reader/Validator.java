@@ -7,5 +7,18 @@ public class Validator {
 	public static void validateModel(AppModel appModel) {
 		
 	}
-
+	
+	private void validateEntity() {
+		
+	}
+	
+	private void checkForDuplicateName() {
+		
+	}
+	
+	private void validateRelations() {
+		
+	}
+	
+	
 }

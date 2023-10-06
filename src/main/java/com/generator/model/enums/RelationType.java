@@ -1,7 +1,7 @@
 package com.generator.model.enums;
 
 public enum RelationType {
-	ONE_TO_MANY("oneToMany", "@OneToMny"),
+	ONE_TO_MANY("oneToMany", "@OneToMany"),
 	MANY_TO_MANY("manyToMany", "@ManyToMany"),
 	MANY_TO_ONE("manyToOne", "@ManyToOne"),
 	ONE_TO_ONE("oneToOne", "@OneToOne"),
@@ -16,7 +16,7 @@ public enum RelationType {
 	}
 
 	public String getCode() {
-		return code.toLowerCase();
+		return code;
 	}
 
 	public String getGeneratorCode() {

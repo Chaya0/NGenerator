@@ -87,11 +87,10 @@ public class JavaEntityWriter implements DefaultWriter {
 			String fetchType = relation.getFetchType().equals(FetchType.NULL) ? "" : (", " + relation.getFetchType().getGeneratorCode());
 			switch (relation.getRelationType()) {
 			case ONE_TO_MANY:
-				file.writeln(1, relation.getRelationType().getGeneratorCode() + "(mappedBy = \"" + entity.getName() + fetchType + ")");
+				file.writeln(1, relation.getRelationType().getGeneratorCode() + "(mappedBy = \"" + entity.getName() + fetchType + "\")");
 				file.writeln(1, "@JsonIgnore");
 				file.writeln(1, "List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relation.getEntityName() + "List;");
 				file.writeln(0, "");
-
 				break;
 			case ONE_TO_ONE:
 				if (relation.isOwningSide()) {
@@ -110,8 +109,8 @@ public class JavaEntityWriter implements DefaultWriter {
 					file.writeln(1, relation.getRelationType().getGeneratorCode() + "(" + relation.getFetchType().getGeneratorCode() + ")");
 					file.writeln(1, "@JsonIgnore");
 					file.writeln(1, "@JoinTable(name = \"" + entity.getName() + "_" + relation.getEntityName() + "\",");
-					file.writeln(2, "joinColumns = @JoinColumn(name = \"" + entity.getName() + "_id\", referencedColumnName = \"id\")),");
-					file.writeln(1, "inverseJoinColumns = @JoinColumn(name = \"" + relation.getEntityName() + "_id\", referencedColumnName = \"id\")))");
+					file.writeln(2, "joinColumns = @JoinColumn(name = \"" + entity.getName() + "_id\", referencedColumnName = \"id\"),");
+					file.writeln(1, "inverseJoinColumns = @JoinColumn(name = \"" + relation.getEntityName() + "_id\", referencedColumnName = \"id\"))");
 					file.writeln(1, "private List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relation.getEntityName() + "List;");
 					file.writeln(0, "");
 				} else {
@@ -121,7 +120,7 @@ public class JavaEntityWriter implements DefaultWriter {
 				break;
 			case MANY_TO_ONE:
 				file.writeln(1, relation.getRelationType().getGeneratorCode() + "(" + relation.getFetchType().getGeneratorCode() + ")");
-				file.writeln(1, "@JoinColumn(name = \"" + relation.getEntityName() + "_id\", referencedColumnName = \"id\"))");
+				file.writeln(1, "@JoinColumn(name = \"" + relation.getEntityName() + "_id\", referencedColumnName = \"id\")");
 				file.writeln(1, "private " + StringUtils.uppercaseFirst(relation.getEntityName()) + " " + relation.getEntityName() + ";");
 				file.writeln(0, "");
 				break;

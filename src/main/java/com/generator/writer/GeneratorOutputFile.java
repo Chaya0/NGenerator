@@ -15,7 +15,6 @@ public class GeneratorOutputFile implements AutoCloseable {
 	private String previousContentEnd = "";
 	private String previousContentStart = "";
 
-
 	public GeneratorOutputFile(String filename, String charset, boolean overwrite) throws IOException {
 		file = new File(filename);
 		alreadyExisted = true;
@@ -46,25 +45,6 @@ public class GeneratorOutputFile implements AutoCloseable {
 	boolean writePermitted() {
 		return !alreadyExisted;
 	}
-
-	/**
-	 * Sadrzaj fajla (ako je vec postojao) koji prethodi sistemskim oznakama za
-	 * pocetak generisanog dela<br>
-	 * U slucaju da se sadrzaj tekuceg fajla ponovo generise, a da je fajl tipa
-	 * "insert" onda ovaj
-	 * prethodno postojeci sadrzaj treba da se sacuva (i da se ponovo upise u
-	 * izlazni fajl)
-	 */
-
-	/**
-	 * Sadrzaj fajla (ako je vec postojao) koji sledi sistemskim oznakama za pocetak
-	 * generisanog dela<br>
-	 * U slucaju da se sadrzaj tekuceg fajla ponovo generise, a da je fajl tipa
-	 * "insert" onda ovaj
-	 * prethodno postojeci sadrzaj treba da se sacuva (i da se ponovo upise u
-	 * izlazni fajl)
-	 */
-	
 
 	private void conditionalWrite(String s) throws IOException {
 		if (writer == null) return;

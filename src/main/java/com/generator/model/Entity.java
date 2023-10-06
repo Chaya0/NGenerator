@@ -2,12 +2,10 @@ package com.generator.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.generator.model.enums.AttributeType;
 import com.generator.model.enums.GenerationType;
 import com.generator.model.enums.InheritanceType;
-import com.generator.model.enums.RelationType;
 import com.generator.reader.adapter.GenerationTypeXmlAdapter;
 import com.generator.reader.adapter.InheritanceTypeXmlAdapter;
 import com.generator.util.StringUtils;
@@ -44,7 +42,6 @@ public class Entity {
 	 * Key - entityName
 	 * Value - relationType
 	 */
-	private Map<String, RelationType> owningSideRelationEntites;
 
 	public Entity() {
 	}
@@ -104,14 +101,6 @@ public class Entity {
 		this.generationType = generationType;
 	}
 
-	public Map<String, RelationType> getOwningSideRelationEntites() {
-		return owningSideRelationEntites;
-	}
-
-	public void setOwningSideRelationEntites(Map<String, RelationType> owningSideRelationEntites) {
-		this.owningSideRelationEntites = owningSideRelationEntites;
-	}
-
 	public boolean relationWithEntityNameExsists(String entityName) {
 		for (Relation relation : getRelations()) {
 			if (relation.getEntityName().equals(entityName)) return true;
@@ -132,6 +121,6 @@ public class Entity {
 	@Override
 	public String toString() {
 		return "Entity [name=" + name + ", inherits=" + inherits + ", inheritanceType=" + inheritanceType + ", generationType=" + generationType + ", relations=" + relations + ", attributes="
-				+ attributes + ", owningSideRelationEntites=" + owningSideRelationEntites + "]";
+				+ attributes + "]";
 	}
 }

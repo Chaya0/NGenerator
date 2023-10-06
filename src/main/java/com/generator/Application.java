@@ -9,8 +9,12 @@ import com.generator.model.SpringProperties;
 public class Application {
 	private static SpringProperties springProperties = new SpringProperties(loadProperties());
 
-	public static void main(String[] args) {
-		ApplicationGenerator.generateApp();
+	public static void main(String[] args) throws Exception {
+		try {
+			ApplicationGenerator.generateApp();			
+		}catch (Exception e) {
+			ErrorLogHandler.writeErrorLog(e);
+		}
 	}
 
 	private static Properties loadProperties() {
