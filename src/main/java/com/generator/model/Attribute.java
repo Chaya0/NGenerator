@@ -3,31 +3,26 @@ package com.generator.model;
 import com.generator.model.enums.AttributeType;
 import com.generator.reader.adapter.AttributeTypeXmlAdapter;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Attribute {
 	@XmlAttribute(name = "name", required = true)
 	private String name;
 	@XmlAttribute(name = "type", required = true)
 	@XmlJavaTypeAdapter(AttributeTypeXmlAdapter.class)
-	private AttributeType attributeType;
-	@XmlAttribute(name = "enumName", required = false)
+	private AttributeType type;
+	@XmlAttribute(name = "enumName")
 	private String enumName;
-	@XmlAttribute(name = "nullable", required = false)
+	@XmlAttribute(name = "nullable")
 	private boolean nullable = true;
-	@XmlAttribute(name = "unique", required = false)
+	@XmlAttribute(name = "unique")
 	private boolean unique = false;
 
 	public Attribute() {
-	}
-
-	public Attribute(String name, AttributeType attributeType, boolean nullable, boolean unique) {
-		super();
-		this.name = name;
-		this.attributeType = attributeType;
-		this.nullable = nullable;
-		this.unique = unique;
 	}
 
 	public String getName() {
@@ -38,12 +33,12 @@ public class Attribute {
 		this.name = name;
 	}
 
-	public AttributeType getAttributeType() {
-		return attributeType;
+	public AttributeType getType() {
+		return type;
 	}
 
-	public void setAttributeType(AttributeType attributeType) {
-		this.attributeType = attributeType;
+	public void setType(AttributeType type) {
+		this.type = type;
 	}
 
 	public boolean isNullable() {
@@ -70,4 +65,8 @@ public class Attribute {
 		this.enumName = enumName;
 	}
 
+	@Override
+	public String toString() {
+		return "Attribute [name=" + name + ", type=" + type + ", enumName=" + enumName + ", nullable=" + nullable + ", unique=" + unique + "]";
+	}
 }

@@ -3,7 +3,8 @@ package com.generator.model.enums;
 public enum InheritanceType {
 	JOINED("joined", "@Inheritance(strategy = InheritanceType.JOINED)"),
 	TABLE_PER_CLASS("tablePerClass", "@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)"),
-	SINGLE_TABLE("singleTable", "@Inheritance(strategy = InheritanceType.SINGLE_TABLE)");
+	SINGLE_TABLE("singleTable", "@Inheritance(strategy = InheritanceType.SINGLE_TABLE)"),
+	NULL("","");
 
 	private String code;
 	private String generatorCode;
@@ -25,7 +26,7 @@ public enum InheritanceType {
 		for (InheritanceType inheritanceType : InheritanceType.values()) {
 			if (inheritanceType.getCode().equals(code)) return inheritanceType;
 		}
-		return null;
+		return NULL;
 	}
 
 }

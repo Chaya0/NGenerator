@@ -4,7 +4,8 @@ public enum RelationType {
 	ONE_TO_MANY("oneToMany", "@OneToMny"),
 	MANY_TO_MANY("manyToMany", "@ManyToMany"),
 	MANY_TO_ONE("manyToOne", "@ManyToOne"),
-	ONE_TO_ONE("oneToOne", "@OneToOne");
+	ONE_TO_ONE("oneToOne", "@OneToOne"),
+	NULL("","");
 
 	private String code;
 	private String generatorCode;
@@ -26,6 +27,6 @@ public enum RelationType {
 		for (RelationType relationType : RelationType.values()) {
 			if (relationType.getCode().equals(code)) return relationType;
 		}
-		return null;
+		return NULL;
 	}
 }

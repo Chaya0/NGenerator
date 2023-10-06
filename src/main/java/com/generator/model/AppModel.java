@@ -2,22 +2,23 @@ package com.generator.model;
 
 import java.util.List;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "app")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class AppModel {
 	@XmlElementWrapper(name = "entities")
-	@XmlElement(name = "entitie")
+	@XmlElement(name = "entity")
 	private List<Entity> entities;
 	@XmlElementWrapper(name = "enums")
 	@XmlElement(name = "enum")
 	private List<EnumModel> enums;
 
-	public AppModel(List<Entity> entities) {
-		super();
-		this.entities = entities;
+	public AppModel() {
 	}
 
 	public List<Entity> getEntities() {
@@ -39,4 +40,8 @@ public class AppModel {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "AppModel [entities=" + entities + ", enums=" + enums + "]";
+	}
 }

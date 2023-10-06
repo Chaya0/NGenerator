@@ -3,11 +3,11 @@ package com.generator.writer.java;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
+import com.generator.writer.DefaultWriter;
 import com.generator.writer.GeneratorOutputFile;
 import com.generator.writer.Utils;
-import com.generator.writer.Writer;
 
-public class JavaRepositoryWriter implements Writer {
+public class JavaRepositoryWriter implements DefaultWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
@@ -29,11 +29,13 @@ public class JavaRepositoryWriter implements Writer {
 
 			file.writeln(0, "package " + Utils.getImportRepositoryPackageName(false) + ";");
 			file.writeln(0, "");
-			file.writeln(0, "import javax.persistence.*");
+			file.writeln(0, "import org.springframework.context.annotation.*;");
+			file.writeln(0, "import org.springframework.stereotype.*;");
+			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(true) + "." + upperCaseName + "GenericRepository;");
 			file.writeln(0, "");
 			file.writeln(0, "@Repository");
 			file.writeln(0, "@Primary");
-			file.writeln(0, "public class " + upperCaseName + " implements " + upperCaseName + "GenericRepository {");
+			file.writeln(0, "public interface " + upperCaseName + "Repository extends " + upperCaseName + "GenericRepository {");
 			file.writeln(0, "");
 
 			file.writeln(0, "}");

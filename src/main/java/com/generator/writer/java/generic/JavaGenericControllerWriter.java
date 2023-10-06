@@ -3,11 +3,11 @@ package com.generator.writer.java.generic;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
+import com.generator.writer.DefaultWriter;
 import com.generator.writer.GeneratorOutputFile;
 import com.generator.writer.Utils;
-import com.generator.writer.Writer;
 
-public class JavaGenericControllerWriter implements Writer {
+public class JavaGenericControllerWriter implements DefaultWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
@@ -20,7 +20,7 @@ public class JavaGenericControllerWriter implements Writer {
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 		
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getControllerPackagePath(true), upperCaseName + "GenericController.java")) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getControllerPackagePath(true), upperCaseName + "GenericController.java", true)) {
 
 			file.writeln(0, "package " + Utils.getImportControllerPackageName(true) + ";");
 			file.writeln(0, "");
@@ -28,18 +28,18 @@ public class JavaGenericControllerWriter implements Writer {
 			file.writeln(0, "import org.springframework.http.*;");
 			file.writeln(0, "import org.springframework.data.domain.*;");
 			file.writeln(0, "import org.springframework.data.jpa.domain.*;");
-			file.writeln(0, "import javax.persistence.*");
-			file.writeln(0, "import java.util.*");
-			file.writeln(0, "import javax.validation.constraints.Max;");
-			file.writeln(0, "import javax.validation.constraints.Min;");
-			file.writeln(0, "import javax.validation.Valid;");
-			file.writeln(0, "import " + Utils.getImportServicePackageName(true) + "." + upperCaseName + "GenericService" + ";");
+			file.writeln(0, "import org.springframework.stereotype.*;");
+			file.writeln(0, "import java.util.*;");
+			file.writeln(0, "import jakarta.validation.constraints.Max;");
+			file.writeln(0, "import jakarta.validation.constraints.Min;");
+			file.writeln(0, "import jakarta.validation.Valid;");
+			file.writeln(0, "import jakarta.persistence.EntityNotFoundException;");
+			file.writeln(0, "import " + Utils.getImportServicePackageName(false) + "." + upperCaseName + "Service;");
 			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".utils.ApiUtil;");
 			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
 			file.writeln(0, "");
 			file.writeln(0, "@CrossOrigin");
 			file.writeln(0, "@RestController");
-			file.writeln(0, "@SecurityRequirement(name = \"bearerAuth\")");
 			file.writeln(0, "@RequestMapping(\"/api/generic\")");
 			file.writeln(0, "public class " + upperCaseName + "GenericController {");
 			file.writeln(0, "private final " + upperCaseName + "Service service;");

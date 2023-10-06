@@ -19,7 +19,6 @@ public class Utils {
 	public static GeneratorOutputFile getOutputResource(String folder, String filename, String charset, boolean overwrite) throws Exception {
 		folder = getCorrectPath(folder);
 		String fullPath = folder + "/" + filename;
-
 		GFolder fullFolderPath = new GFolder(folder);
 		if (!fullFolderPath.create()) throw new Exception("Could not create folder " + folder);
 
@@ -42,9 +41,8 @@ public class Utils {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getSpringProperties().getProjectPath());
 		stringBuilder.append(Application.getSpringProperties().getArtifactId());
-		stringBuilder.append("src/main/java");
+		stringBuilder.append("/src/main/java/");
 		stringBuilder.append(getCorrectPath(Application.getSpringProperties().getPackageName()));
-
 		return stringBuilder.toString();
 	}
 
@@ -56,7 +54,7 @@ public class Utils {
 	 *                true - returns generic package name
 	 */
 	public static String getControllerPackagePath(boolean generic) {
-		return generic ? getMainPackagePath() + "controller/generic/" : getMainPackagePath() + "controller/";
+		return generic ? getMainPackagePath() + "/controller/generic" : getMainPackagePath() + "/controller";
 	}
 
 	/**
@@ -64,7 +62,7 @@ public class Utils {
 	 *                true - returns generic package name
 	 */
 	public static String getRepositoryPackagePath(boolean generic) {
-		return generic ? getMainPackagePath() + "controller/generic/" : getMainPackagePath() + "controller/";
+		return generic ? getMainPackagePath() + "/repository/generic" : getMainPackagePath() + "/repository";
 	}
 
 	/**
@@ -72,15 +70,18 @@ public class Utils {
 	 *                true - returns generic package name
 	 */
 	public static String getServicePackagePath(boolean generic) {
-		return generic ? getMainPackagePath() + "controller/generic/" : getMainPackagePath() + "controller/";
+		return generic ? getMainPackagePath() + "/service/generic" : getMainPackagePath() + "/service";
 	}
 
 	public static String getModelPackagePath() {
-		return getMainPackagePath() + "model/";
+		return getMainPackagePath() + "/model";
 	}
 
 	public static String getModelEnumsPackagePath() {
-		return getModelPackagePath() + "enums/";
+		return getModelPackagePath() + "/enums";
+	}
+	public static String getUtilsPackagePath() {
+		return getMainPackagePath() + "/utils";
 	}
 	/**
 	 * @param generic

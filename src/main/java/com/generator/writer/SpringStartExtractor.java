@@ -47,7 +47,6 @@ public class SpringStartExtractor {
 
 					while ((entry = zipInput.getNextEntry()) != null) {
 						String filePath = extractPath + entry.getName();
-						System.out.println(filePath);
 						if (!entry.isDirectory()) {
 							new File(filePath).getParentFile().mkdirs();
 							try (FileOutputStream fos = new FileOutputStream(filePath)) {

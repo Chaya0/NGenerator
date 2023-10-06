@@ -8,7 +8,8 @@ public enum AttributeType {
 	DATE("date", "Date"),
 	LOCAL_DATE("localDate", "LocalDate"),
 	BOOLEAN("boolean", "Boolean"),
-	ENUM("enum", "");
+	ENUM("enum", ""),
+	NULL("","");
 
 	private String code;
 	private String generatorCode;
@@ -30,6 +31,6 @@ public enum AttributeType {
 		for (AttributeType attributeType : AttributeType.values()) {
 			if (attributeType.getCode().equals(code)) return attributeType;
 		}
-		return null;
+		return NULL;
 	}
 }

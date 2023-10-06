@@ -12,27 +12,29 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Relation {
-	@XmlAttribute(name = "joinColumn", required = false)
+	@XmlAttribute(name = "joinColumn")
 	private String joinColumn;
-	@XmlAttribute(name = "entityName", required = false)
+	@XmlAttribute(name = "entityName", required = true)
 	private String entityName;
-	@XmlAttribute(name = "relationType", required = false)
+	@XmlAttribute(name = "relationType", required = true)
 	@XmlJavaTypeAdapter(RelationTypeXmlAdapter.class)
 	private RelationType relationType;
-	@XmlAttribute(name = "fetchType", required = false)
+	@XmlAttribute(name = "fetchType")
 	@XmlJavaTypeAdapter(FetchTypeXmlAdapter.class)
-	private FetchType fetchType;
-	
+	private FetchType fetchType = FetchType.NULL;
+	@XmlAttribute(name = "owningSide", required = true)
+	private boolean owningSide;
 
 	public Relation() {
 	}
 
-	public Relation(RelationType relationType, String joinColumn, String entityName, FetchType fetchType) {
+	public Relation(RelationType relationType, String joinColumn, String entityName, FetchType fetchType, boolean owningSide) {
 		super();
 		this.relationType = relationType;
 		this.joinColumn = joinColumn;
 		this.entityName = entityName;
 		this.fetchType = fetchType;
+		this.owningSide = owningSide;
 	}
 
 	public RelationType getRelationType() {
@@ -67,4 +69,16 @@ public class Relation {
 		this.fetchType = fetchType;
 	}
 
+	public boolean isOwningSide() {
+		return owningSide;
+	}
+
+	public void setOwningSide(boolean owningSide) {
+		this.owningSide = owningSide;
+	}
+
+	@Override
+	public String toString() {
+		return "Relation [joinColumn=" + joinColumn + ", entityName=" + entityName + ", relationType=" + relationType + ", fetchType=" + fetchType + ", owningSide=" + owningSide + "]";
+	}
 }

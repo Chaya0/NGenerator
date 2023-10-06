@@ -8,10 +8,12 @@ import com.generator.model.AppModel;
 import com.generator.reader.ModelReader;
 import com.generator.writer.SpringStartExtractor;
 import com.generator.writer.Writer;
+import com.generator.writer.java.JavaApiUtilWriter;
 import com.generator.writer.java.JavaControllerWriter;
 import com.generator.writer.java.JavaRepositoryWriter;
 import com.generator.writer.java.JavaServiceWriter;
 import com.generator.writer.java.generic.JavaEntityWriter;
+import com.generator.writer.java.generic.JavaEnumWriter;
 import com.generator.writer.java.generic.JavaGenericControllerWriter;
 import com.generator.writer.java.generic.JavaGenericRepositoryWriter;
 import com.generator.writer.java.generic.JavaGenericServiceWriter;
@@ -21,7 +23,9 @@ public class ApplicationGenerator {
 	private static AppModel appModel = ModelReader.readModel();
 
 	public static void generateApp() {
+		System.out.println(appModel);
 		extractAppIfItDoesntExists();
+		JavaApiUtilWriter utilWriter = new JavaApiUtilWriter();;
 		for (Writer writer : writers) {
 			try {
 				writer.create(appModel);
@@ -29,6 +33,12 @@ public class ApplicationGenerator {
 				e.printStackTrace();
 			}
 		}
+		try {
+			utilWriter.create();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("Done");
 
 	}
 
@@ -40,8 +50,8 @@ public class ApplicationGenerator {
 		Writer controllerWriter = new JavaControllerWriter();
 		Writer repositoryWriter = new JavaRepositoryWriter();
 		Writer serviceWriter = new JavaServiceWriter();
-
-		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter);
+		Writer enumWriter = new JavaEnumWriter();
+		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter, enumWriter);
 	}
 
 	private static void extractAppIfItDoesntExists() {

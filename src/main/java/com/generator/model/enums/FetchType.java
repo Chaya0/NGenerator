@@ -2,7 +2,8 @@ package com.generator.model.enums;
 
 public enum FetchType {
 	LAZY("lazy", "fetch =  FetchType.LAZY"),
-	EAGER("eager", "fetch =  FetchType.EAGER");
+	EAGER("eager", "fetch =  FetchType.EAGER"),
+	NULL("","");
 
 	private String code;
 	private String generatorCode;
@@ -24,6 +25,6 @@ public enum FetchType {
 		for (FetchType fetchType : FetchType.values()) {
 			if (fetchType.getCode().equals(code)) return fetchType;
 		}
-		return null;
+		return NULL;
 	}
 }

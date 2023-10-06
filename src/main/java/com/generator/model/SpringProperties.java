@@ -26,7 +26,7 @@ public class SpringProperties {
 		type = "maven-project";
 		language = "java";
 		packaging = "jar";
-		dependencies = Arrays.asList("lombok");
+		dependencies = Arrays.asList("lombok", "data-jpa", "validation", "web", "cloud-feign", "jdbc", "mysql", "security");
 		bootVersion = properties.getProperty("bootVersion", "3.1.4");
 		baseDir = properties.getProperty("baseDir", "myApp");
 		groupId = properties.getProperty("groupId", "com.myApp");

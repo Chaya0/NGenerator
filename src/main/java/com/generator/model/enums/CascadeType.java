@@ -6,7 +6,8 @@ public enum CascadeType {
 	MERGE("merge", "cascade = CascadeType.MERGE"),
 	REMOVE("remove", "cascade = CascadeType.REMOVE"),
 	REFRESH("refresh", "cascade = CascadeType.REFRESH"),
-	DETACH("detach", "cascade = CascadeType.DETACH");
+	DETACH("detach", "cascade = CascadeType.DETACH"),
+	NULL("","");
 
 	private String code;
 	private String generatorCode;
@@ -27,6 +28,6 @@ public enum CascadeType {
 		for (CascadeType cascadeType : CascadeType.values()) {
 			if (cascadeType.getCode().equals(code)) return cascadeType;
 		}
-		return null;
+		return NULL;
 	}
 }
