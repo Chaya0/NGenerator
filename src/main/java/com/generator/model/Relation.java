@@ -12,26 +12,23 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Relation {
-	@XmlAttribute(name = "joinColumn")
-	private String joinColumn;
 	@XmlAttribute(name = "entityName", required = true)
 	private String entityName;
+	@XmlAttribute(name = "owningSide", required = true)
+	private boolean owningSide;
 	@XmlAttribute(name = "relationType", required = true)
 	@XmlJavaTypeAdapter(RelationTypeXmlAdapter.class)
 	private RelationType relationType;
 	@XmlAttribute(name = "fetchType")
 	@XmlJavaTypeAdapter(FetchTypeXmlAdapter.class)
 	private FetchType fetchType = FetchType.NULL;
-	@XmlAttribute(name = "owningSide", required = true)
-	private boolean owningSide;
 
 	public Relation() {
 	}
 
-	public Relation(RelationType relationType, String joinColumn, String entityName, FetchType fetchType, boolean owningSide) {
+	public Relation(RelationType relationType, String entityName, FetchType fetchType, boolean owningSide) {
 		super();
 		this.relationType = relationType;
-		this.joinColumn = joinColumn;
 		this.entityName = entityName;
 		this.fetchType = fetchType;
 		this.owningSide = owningSide;
@@ -43,14 +40,6 @@ public class Relation {
 
 	public void setRelationType(RelationType relationType) {
 		this.relationType = relationType;
-	}
-
-	public String getJoinColumn() {
-		return joinColumn;
-	}
-
-	public void setJoinColumn(String joinColumn) {
-		this.joinColumn = joinColumn;
 	}
 
 	public String getEntityName() {
@@ -79,6 +68,6 @@ public class Relation {
 
 	@Override
 	public String toString() {
-		return "Relation [joinColumn=" + joinColumn + ", entityName=" + entityName + ", relationType=" + relationType + ", fetchType=" + fetchType + ", owningSide=" + owningSide + "]";
+		return "Relation [entityName=" + entityName + ", relationType=" + relationType + ", fetchType=" + fetchType + ", owningSide=" + owningSide + "]";
 	}
 }
