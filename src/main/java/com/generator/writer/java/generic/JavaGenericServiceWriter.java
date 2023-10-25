@@ -1,5 +1,7 @@
 package com.generator.writer.java.generic;
 
+import java.io.IOException;
+
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
@@ -41,48 +43,58 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 			file.writeln(1, "public " + upperCaseName + "GenericService(" + upperCaseName + "Repository repository) {");
 			file.writeln(2, "this.repository = repository;");
 			file.writeln(1, "}");
-			/*
-			 * Creates findAll methods with different parameters;
-			 */
-			file.writeln(1, "public List<" + upperCaseName + "> findAll() {");
-			file.writeln(2, "return repository.findAll();");
-			file.writeln(1, "}");
-			file.writeln(0, "");
-			file.writeln(1, "public Page<" + upperCaseName + "> findAll(Pageable pageable) {");
-			file.writeln(2, "return repository.findAll(pageable);");
-			file.writeln(1, "}");
-			file.writeln(0, "");
-			file.writeln(1, "public List<" + upperCaseName + "> findAll(Specification<" + upperCaseName + "> specification) {");
-			file.writeln(2, "return repository.findAll(specification);");
-			file.writeln(1, "}");
-			file.writeln(0, "");
-			file.writeln(1, "public Page<" + upperCaseName + "> findAll(Specification<" + upperCaseName + "> specification, Pageable pageable) {");
-			file.writeln(2, "return repository.findAll(specification, pageable);");
-			file.writeln(1, "}");
-			file.writeln(0, "");
-			/*
-			 * Creates findById method;
-			 */
-			file.writeln(1, "public Optional<" + upperCaseName + "> findById(Long id) {");
-			file.writeln(2, "return repository.findById(id);");
-			file.writeln(1, "}");
-			file.writeln(0, "");
-			/*
-			 * Creates save (update) method;
-			 */
-			file.writeln(1, "public " + upperCaseName + " save(" + upperCaseName + " object) {");
-			file.writeln(2, "return repository.save(object);");
-			file.writeln(1, "}");
-			file.writeln(0, "");
-			/*
-			 * Creates delete method;
-			 */
-			file.writeln(1, "public void deleteById(Long id) {");
-			file.writeln(2, "repository.deleteById(id);");
-			file.writeln(1, "}");
-			file.writeln(0, "");
-			file.writeln(0, "}");
+			
+			writeGetDataMethods(upperCaseName, file);
+			
+			writeFindByIdMethod(upperCaseName, file);
+			
+			writeSaveMethod(upperCaseName, file);
+			
+			writeDeleteByIdMethod(file);
+
 		}
 
 	}
+	
+	private void writeGetDataMethods(String upperCaseName, GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public List<" + upperCaseName + "> findAll() {");
+		file.writeln(2, "return repository.findAll();");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+		file.writeln(1, "public Page<" + upperCaseName + "> findAll(Pageable pageable) {");
+		file.writeln(2, "return repository.findAll(pageable);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+		file.writeln(1, "public List<" + upperCaseName + "> findAll(Specification<" + upperCaseName + "> specification) {");
+		file.writeln(2, "return repository.findAll(specification);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+		file.writeln(1, "public Page<" + upperCaseName + "> findAll(Specification<" + upperCaseName + "> specification, Pageable pageable) {");
+		file.writeln(2, "return repository.findAll(specification, pageable);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+	}
+
+	private void writeDeleteByIdMethod(GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public void deleteById(Long id) {");
+		file.writeln(2, "repository.deleteById(id);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+		file.writeln(0, "}");
+	}
+
+	private void writeSaveMethod(String upperCaseName, GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public " + upperCaseName + " save(" + upperCaseName + " object) {");
+		file.writeln(2, "return repository.save(object);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+	}
+
+	private void writeFindByIdMethod(String upperCaseName, GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public Optional<" + upperCaseName + "> findById(Long id) {");
+		file.writeln(2, "return repository.findById(id);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+	}
+
 }

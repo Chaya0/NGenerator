@@ -21,6 +21,9 @@ public class SpringProperties {
 	private String packageName;
 	private String javaVersion;
 	private String projectPath;
+	private String datasourceUrl;
+	private String datasourceUsername;
+	private String datasourcePassword;
 
 	public SpringProperties(Properties properties) {
 		type = "maven-project";
@@ -36,6 +39,9 @@ public class SpringProperties {
 		packageName = properties.getProperty("packageName", "com.myApp.myApp");
 		javaVersion = properties.getProperty("javaVersion", "11");
 		projectPath = properties.getProperty("projectPath");
+		datasourceUrl = properties.getProperty("datasourceUrl", "");
+		datasourceUsername = properties.getProperty("datasourceUsername", "");
+		datasourcePassword = properties.getProperty("datasourcePassword", "");
 	}
 
 	public String getType() {
@@ -88,6 +94,18 @@ public class SpringProperties {
 
 	public String getProjectPath() {
 		return projectPath;
+	}
+
+	public String getDatasourceUrl() {
+		return datasourceUrl;
+	}
+
+	public String getDatasourceUsername() {
+		return datasourceUsername;
+	}
+
+	public String getDatasourcePassword() {
+		return datasourcePassword;
 	}
 
 	public String getSpringAppDownloadUrl() {

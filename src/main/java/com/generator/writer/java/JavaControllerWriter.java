@@ -45,9 +45,9 @@ import org.springframework.stereotype.*;
 			file.writeln(0, "@RequestMapping(\"/api/" + entity.getName() + "\")");
 			file.writeln(0, "public class " + upperCaseName + "Controller extends " + upperCaseName + "GenericController {");
 			file.writeln(0, "");
-			file.writeln(0, "public " + upperCaseName + "Controller(" + upperCaseName +"Service service) {");
-			file.writeln(0, "super(service);");
-			file.writeln(0, "}");
+			file.writeln(1, "public " + upperCaseName + "Controller(" + upperCaseName +"Service service) {");
+			file.writeln(2, "super(service);");
+			file.writeln(1, "}");
 			file.writeln(0, "");
 			file.writeln(0, "}");
 		}

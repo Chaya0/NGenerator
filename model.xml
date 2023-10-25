@@ -1,6 +1,6 @@
 <app>
 	<entities>
-		<entity name="dokument">
+		<entity name="dokument" inheritanceType="joined">
 			<attributes>
 				<attribute name="brojDokumenta" type="string" nullable="false" />
 				<attribute name="tipDokumenta" type="enum" nullable="false" enumName="tipDokumenta" />
@@ -9,7 +9,7 @@
 				<relation entityName="knjizenje" relationType="oneToMany" owningSide="true" />
 			</relations>
 		</entity>
-		<entity name="faktura">
+		<entity name="faktura" inherits="dokument">
 			<attributes>
 				<attribute name="brojFakture" type="string" nullable="false" />
 				<attribute name="datumIzdavanja" type="date" nullable="false" />
@@ -28,7 +28,7 @@
 				<attribute name="tipFakture" type="enum" nullable="false" enumName="tipFakture" />
 			</attributes>
 			<relations>
-				<relation entityName="preduzece" relationType="manyToOne" owningSide="true" />
+				<relation entityName="preduzece" relationType="manyToOne" owningSide="false" />
 			</relations>
 		</entity>
 		<entity name="knjizenje">
@@ -39,6 +39,7 @@
 			</attributes>
 			<relations>
 				<relation entityName="konto" relationType="oneToMany" owningSide="true" fetchType="eager" />
+				<relation entityName="dokument" relationType="manyToOne" owningSide="false" />
 			</relations>
 		</entity>
 		<entity name="kontnaGrupa">
@@ -55,11 +56,18 @@
 				<attribute name="potrazuje" type="double" />
 				<attribute name="duguje" type="double" />
 			</attributes>
+			<relations>
+				<relation entityName="knjizenje" relationType="manyToOne" owningSide="false" />
+				<relation entityName="kontnaGrupa" relationType="manyToOne" owningSide="false" />
+			</relations>
 		</entity>
 		<entity name="permission">
 			<attributes>
 				<attribute name="name" type="string" />
 			</attributes>
+			<relations>
+				<relation entityName="user" relationType="manyToMany" owningSide="false" />
+			</relations>
 		</entity>
 		<entity name="preduzece">
 			<attributes>
@@ -104,3 +112,6 @@
 		</enum>
 	</enums>
 </app>
+
+
+

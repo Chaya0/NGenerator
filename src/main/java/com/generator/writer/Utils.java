@@ -83,6 +83,13 @@ public class Utils {
 	public static String getUtilsPackagePath() {
 		return getMainPackagePath() + "/utils";
 	}
+	public static String getResourcesPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getSpringProperties().getProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getArtifactId());
+		stringBuilder.append("/src/main/resources/");
+		return stringBuilder.toString();
+	}
 	/**
 	 * @param generic
 	 *                true - returns generic package name
