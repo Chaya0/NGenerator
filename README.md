@@ -23,7 +23,7 @@ To use the Generator Spring Boot Application, follow these steps:
 
 ## Requirements
 
-- Java Development Kit (JDK) 8 or higher
+- Java Development Kit (JDK) 11 or higher
 - Apache Maven or Gradle (for building the generated Spring Boot application)
 
 ## Contributing
