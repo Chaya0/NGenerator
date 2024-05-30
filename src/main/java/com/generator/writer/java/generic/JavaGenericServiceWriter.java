@@ -21,9 +21,9 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		
+
 		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(true), upperCaseName + "GenericService.java", true)) {
-			
+
 			file.writeln(0, "package " + Utils.getImportServicePackageName(true) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.stereotype.Service;");
@@ -39,23 +39,25 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 			file.writeln(0, "public class " + upperCaseName + "GenericService {");
 			file.writeln(1, "private final " + upperCaseName + "Repository repository;");
 			file.writeln(0, "");
-			file.writeln(1, "@Autowired");
+//			file.writeln(1, "@Autowired");
 			file.writeln(1, "public " + upperCaseName + "GenericService(" + upperCaseName + "Repository repository) {");
 			file.writeln(2, "this.repository = repository;");
 			file.writeln(1, "}");
-			
+
 			writeGetDataMethods(upperCaseName, file);
-			
+
 			writeFindByIdMethod(upperCaseName, file);
-			
+
 			writeSaveMethod(upperCaseName, file);
-			
+
+			writeRepositoryGetter(upperCaseName, file);
+
 			writeDeleteByIdMethod(file);
 
 		}
 
 	}
-	
+
 	private void writeGetDataMethods(String upperCaseName, GeneratorOutputFile file) throws IOException {
 		file.writeln(1, "public List<" + upperCaseName + "> findAll() {");
 		file.writeln(2, "return repository.findAll();");
@@ -93,6 +95,13 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 	private void writeFindByIdMethod(String upperCaseName, GeneratorOutputFile file) throws IOException {
 		file.writeln(1, "public Optional<" + upperCaseName + "> findById(Long id) {");
 		file.writeln(2, "return repository.findById(id);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+	}
+
+	private void writeRepositoryGetter(String upperCaseName, GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public " + upperCaseName + "Repository getRepository() {");
+		file.writeln(2, "return repository;");
 		file.writeln(1, "}");
 		file.writeln(0, "");
 	}

@@ -55,7 +55,7 @@ public class ApplicationGenerator {
 	}
 
 	private static void extractAppIfItDoesntExists() {
-		File file = new File(Application.getSpringProperties().getProjectPath() + Application.getSpringProperties().getArtifactId());
+		File file = new File(Application.getSpringProperties().getProjectPath() + Application.getSpringProperties().getBaseDir());
 		if (!file.exists()) {
 			SpringStartExtractor.extractApp();
 		}

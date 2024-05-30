@@ -40,7 +40,7 @@ public class Utils {
 	public static String getMainPackagePath() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getSpringProperties().getProjectPath());
-		stringBuilder.append(Application.getSpringProperties().getArtifactId());
+		stringBuilder.append(Application.getSpringProperties().getBaseDir());
 		stringBuilder.append("/src/main/java/");
 		stringBuilder.append(getCorrectPath(Application.getSpringProperties().getPackageName()));
 		return stringBuilder.toString();
@@ -86,7 +86,7 @@ public class Utils {
 	public static String getResourcesPath() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getSpringProperties().getProjectPath());
-		stringBuilder.append(Application.getSpringProperties().getArtifactId());
+		stringBuilder.append(Application.getSpringProperties().getBaseDir());
 		stringBuilder.append("/src/main/resources/");
 		return stringBuilder.toString();
 	}

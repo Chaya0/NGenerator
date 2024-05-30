@@ -7,12 +7,14 @@ import com.generator.writer.EnumWriter;
 import com.generator.writer.GeneratorOutputFile;
 import com.generator.writer.Utils;
 
-public class JavaEnumWriter implements EnumWriter{
+public class JavaEnumWriter implements EnumWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
-		for (EnumModel enumModel : model.getEnums()) {
-			create(enumModel);
+		if (model.getEnums() != null) {
+			for (EnumModel enumModel : model.getEnums()) {
+				create(enumModel);
+			}
 		}
 	}
 

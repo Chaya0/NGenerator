@@ -1,117 +1,103 @@
 <app>
 	<entities>
-		<entity name="dokument" inheritanceType="joined">
+		<entity name="user">
 			<attributes>
-				<attribute name="brojDokumenta" type="string" nullable="false" />
-				<attribute name="tipDokumenta" type="enum" nullable="false" enumName="tipDokumenta" />
+				<attribute name="username" type="string" nullable="false"/>
+				<attribute name="password" type="string" nullable="false"/>
+				<attribute name="firstName" type="string" nullable="false"/>
+				<attribute name="lastName" type="string" nullable="false"/>
+				<attribute name="email" type="string" nullable="false"/>
 			</attributes>
 			<relations>
-				<relation entityName="knjizenje" relationType="oneToMany" owningSide="true" />
-			</relations>
-		</entity>
-		<entity name="faktura" inherits="dokument">
-			<attributes>
-				<attribute name="brojFakture" type="string" nullable="false" />
-				<attribute name="datumIzdavanja" type="date" nullable="false" />
-				<attribute name="rokZaPlacanje" type="date" nullable="false" />
-				<attribute name="datumPlacanja" type="date" nullable="false" />
-				<attribute name="prodajnaVrednost" type="double" nullable="false" />
-				<attribute name="rabatProcenat" type="double" />
-				<attribute name="rabat" type="double" />
-				<attribute name="porezProcenat" type="double" nullable="false" />
-				<attribute name="porez" type="double" nullable="false" />
-				<attribute name="iznos" type="double" nullable="false" />
-				<attribute name="valuta" type="string" nullable="false" />
-				<attribute name="kurs" type="double" nullable="false" />
-				<attribute name="naplata" type="double" nullable="false" />
-				<attribute name="komentar" type="string" />
-				<attribute name="tipFakture" type="enum" nullable="false" enumName="tipFakture" />
-			</attributes>
-			<relations>
-				<relation entityName="preduzece" relationType="manyToOne" owningSide="false" />
-			</relations>
-		</entity>
-		<entity name="knjizenje">
-			<attributes>
-				<attribute name="brojNaloga" type="string" nullable="false" />
-				<attribute name="datumKnjizenja" type="date" nullable="false" />
-				<attribute name="komentar" type="string" />
-			</attributes>
-			<relations>
-				<relation entityName="konto" relationType="oneToMany" owningSide="true" fetchType="eager" />
-				<relation entityName="dokument" relationType="manyToOne" owningSide="false" />
-			</relations>
-		</entity>
-		<entity name="kontnaGrupa">
-			<attributes>
-				<attribute name="brojKonta" type="string" nullable="false" />
-				<attribute name="nazivKonta" type="string" nullable="false" />
-			</attributes>
-			<relations>
-				<relation entityName="konto" relationType="oneToMany" owningSide="true" fetchType="eager" />
-			</relations>
-		</entity>
-		<entity name="konto">
-			<attributes>
-				<attribute name="potrazuje" type="double" />
-				<attribute name="duguje" type="double" />
-			</attributes>
-			<relations>
-				<relation entityName="knjizenje" relationType="manyToOne" owningSide="false" />
-				<relation entityName="kontnaGrupa" relationType="manyToOne" owningSide="false" />
+				<relation entityName="transaction" relationType="oneToMany" owningSide="false"/>
+				<relation entityName="bankAccount" relationType="oneToMany" owningSide="true"/>
+				<relation entityName="permission" relationType="manyToMany" owningSide="true"/>
 			</relations>
 		</entity>
 		<entity name="permission">
 			<attributes>
-				<attribute name="name" type="string" />
+				<attribute name="name" type="string" nullable="false"/>
 			</attributes>
 			<relations>
-				<relation entityName="user" relationType="manyToMany" owningSide="false" />
+				<relation entityName="user" relationType="manyToMany" owningSide="false"/>
 			</relations>
 		</entity>
-		<entity name="preduzece">
+		<entity name="bankAccount">
 			<attributes>
-				<attribute name="naziv" type="string" nullable="false" />
-				<attribute name="pib" type="string" nullable="false" />
-				<attribute name="racun" type="string" />
-				<attribute name="adresa" type="string" nullable="false" />
-				<attribute name="grad" type="string" nullable="false" />
-				<attribute name="telefon" type="string" />
-				<attribute name="email" type="string" />
-				<attribute name="fax" type="string" />
-				<attribute name="webAdresa" type="string" />
-				<attribute name="komentar" type="string" />
+				<attribute name="accountNumber" type="string" nullable="false"/>
 			</attributes>
 			<relations>
-				<relation entityName="faktura" relationType="oneToMany" owningSide="true" fetchType="eager" />
+				<relation entityName="user" relationType="manyToOne" owningSide="false"></relation>
 			</relations>
 		</entity>
-		<entity name="user">
+		<entity name="transaction">
 			<attributes>
-				<attribute name="firstName" type="string" />
-				<attribute name="lastName" type="string" />
-				<attribute name="username" type="string" />
-				<attribute name="password" type="string" />
+				<attribute name="date" type="date" nullable="false"/>
+				<attribute name="accountNumber" type="string" nullable="false"/>
+				<attribute name="ammount" type="string" nullable="false"/>
+				<attribute name="sender" type="string" nullable="false"/>
+				<attribute name="recipient" type="string" nullable="false"/>
+				<attribute name="description" type="string" nullable="true"/>
+				<attribute name="currency" type="string" nullable="false"/>
 			</attributes>
 			<relations>
-				<relation entityName="permission" relationType="manyToMany" owningSide="true" fetchType="eager" />
+				<relation entityName="user" relationType="manyToOne" owningSide="true"/>
+				<relation entityName="stock" relationType="manyToOne" owningSide="true"/>
+				<relation entityName="QRCode" relationType="oneToOne" owningSide="true"/>
+				<relation entityName="paymentCode" relationType="oneToOne" owningSide="true"/>
+			</relations>
+		</entity>
+		<entity name="paymentCode">
+			<attributes>
+				<attribute name="form" type="string" nullable="false"/>
+				<attribute name="basis" type="string" nullable="false"/>
+				<attribute name="description" type="string" nullable="false"/>
+			</attributes>
+			<relations>
+				<relation entityName="transaction" relationType="oneToOne" owningSide="false"></relation>
+			</relations>
+		</entity>
+		<entity name="stock">
+			<attributes>
+				<attribute name="name" type="string" nullable="false"/>
+			</attributes>
+			<relations>
+				<relation entityName="transaction" relationType="oneToMany" owningSide="false"/>				
+				<relation entityName="stockValue" relationType="oneToMany" owningSide="true"/>
+			</relations>
+		</entity>
+		<entity name="stockValue">
+			<attributes>
+				<attribute name="value" type="string" nullable="false"/>
+				<attribute name="date" type="date" nullable="false"/>
+				<attribute name="currency" type="string" nullable="false"/>
+				<attribute name="volume" type="string" nullable="false"/>
+				<attribute name="traffic" type="string" nullable="false"/>
+				<attribute name="volumeWeightAveragePrice" type="string" nullable="false"/>
+				<attribute name="totalSupply" type="string" nullable="false"/>
+				<attribute name="totalDemand" type="string" nullable="false"/>
+			</attributes>
+			<relations>
+				<relation entityName="stock" relationType="manyToOne" owningSide="false"/>
+			</relations>
+		</entity>
+		<entity name="QRCode">
+			<attributes>
+				<attribute name="code" type="string"/>
+				<attribute name="date" type="date"/>
+			</attributes>
+			<relations>
+				<relation entityName="transaction" relationType="oneToOne" owningSide="false"/>
 			</relations>
 		</entity>
 	</entities>
 	<enums>
-		<enum name="tipDokumenta">
+		<enum name="permissionType">
 			<values>
-				<value>faktura</value>
-			</values>
-		</enum>
-		<enum name="tipFakture">
-			<values>
-				<value>ulazna_faktura</value>
-				<value>izlazna_faktura</value>
+				<value>admin</value>
+				<value>developer</value>
+				<value>regular_user</value>
 			</values>
 		</enum>
 	</enums>
 </app>
-
-
-

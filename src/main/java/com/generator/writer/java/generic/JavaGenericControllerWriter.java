@@ -36,12 +36,16 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 			file.writeln(0, "import jakarta.validation.constraints.Min;");
 			file.writeln(0, "import jakarta.validation.Valid;");
 			file.writeln(0, "import jakarta.persistence.EntityNotFoundException;");
+			//TODO dodati logiku za generisanje anotacije za autorizaciju
+			file.writeln(0, "import io.swagger.v3.oas.annotations.security.SecurityRequirement;");
 			file.writeln(0, "import " + Utils.getImportServicePackageName(false) + "." + upperCaseName + "Service;");
 			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".utils.ApiUtil;");
 			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
 			file.writeln(0, "");
 			file.writeln(0, "@CrossOrigin");
 			file.writeln(0, "@RestController");
+			//TODO dodati logiku za generisanje anotacije za autorizaciju
+			file.writeln(0, "@SecurityRequirement(name = \"bearerAuth\")");
 			file.writeln(0, "@RequestMapping(\"/api/generic/" + entity.getName() +"\")");
 			file.writeln(0, "public class " + upperCaseName + "GenericController {");
 			file.writeln(1, "private final " + upperCaseName + "Service service;");

@@ -36,6 +36,8 @@ import org.springframework.stereotype.*;
 			file.writeln(0, "import org.springframework.web.bind.annotation.*;");
 			file.writeln(0, "import org.springframework.context.annotation.*;");
 			file.writeln(0, "import org.springframework.stereotype.*;");
+			//TODO dodati logiku za generisanje anotacije za autorizaciju
+			file.writeln(0, "import io.swagger.v3.oas.annotations.security.SecurityRequirement;");
 			file.writeln(0, "import " + Utils.getImportControllerPackageName(true) + "." + upperCaseName + "GenericController;");
 			file.writeln(0, "import " + Utils.getImportServicePackageName(false) + "." + upperCaseName + "Service;");
 			file.writeln(0, "");
@@ -43,6 +45,8 @@ import org.springframework.stereotype.*;
 			file.writeln(0, "@CrossOrigin");
 			file.writeln(0, "@RestController");
 			file.writeln(0, "@RequestMapping(\"/api/" + entity.getName() + "\")");
+			//TODO dodati logiku za generisanje anotacije za autorizaciju
+			file.writeln(0, "@SecurityRequirement(name = \"bearerAuth\")");
 			file.writeln(0, "public class " + upperCaseName + "Controller extends " + upperCaseName + "GenericController {");
 			file.writeln(0, "");
 			file.writeln(1, "public " + upperCaseName + "Controller(" + upperCaseName +"Service service) {");
