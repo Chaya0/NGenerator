@@ -1,6 +1,6 @@
 # Spring Boot Application Generator
 
-The Generator Spring Boot Application is a powerful tool designed to streamline the process of generating Spring Boot applications based on a data model. It allows developers to quickly scaffold Spring Boot projects with CRUD operations, RESTful APIs, and other essential components, saving time and effort in application development.
+The Generator Spring Boot Application is a tool designed to streamline the process of generating Spring Boot applications based on a data model. It allows developers to quickly scaffold Spring Boot projects with CRUD operations, RESTful APIs, and other essential components, saving time and effort in application development.
 
 ## Features
 
