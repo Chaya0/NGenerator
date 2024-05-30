@@ -16,7 +16,7 @@ The Generator Spring Boot Application is a powerful tool designed to streamline 
 To use the Generator Spring Boot Application, follow these steps:
 
 1. **Define Data Model**: Create an XML file defining the data model for your application. Specify entities, attributes, relationships, and any other necessary details.
-2. **Define Application Properties**: Create an application.properties file and defining the properties for application that will be generated (Spring Boot version, project path, dependencies, database informations,...)
+2. **Define Application Properties**: Create an application.properties file and defining the properties for application that will be generated (Spring Boot version, project path, dependencies, database informations,...).
 3. **Run the Generator**: Execute the generator application, providing the path to the XML data model file as input.
 4. **Customize (Optional)**: Optionally, customize the generated code to add additional functionality or modify existing templates to meet specific requirements.
 5. **Build and Run**: Build the generated Spring Boot application using your preferred build tool (e.g., Maven or Gradle) and run it locally or deploy it to a server.
