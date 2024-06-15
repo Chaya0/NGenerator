@@ -7,6 +7,7 @@ public enum AttributeType {
 	LONG("long", "Long"),
 	DATE("date", "Date"),
 	LOCAL_DATE("localDate", "LocalDate"),
+	LOCAL_DATE_IME("localDateTime", "LocalDateTime"),
 	BOOLEAN("boolean", "Boolean"),
 	ENUM("enum", ""),
 	NULL("","");

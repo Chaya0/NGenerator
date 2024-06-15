@@ -16,14 +16,20 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Entity {
 	@XmlAttribute(name = "name", required = true)
 	private String name;
 	@XmlAttribute(name = "inherits")
 	private String inherits;
-	@XmlAttribute(name = "inheritance-type")
+	@XmlAttribute(name = "inheritanceType")
 	@XmlJavaTypeAdapter(InheritanceTypeXmlAdapter.class)
 	private InheritanceType inheritanceType = InheritanceType.NULL;
 	@XmlAttribute(name = "generationType")
@@ -42,64 +48,6 @@ public class Entity {
 	 * Key - entityName
 	 * Value - relationType
 	 */
-
-	public Entity() {
-	}
-
-	public Entity(List<Relation> relations, List<Attribute> attributes, String name) {
-		super();
-		this.relations = relations;
-		this.attributes = attributes;
-		this.name = name;
-	}
-
-	public List<Relation> getRelations() {
-		return relations;
-	}
-
-	public void setRelations(List<Relation> relations) {
-		this.relations = relations;
-	}
-
-	public List<Attribute> getAttributes() {
-		return attributes;
-	}
-
-	public void setAttributes(List<Attribute> attributes) {
-		this.attributes = attributes;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public InheritanceType getInheritanceType() {
-		return inheritanceType;
-	}
-
-	public void setInheritanceType(InheritanceType inheritanceType) {
-		this.inheritanceType = inheritanceType;
-	}
-
-	public String getInherits() {
-		return inherits;
-	}
-
-	public void setInherits(String inherits) {
-		this.inherits = inherits;
-	}
-
-	public GenerationType getGenerationType() {
-		return generationType;
-	}
-
-	public void setGenerationType(GenerationType generationType) {
-		this.generationType = generationType;
-	}
 
 	public boolean relationWithEntityNameExsists(String entityName) {
 		for (Relation relation : getRelations()) {

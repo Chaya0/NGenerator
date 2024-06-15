@@ -4,8 +4,11 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import com.generator.model.AppModel;
-import com.generator.reader.ModelReader;
+import com.generator.reader.XMLModelReader;
 import com.generator.writer.SpringStartExtractor;
 import com.generator.writer.Writer;
 import com.generator.writer.java.JavaApiUtilWriter;
@@ -19,8 +22,9 @@ import com.generator.writer.java.generic.JavaGenericRepositoryWriter;
 import com.generator.writer.java.generic.JavaGenericServiceWriter;
 
 public class ApplicationGenerator {
+	private static final Logger logger = LogManager.getLogger(ApplicationGenerator.class);
 	private static List<Writer> writers = initWriters();
-	private static AppModel appModel = ModelReader.readModel();
+	private static AppModel appModel = XMLModelReader.readModel();
 
 	public static void generateApp() {
 		System.out.println(appModel);

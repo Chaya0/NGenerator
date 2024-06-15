@@ -4,9 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import lombok.Data;
+
 /*
  * Might be advanced into loading properties from XML.
  */
+@Data
 public class SpringProperties {
 	private String type;
 	private String language;
@@ -42,70 +45,6 @@ public class SpringProperties {
 		datasourceUrl = properties.getProperty("datasourceUrl", "");
 		datasourceUsername = properties.getProperty("datasourceUsername", "");
 		datasourcePassword = properties.getProperty("datasourcePassword", "");
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public String getLanguage() {
-		return language;
-	}
-
-	public String getPackaging() {
-		return packaging;
-	}
-
-	public List<String> getDependencies() {
-		return dependencies;
-	}
-
-	public String getBootVersion() {
-		return bootVersion;
-	}
-
-	public String getBaseDir() {
-		return baseDir;
-	}
-
-	public String getGroupId() {
-		return groupId;
-	}
-
-	public String getArtifactId() {
-		return artifactId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getPackageName() {
-		return packageName;
-	}
-
-	public String getJavaVersion() {
-		return javaVersion;
-	}
-
-	public String getProjectPath() {
-		return projectPath;
-	}
-
-	public String getDatasourceUrl() {
-		return datasourceUrl;
-	}
-
-	public String getDatasourceUsername() {
-		return datasourceUsername;
-	}
-
-	public String getDatasourcePassword() {
-		return datasourcePassword;
 	}
 
 	public String getSpringAppDownloadUrl() {
