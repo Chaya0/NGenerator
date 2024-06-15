@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.generator.model.AppModel;
 import com.generator.model.Attribute;
@@ -59,7 +59,7 @@ class ValidatorFirstImpl {
 		Set<String> attributeNames = new HashSet<>();
 		for (Attribute attribute : attributes) {
 			if (!attributeNames.add(attribute.getName())) {
-				throw new DuplicateAttributeNameException();
+				throw new DuplicateAttributeNameException(attribute.getName());
 			}
 		}
 	}
@@ -78,7 +78,7 @@ class ValidatorFirstImpl {
 		Set<String> enumNames = new HashSet<>();
 		for (EnumModel enumModel : appModel.getEnums()) {
 			if (!enumNames.add(enumModel.getName())) {
-				throw new DuplicateEnumNameException();
+				throw new DuplicateEnumNameException(enumModel.getName());
 			}
 		}
 		for (Entity entity : appModel.getEntities()) {
@@ -106,8 +106,7 @@ class ValidatorFirstImpl {
 	private static void validateNonEmptyNames(List<Attribute> attributes) throws Exception {
         for (Attribute attribute : attributes) {
             if (attribute.getName() == null || attribute.getName().isEmpty()) {
-            	System.err.println("Attribute name cannot be null or empty.");
-            	throw new EmptyNameException("");
+            	throw new EmptyNameException("Attribute name cannot be null or empty.");
             }
         }
     }

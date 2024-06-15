@@ -34,7 +34,7 @@ public class AppModelValidator implements Validator<AppModel> {
         Set<String> enumNames = new HashSet<>();
         for (EnumModel enumModel : appModel.getEnums()) {
             if (!enumNames.add(enumModel.getName())) {
-                throw new DuplicateEnumNameException();
+                throw new DuplicateEnumNameException(enumModel.getName());
             }
         }
         for (Entity entity : appModel.getEntities()) {

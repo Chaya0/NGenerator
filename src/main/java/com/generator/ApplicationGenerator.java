@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.generator.model.AppModel;
 import com.generator.reader.XMLModelReader;
@@ -23,11 +23,10 @@ import com.generator.writer.java.generic.JavaGenericServiceWriter;
 
 public class ApplicationGenerator {
 	private static final Logger logger = LogManager.getLogger(ApplicationGenerator.class);
-	private static List<Writer> writers = initWriters();
+	private static List<Writer> writers = initJavaWriters();
 	private static AppModel appModel = XMLModelReader.readModel();
 
 	public static void generateApp() {
-		System.out.println(appModel);
 		extractAppIfItDoesntExists();
 		JavaApiUtilWriter utilWriter = new JavaApiUtilWriter();;
 		for (Writer writer : writers) {
@@ -46,7 +45,7 @@ public class ApplicationGenerator {
 
 	}
 
-	private static List<Writer> initWriters() {
+	private static List<Writer> initJavaWriters() {
 		Writer entityWriter = new JavaEntityWriter();
 		Writer genControllerWriter = new JavaGenericControllerWriter();
 		Writer genRepositoryWriter = new JavaGenericRepositoryWriter();
@@ -59,9 +58,13 @@ public class ApplicationGenerator {
 	}
 
 	private static void extractAppIfItDoesntExists() {
-		File file = new File(Application.getSpringProperties().getProjectPath() + Application.getSpringProperties().getBaseDir());
+		String path = Application.getSpringProperties().getProjectPath() + Application.getSpringProperties().getBaseDir();
+		File file = new File(path);
 		if (!file.exists()) {
+			logger.info("Application folder is not detected. New insatance of application is being created on path : " + path);
 			SpringStartExtractor.extractApp();
+		}else {
+			logger.info("Application already exsists on path : " + path + ". Generic files will be overwritten!");
 		}
 	}
 

@@ -2,7 +2,7 @@ package com.generator.validator.exceptions;
 
 public class DuplicateEntityNameException extends Exception{
 	public DuplicateEntityNameException(String entityName) {
-		// TODO Auto-generated constructor stub
+		super("Duplicate entity name: " + entityName+ '.');
 	}
 
 	private static final long serialVersionUID = 1L;
