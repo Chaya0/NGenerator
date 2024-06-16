@@ -132,7 +132,7 @@ Defines an enum.
 
 ## Requirements
 
-- Java Development Kit (JDK) 11 or higher
+- Java Development Kit (JDK) 17 or higher
 - Apache Maven or Gradle (for building the generated Spring Boot application)
 
 ## Contributing
