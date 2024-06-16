@@ -90,6 +90,18 @@ public class Utils {
 		stringBuilder.append("/src/main/resources/");
 		return stringBuilder.toString();
 	}
+	
+	public static String getConfigPackagePath() {
+		return getMainPackagePath() + "/config";
+	}
+	
+	public static String getExceptionsPackagePath() {
+		return getMainPackagePath() + "/exceptions";
+	}
+	
+	public static String getDTOPackagePath() {
+		return getMainPackagePath() + "/dto";
+	}
 	/**
 	 * @param generic
 	 *                true - returns generic package name

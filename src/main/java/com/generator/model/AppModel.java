@@ -23,7 +23,8 @@ public class AppModel {
 	@XmlElementWrapper(name = "enums")
 	@XmlElement(name = "enum")
 	private List<EnumModel> enums;
-	
+	@XmlElement(name = "properties")
+	private GeneratorProperties generatorProperties;
 
 
 	public Entity getEntityByName(String entityName) {

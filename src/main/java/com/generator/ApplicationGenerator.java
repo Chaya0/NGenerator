@@ -11,15 +11,15 @@ import com.generator.model.AppModel;
 import com.generator.reader.XMLModelReader;
 import com.generator.writer.SpringStartExtractor;
 import com.generator.writer.Writer;
-import com.generator.writer.java.JavaApiUtilWriter;
-import com.generator.writer.java.JavaControllerWriter;
-import com.generator.writer.java.JavaRepositoryWriter;
-import com.generator.writer.java.JavaServiceWriter;
-import com.generator.writer.java.generic.JavaEntityWriter;
-import com.generator.writer.java.generic.JavaEnumWriter;
-import com.generator.writer.java.generic.JavaGenericControllerWriter;
-import com.generator.writer.java.generic.JavaGenericRepositoryWriter;
-import com.generator.writer.java.generic.JavaGenericServiceWriter;
+import com.generator.writer.java.components.JavaControllerWriter;
+import com.generator.writer.java.components.JavaRepositoryWriter;
+import com.generator.writer.java.components.JavaServiceWriter;
+import com.generator.writer.java.components.generic.JavaEntityWriter;
+import com.generator.writer.java.components.generic.JavaEnumWriter;
+import com.generator.writer.java.components.generic.JavaGenericControllerWriter;
+import com.generator.writer.java.components.generic.JavaGenericRepositoryWriter;
+import com.generator.writer.java.components.generic.JavaGenericServiceWriter;
+import com.generator.writer.java.utils.JavaApiUtilWriter;
 
 public class ApplicationGenerator {
 	private static final Logger logger = LogManager.getLogger(ApplicationGenerator.class);

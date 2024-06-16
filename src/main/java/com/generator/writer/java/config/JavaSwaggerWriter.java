@@ -1,0 +1,30 @@
+package com.generator.writer.java.config;
+
+import com.generator.writer.GeneratorOutputFile;
+import com.generator.writer.Utils;
+
+public class JavaSwaggerWriter {
+
+	public void create() throws Exception {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath(), "OpenApiConfiguration.java", false)) {
+			if (file.hasAlreadyExisted()) {
+				return;
+			}
+
+			file.writeln(0, "package " + Utils.getImportDefaultPackage() + ".config;");
+			file.writeln(0, "import io.swagger.v3.oas.annotations.OpenAPIDefinition;");
+			file.writeln(0, "import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;");
+			file.writeln(0, "import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;");
+			file.writeln(0, "import io.swagger.v3.oas.annotations.info.Info;");
+			file.writeln(0, "import io.swagger.v3.oas.annotations.security.SecurityScheme;");
+			file.writeln(0, "");
+//			if(condition) {
+//				file.writeln(0, "@SecurityScheme(name = \"bearerAuth\", type = SecuritySchemeType.HTTP, bearerFormat = \"JWT\", scheme = \"bearer\", in = SecuritySchemeIn.HEADER)\r");
+//			}
+			file.writeln(0, "@Configuration");
+			file.writeln(0, "@OpenAPIDefinition(info = @Info(title = \"My API\", version = \"v1\"))");
+			file.writeln(0, "public class OpenApiConfiguration {");
+			file.writeln(0, "}");
+		}
+	}
+}
