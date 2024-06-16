@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<app>
+	<entities>
+		<entity name="User" inherits="BaseEntity"
+			inheritanceType="SINGLE_TABLE" generationType="IDENTITY">
+			<relations>
+				<relation entityName="Profile" relationName="userProfile"
+					owningSide="true" relationType="ONE_TO_ONE" fetchType="EAGER" />
+			</relations>
+			<attributes>
+				<attribute name="id" type="LONG" />
+				<attribute name="username" type="STRING" />
+				<attribute name="status" type="ENUM" enumName="UserStatus" />
+			</attributes>
+		</entity>
+	</entities>
+	<enums>
+		<enum name="UserStatus">
+			<value>ACTIVE</value>
+			<value>INACTIVE</value>
+		</enum>
+	</enums>
+</app>
