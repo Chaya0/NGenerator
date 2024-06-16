@@ -34,39 +34,39 @@ Generator properties used to configure the Spring application.
 
 #### `bootVersion`
 - **Description:** Specifies the version of Spring Boot to be used in the project.
-- **Example:** `bootVersion=3.2.4`
+- **Example:** `bootVersion=3.2.6`
 
 #### `baseDir`
 - **Description:** Directory name of the application folder.
-- **Example:** `baseDir=MDS-StockPay`
+- **Example:** `baseDir=MyProject`
 
 #### `groupId`
 - **Description:** Group name for the application.
-- **Example:** `groupId=com.mds`
+- **Example:** `groupId=com.organisation`
 
 #### `artifactId`
 - **Description:** Artifact name for the application.
-- **Example:** `artifactId=stockPay`
+- **Example:** `artifactId=myProject`
 
 #### `name`
 - **Description:** Application name.
-- **Example:** `name=stockPay`
+- **Example:** `name=MyProject`
 
 #### `description`
 - **Description:** Description of the application.
-- **Example:** `description=MDS-StockPay project`
+- **Example:** `description=My Test Project`
 
 #### `packageName`
 - **Description:** Package name of the application.
-- **Example:** `packageName=com.mds.stockPay`
+- **Example:** `packageName=com.organisation.myProject`
 
 #### `javaVersion`
 - **Description:** Java version to be used in the project.
-- **Example:** `javaVersion=11`
+- **Example:** `javaVersion=17`
 
 #### `projectPath`
 - **Description:** Path where the project will be created.
-- **Example:** `projectPath=D:/dev/MDS-StockPay/`
+- **Example:** `projectPath=C:/projects/MyProject/`
 
 #### `datasourceUrl`
 - **Description:** Database connection URL.
