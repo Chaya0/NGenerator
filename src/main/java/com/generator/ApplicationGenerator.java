@@ -19,6 +19,16 @@ import com.generator.writer.java.components.generic.JavaEnumWriter;
 import com.generator.writer.java.components.generic.JavaGenericControllerWriter;
 import com.generator.writer.java.components.generic.JavaGenericRepositoryWriter;
 import com.generator.writer.java.components.generic.JavaGenericServiceWriter;
+import com.generator.writer.java.config.JavaSwaggerWriter;
+import com.generator.writer.java.config.quartz.JavaAutowiringSpringBeanJobFactoryWriter;
+import com.generator.writer.java.config.quartz.JavaQuartzConfigurationWriter;
+import com.generator.writer.java.config.security.JavaJwtFilterWriter;
+import com.generator.writer.java.config.security.JavaJwtUtilWriter;
+import com.generator.writer.java.config.security.JavaSpringSecurityConfigWriter;
+import com.generator.writer.java.dto.JavaErrorResponseDTOWriter;
+import com.generator.writer.java.dto.JavaGenericResponseWriter;
+import com.generator.writer.java.exceptions.JavaExceptionHandlerWriter;
+import com.generator.writer.java.exceptions.JavaOperationNotSupprotedExceptionWriter;
 import com.generator.writer.java.utils.JavaApiUtilWriter;
 
 public class ApplicationGenerator {
@@ -29,6 +39,17 @@ public class ApplicationGenerator {
 	public static void generateApp() {
 		extractAppIfItDoesntExists();
 		JavaApiUtilWriter utilWriter = new JavaApiUtilWriter();;
+		JavaAutowiringSpringBeanJobFactoryWriter autowiringSpringBeanJobFactoryWriter = new JavaAutowiringSpringBeanJobFactoryWriter();
+		JavaQuartzConfigurationWriter quartzWriter = new JavaQuartzConfigurationWriter();
+		JavaJwtFilterWriter jwtFilterWriter = new JavaJwtFilterWriter();
+		JavaJwtUtilWriter jwtUtilWriter = new JavaJwtUtilWriter();
+		JavaSpringSecurityConfigWriter javaSpringSecurityConfigWriter = new JavaSpringSecurityConfigWriter();
+		JavaSwaggerWriter swaggerWriter = new JavaSwaggerWriter();
+		JavaErrorResponseDTOWriter javaErrorResponseDTOWriter = new JavaErrorResponseDTOWriter();
+		JavaGenericResponseWriter javaGenericResponseWriter = new JavaGenericResponseWriter();
+		JavaExceptionHandlerWriter javaExceptionHandlerWriter = new JavaExceptionHandlerWriter();
+		JavaOperationNotSupprotedExceptionWriter javaOperationNotSupprotedExceptionWriter = new JavaOperationNotSupprotedExceptionWriter();
+		
 		for (Writer writer : writers) {
 			try {
 				writer.create(appModel);
