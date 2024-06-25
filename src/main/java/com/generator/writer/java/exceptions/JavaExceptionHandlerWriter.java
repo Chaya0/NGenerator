@@ -28,9 +28,8 @@ public class JavaExceptionHandlerWriter {
 			file.writeln(0, "import org.springframework.web.context.request.WebRequest;");
 			file.writeln(0, "import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;");
 			file.writeln(0, "");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".dto.response.ErrorResponse;");
+			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".dto.ErrorResponse;");
 			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".exceptions.OperationNotSupportedException;");
-			file.writeln(0, "import com.mds.stockPay.exceptions.OperationNotSupportedException;");
 			file.writeln(0, "");
 			file.writeln(0, "import jakarta.persistence.EntityNotFoundException;");
 			file.writeln(0, "import jakarta.validation.ConstraintViolationException;");

@@ -11,9 +11,30 @@ public class JavaGenericRepositoryWriter implements DefaultWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
-		for (Entity entity : model.getEntities()) {
-			create(entity);
+		create();
+	}
+	
+	public void create() throws Exception {
+		
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getRepositoryPackagePath(true), "GenericRepository.java", true)) {
+			file.writeln(0, "package " + Utils.getImportRepositoryPackageName(true) + ";");
+			file.writeln(0, "");
+			file.writeln(0, "import org.springframework.data.jpa.domain.Specification;");
+			file.writeln(0, "import org.springframework.data.jpa.repository.JpaRepository;");
+			file.writeln(0, "import org.springframework.stereotype.Repository;");
+			file.writeln(0, "import org.springframework.data.domain.Pageable;");
+			file.writeln(0, "import org.springframework.data.domain.Page;");
+			file.writeln(0, "import java.util.List;");
+			file.writeln(0, "");
+			file.writeln(0, "@Repository");
+			file.writeln(0, "public interface GenericRepository<T> extends JpaRepository<T, Long> {");
+			file.writeln(0, "");
+			file.writeln(1, "Page<T> findAll(Specification<T> spec, Pageable pageSort);");
+			file.writeln(1, "List<T> findAll(Specification<T> spec);");
+			file.writeln(0, "");
+			file.writeln(0, "}");
 		}
+
 	}
 
 	@Override

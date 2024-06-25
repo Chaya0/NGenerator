@@ -15,6 +15,7 @@ public class JavaErrorResponseDTOWriter {
 			file.writeln(0, "import lombok.Data;");
 			file.writeln(0, "import lombok.NoArgsConstructor;");
 			file.writeln(0, "import lombok.AllArgsConstructor;");
+			file.writeln(0, "import java.util.List;");
 			file.writeln(0, "");
 			file.writeln(0, "@Data");
 			file.writeln(0, "@NoArgsConstructor");

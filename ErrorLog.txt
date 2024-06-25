@@ -1,0 +1,1 @@
+Illegal character in query at index 182: https://start.spring.io/starter.zip?type=maven-project&language=java&bootVersion=3.2.4&baseDir=MDS-StockPay&groupId=com.mds&artifactId=stockPay&name=stockPay&description=MDS-StockPay project&packageName=com.mds.stockPay&packaging=jar&javaVersion=11&dependencies=lombok,data-jpa,validation,web,cloud-feign,jdbc,mysql,security

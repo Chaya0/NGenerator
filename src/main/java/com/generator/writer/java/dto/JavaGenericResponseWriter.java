@@ -21,7 +21,7 @@ public class JavaGenericResponseWriter {
 			file.writeln(0, "@Data");
 			file.writeln(0, "@NoArgsConstructor");
 			file.writeln(0, "@AllArgsConstructor");
-			file.writeln(0, "public class GenericResponseEntity {");
+			file.writeln(0, "public class GenericResponse {");
 			file.writeln(1, "private String code;");
 			file.writeln(1, "private String message;");
 			file.writeln(1, "private Object data;");
@@ -38,8 +38,8 @@ public class JavaGenericResponseWriter {
 	}
 
 	private void writeGetErrorResponseWithCodeInput(GeneratorOutputFile file) throws IOException {
-		file.writeln(1, "public static GenericResponseEntity getErrorResponse(String code, String errorMessage) {");
-		file.writeln(2, "GenericResponseEntity response = new GenericResponseEntity();");
+		file.writeln(1, "public static GenericResponse getErrorResponse(String code, String errorMessage) {");
+		file.writeln(2, "GenericResponse response = new GenericResponse();");
 		file.writeln(2, "response.code = code;");
 		file.writeln(2, "response.message = errorMessage;");
 		file.writeln(2, "response.data = \"\";");
@@ -49,8 +49,8 @@ public class JavaGenericResponseWriter {
 	}
 
 	private void writeGetErrorResponse(GeneratorOutputFile file) throws IOException {
-		file.writeln(1, "public static GenericResponseEntity getErrorResponse(String errorMessage) {");
-		file.writeln(2, "GenericResponseEntity response = new GenericResponseEntity();");
+		file.writeln(1, "public static GenericResponse getErrorResponse(String errorMessage) {");
+		file.writeln(2, "GenericResponse response = new GenericResponse();");
 		file.writeln(2, "response.code = \"500\";");
 		file.writeln(2, "response.message = errorMessage;");
 		file.writeln(2, "response.data = \"\";");
@@ -60,8 +60,8 @@ public class JavaGenericResponseWriter {
 	}
 
 	private void writeGetSuccessfulResponse(GeneratorOutputFile file) throws IOException {
-		file.writeln(1, "public static GenericResponseEntity getSuccessfulResponse(Object data) {");
-		file.writeln(2, "GenericResponseEntity response = new GenericResponseEntity();");
+		file.writeln(1, "public static GenericResponse getSuccessfulResponse(Object data) {");
+		file.writeln(2, "GenericResponse response = new GenericResponse();");
 		file.writeln(2, "response.code = \"200\";");
 		file.writeln(2, "response.message = \"Success\";");
 		file.writeln(2, "response.data = data;");

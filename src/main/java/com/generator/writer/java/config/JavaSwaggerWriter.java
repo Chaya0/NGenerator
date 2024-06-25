@@ -12,11 +12,10 @@ public class JavaSwaggerWriter {
 			}
 
 			file.writeln(0, "package " + Utils.getImportDefaultPackage() + ".config;");
+			file.writeln(0, "");
 			file.writeln(0, "import io.swagger.v3.oas.annotations.OpenAPIDefinition;");
-			file.writeln(0, "import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;");
-			file.writeln(0, "import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;");
 			file.writeln(0, "import io.swagger.v3.oas.annotations.info.Info;");
-			file.writeln(0, "import io.swagger.v3.oas.annotations.security.SecurityScheme;");
+			file.writeln(0, "import org.springframework.context.annotation.Configuration;");
 			file.writeln(0, "");
 //			if(condition) {
 //				file.writeln(0, "@SecurityScheme(name = \"bearerAuth\", type = SecuritySchemeType.HTTP, bearerFormat = \"JWT\", scheme = \"bearer\", in = SecuritySchemeIn.HEADER)\r");

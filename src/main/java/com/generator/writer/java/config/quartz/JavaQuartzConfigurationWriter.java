@@ -2,7 +2,6 @@ package com.generator.writer.java.config.quartz;
 
 import java.io.IOException;
 
-import com.generator.Application;
 import com.generator.writer.GeneratorOutputFile;
 import com.generator.writer.Utils;
 
@@ -19,32 +18,22 @@ public class JavaQuartzConfigurationWriter {
 			file.writeln(0, "import java.util.Properties;");
 			file.writeln(0, "");
 			file.writeln(0, "import org.apache.commons.lang3.ArrayUtils;");
-			file.writeln(0, "import org.apache.commons.lang3.StringUtils;");
-			file.writeln(0, "import org.quartz.CronTrigger;");
-			file.writeln(0, "import org.quartz.JobDetail;");
 			file.writeln(0, "import org.quartz.Trigger;");
-			file.writeln(0, "import org.springframework.beans.factory.annotation.Qualifier;");
 			file.writeln(0, "import org.springframework.beans.factory.config.PropertiesFactoryBean;");
 			file.writeln(0, "import org.springframework.context.ApplicationContext;");
 			file.writeln(0, "import org.springframework.context.annotation.Bean;");
 			file.writeln(0, "import org.springframework.context.annotation.Configuration;");
 			file.writeln(0, "import org.springframework.core.io.ClassPathResource;");
-			file.writeln(0, "import org.springframework.scheduling.quartz.CronTriggerFactoryBean;");
-			file.writeln(0, "import org.springframework.scheduling.quartz.JobDetailFactoryBean;");
 			file.writeln(0, "import org.springframework.scheduling.quartz.SchedulerFactoryBean;");
 			file.writeln(0, "import org.springframework.scheduling.quartz.SpringBeanJobFactory;");
-			file.writeln(0, "");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".config.quartz.AutowiringSpringBeanJobFactory;");
 			file.writeln(0, "");
 			file.writeln(0, "@Configuration");
 			file.writeln(0, "public class QuartzConfiguration {");
 			file.writeln(1, "");
 			file.writeln(1, "private final ApplicationContext applicationContext;");
-			file.writeln(1, "private final ApplicationSettings applicationSettings;");
 			file.writeln(1, "");
-			file.writeln(1, "public QuartzConfiguration(ApplicationContext applicationContext, ApplicationSettings applicationSettings) {");
+			file.writeln(1, "public QuartzConfiguration(ApplicationContext applicationContext) {");
 			file.writeln(2, "this.applicationContext = applicationContext;");
-			file.writeln(2, "this.applicationSettings = applicationSettings;");
 			file.writeln(1, "}");
 			file.writeln(0, "");
 

@@ -5,7 +5,7 @@ import com.generator.writer.Utils;
 
 public class JavaAutowiringSpringBeanJobFactoryWriter {
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath() + "/quartz", "QuartzConfiguration.java", false)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath() + "/quartz", "AutowiringSpringBeanJobFactory.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

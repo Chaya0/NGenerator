@@ -12,7 +12,7 @@ public class JavaServiceWriter implements DefaultWriter {
 	@Override
 	public void create(AppModel model) throws Exception {
 		for (Entity entity : model.getEntities()) {
-			create(entity);
+			create2(entity);
 		}
 	}
 
@@ -46,5 +46,37 @@ public class JavaServiceWriter implements DefaultWriter {
 		}
 
 	}
+	
+	public void create2(Entity entity) throws Exception {
+		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
+		if (Utils.fileExists(Utils.getServicePackagePath(false), upperCaseName + "Service.java")) {
+			return;
+		}
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(false), upperCaseName + "Service.java", false)) {
+			if (file.hasAlreadyExisted()) {
+				return;
+			}
+
+			file.writeln(0, "package " + Utils.getImportServicePackageName(false) + ";");
+			file.writeln(0, "");
+			file.writeln(0, "import org.springframework.context.annotation.*;");
+			file.writeln(0, "import org.springframework.stereotype.*;");
+			file.writeln(0, "import " + Utils.getImportServicePackageName(true) + ".GenericService;");
+			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
+			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(false) + "." + upperCaseName + "Repository;");
+			file.writeln(0, "");
+			file.writeln(0, "@Service");
+			file.writeln(0, "@Primary");
+			file.writeln(0, "public class " + upperCaseName + "Service extends GenericService<" + upperCaseName + "> {");
+			file.writeln(0, "");
+			file.writeln(1, "public " + upperCaseName + "Service(" + upperCaseName + "Repository repository) {");
+			file.writeln(2, "super(repository);");
+			file.writeln(1, "}");
+
+			file.writeln(0, "}");
+		}
+
+	}
+
 
 }

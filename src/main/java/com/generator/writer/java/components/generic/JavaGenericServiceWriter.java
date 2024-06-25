@@ -13,10 +13,47 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
-		for (Entity entity : model.getEntities()) {
-			create(entity);
-		}
+//		for (Entity entity : model.getEntities()) {
+//			create(entity);
+//		}
+		create();
 	}
+	
+	public void create() throws Exception {
+
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(true), "GenericService.java", true)) {
+
+			file.writeln(0, "package " + Utils.getImportServicePackageName(true) + ";");
+			file.writeln(0, "");
+			file.writeln(0, "import org.springframework.stereotype.Service;");
+			file.writeln(0, "import org.springframework.data.domain.Page;");
+			file.writeln(0, "import org.springframework.data.domain.Pageable;");
+			file.writeln(0, "import org.springframework.data.jpa.domain.Specification;");
+			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(false) + ".generic.GenericRepository" + ";");
+			file.writeln(0, "import java.util.*;");
+			file.writeln(0, "");
+			file.writeln(0, "@Service");
+			file.writeln(0, "public class GenericService<T> {");
+			file.writeln(1, "private final GenericRepository<T> repository;");
+			file.writeln(0, "");
+			file.writeln(1, "public GenericService(GenericRepository<T> repository) {");
+			file.writeln(2, "this.repository = repository;");
+			file.writeln(1, "}");
+
+			writeGetDataMethods(file);
+
+			writeFindByIdMethod(file);
+
+			writeSaveMethod(file);
+
+			writeRepositoryGetter(file);
+
+			writeDeleteByIdMethod(file);
+
+		}
+
+	}
+
 
 	@Override
 	public void create(Entity entity) throws Exception {
@@ -101,6 +138,51 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 
 	private void writeRepositoryGetter(String upperCaseName, GeneratorOutputFile file) throws IOException {
 		file.writeln(1, "public " + upperCaseName + "Repository getRepository() {");
+		file.writeln(2, "return repository;");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+	}
+	
+	
+	
+	
+	
+	
+	private void writeGetDataMethods(GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public List<T> findAll() {");
+		file.writeln(2, "return repository.findAll();");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+		file.writeln(1, "public Page<T> findAll(Pageable pageable) {");
+		file.writeln(2, "return repository.findAll(pageable);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+		file.writeln(1, "public List<T> findAll(Specification<T> specification) {");
+		file.writeln(2, "return repository.findAll(specification);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+		file.writeln(1, "public Page<T> findAll(Specification<T> specification, Pageable pageable) {");
+		file.writeln(2, "return repository.findAll(specification, pageable);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+	}
+
+	private void writeSaveMethod(GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public T save(T object) {");
+		file.writeln(2, "return repository.save(object);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+	}
+
+	private void writeFindByIdMethod(GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public Optional<T> findById(Long id) {");
+		file.writeln(2, "return repository.findById(id);");
+		file.writeln(1, "}");
+		file.writeln(0, "");
+	}
+
+	private void writeRepositoryGetter(GeneratorOutputFile file) throws IOException {
+		file.writeln(1, "public GenericRepository<T> getRepository() {");
 		file.writeln(2, "return repository;");
 		file.writeln(1, "}");
 		file.writeln(0, "");
