@@ -28,7 +28,7 @@ public class JavaEntityWriter implements DefaultWriter {
 		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getModelPackagePath(), upperCaseName + ".java", true)) {
 
 			file.writeln(0, "package " + Utils.getImportModelPackageName() + ";");
-			file.writeln(0, "");	
+			file.writeln(0, "");
 			file.writeln(0, "import jakarta.persistence.*;");
 			file.writeln(0, "import lombok.Data;");
 			file.writeln(0, "import lombok.AllArgsConstructor;");
@@ -36,6 +36,9 @@ public class JavaEntityWriter implements DefaultWriter {
 			file.writeln(0, "import com.fasterxml.jackson.annotation.JsonIgnore;");
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "import java.time.*;");
+			if (entity.getName().equalsIgnoreCase("permission")) {
+				file.writeln(0, "import org.springframework.security.core.GrantedAuthority;");
+			}
 			for (String enumToImort : entity.getEnumsForImport()) {
 				file.writeln(0, "import " + Utils.getImportModelEnumsPackageName() + "." + enumToImort + ";");
 			}
@@ -48,12 +51,16 @@ public class JavaEntityWriter implements DefaultWriter {
 				file.writeln(0, entity.getInheritanceType().getGeneratorCode());
 			}
 			file.writeln(0, "@Table(name = \"" + entity.getName() + "\")");
-			if (entity.getInherits() != null && !entity.getInherits().equals(null) && !entity.getInherits().isEmpty()) {
+			if (entity.getInherits() != null && !entity.getInherits().isEmpty()) {
 				file.writeln(0, "@PrimaryKeyJoinColumn(name = \"id\")");
 				file.writeln(0, "public class " + upperCaseName + " extends " + StringUtils.uppercaseFirst(entity.getInherits()) + " {");
 				file.writeln(0, "");
 			} else {
-				file.writeln(0, "public class " + upperCaseName + " {");
+				if (entity.getName().equalsIgnoreCase("permission")) {
+					file.writeln(0, "public class " + upperCaseName + " implements GrantedAuthority{");
+				} else {
+					file.writeln(0, "public class " + upperCaseName + " {");
+				}
 				file.writeln(0, "");
 				file.writeln(1, "@Id");
 				file.writeln(1, entity.getGenerationType().getGeneratorCode());
@@ -62,7 +69,13 @@ public class JavaEntityWriter implements DefaultWriter {
 
 			writeAttributes(file, entity);
 			writeRelations(file, entity);
-
+			if (entity.getName().equalsIgnoreCase("permission")) {
+				file.writeln(0, "");
+				file.writeln(1, "@Override");
+				file.writeln(1, "public String getAuthority() {");
+				file.writeln(2, "return null;");
+				file.writeln(1, "}");
+			}
 			file.writeln(0, "");
 			file.writeln(0, "}");
 		}
@@ -71,8 +84,21 @@ public class JavaEntityWriter implements DefaultWriter {
 
 	private void writeAttributes(GeneratorOutputFile file, Entity entity) throws Exception {
 		for (Attribute attribute : entity.getAttributes()) {
-			file.writeln(1, "@Column(nullable = " + attribute.isNullable() + ", unique = " + attribute.isUnique() + ")");
-
+			StringBuilder annotation = new StringBuilder("@Column(");
+			boolean addComma = false;
+			if (!attribute.isNullable()) {
+				annotation.append("nullable = false");
+				addComma = true;
+			}
+			if (attribute.isUnique()) {
+				if (addComma) {
+					annotation.append(", ");
+//					addComma = false;
+				}
+				annotation.append("unique = true");
+			}
+			annotation.append(")");
+			file.writeln(1, annotation.toString());
 			if (attribute.getType().equals(AttributeType.ENUM)) {
 				if (attribute.getEnumName().isEmpty()) throw new Exception("Attribute defined as Enum but enum name wasn't provided.");
 				file.writeln(1, "@Enumerated(EnumType.STRING)");

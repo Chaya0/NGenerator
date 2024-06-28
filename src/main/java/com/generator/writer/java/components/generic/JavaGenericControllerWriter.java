@@ -69,14 +69,14 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 
 			writeUpdateEndpoint(upperCaseName, file);
 
-			writePostEndpoint(upperCaseName, file);
+			writeInsertEndpoint(upperCaseName, file);
 
 		}
 	}
 
-	private void writePostEndpoint(String upperCaseName, GeneratorOutputFile file) throws IOException {
+	private void writeInsertEndpoint(String upperCaseName, GeneratorOutputFile file) throws IOException {
 		file.writeln(1, "@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)");
-		file.writeln(1, "public ResponseEntity<?> update(@Valid @RequestBody " + upperCaseName + " object) {");
+		file.writeln(1, "public ResponseEntity<?> insert(@Valid @RequestBody " + upperCaseName + " object) {");
 		file.writeln(2, "return ResponseEntity.ok(service.save(object));");
 		file.writeln(1, "}");
 		file.writeln(0, "");

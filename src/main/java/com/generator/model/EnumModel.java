@@ -21,4 +21,5 @@ public class EnumModel {
 	@XmlElementWrapper(name = "values")
 	@XmlElement(name = "value", required = true)
 	private List<String> values;
+	
 }

@@ -5,20 +5,20 @@ import com.generator.util.StringUtils;
 import com.generator.writer.GeneratorOutputFile;
 import com.generator.writer.Utils;
 
-public class JavaOperationNotSupprotedExceptionWriter {
+public class JavaApplicationExceptionWriter {
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getExceptionsPackagePath(), "OperationNotSupportedException.java", false)) {
+		String appName = StringUtils.uppercaseFirst(Application.getSpringProperties().getName());
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getExceptionsPackagePath(), appName + "Exception.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			String appName = StringUtils.uppercaseFirst(Application.getSpringProperties().getName());
-			
+
 			file.writeln(0, "package " + Application.getSpringProperties().getPackageName() + ".exceptions;");
 			file.writeln(0, "");
-			file.writeln(0, "public class OperationNotSupportedException extends " + appName + "Exception {");
+			file.writeln(0, "public class MervException extends Exception {");
 			file.writeln(1, "private static final long serialVersionUID = 1L;");
 			file.writeln(0, "");
-			file.writeln(1, "public OperationNotSupportedException(String message) {");
+			file.writeln(1, "public " + appName + "Exception(String message) {");
 			file.writeln(2, "super(message);");
 			file.writeln(1, "}");
 			file.writeln(0, "}");

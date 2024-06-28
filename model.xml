@@ -62,7 +62,7 @@
 		<entity name="timetable">
 			<attributes>
 				<attribute name="actionType" enumName="actionType" type="enum" nullable="false"/>
-				<attribute name="image_path" type="string" nullable="false"/>
+				<attribute name="image" type="string" nullable="false"/>
 				<attribute name="date" type="date" nullable="false"/>
 			</attributes>
 			<relations>

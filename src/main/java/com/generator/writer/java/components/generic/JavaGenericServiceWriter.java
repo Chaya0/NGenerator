@@ -13,27 +13,26 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
-//		for (Entity entity : model.getEntities()) {
-//			create(entity);
-//		}
+		for (Entity entity : model.getEntities()) {
+			create(entity);
+		}
 		create();
 	}
 	
 	public void create() throws Exception {
 
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(true), "GenericService.java", true)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(false), "GenericService.java", true)) {
 
-			file.writeln(0, "package " + Utils.getImportServicePackageName(true) + ";");
+			file.writeln(0, "package " + Utils.getImportServicePackageName(false) + ";");
 			file.writeln(0, "");
-			file.writeln(0, "import org.springframework.stereotype.Service;");
 			file.writeln(0, "import org.springframework.data.domain.Page;");
 			file.writeln(0, "import org.springframework.data.domain.Pageable;");
 			file.writeln(0, "import org.springframework.data.jpa.domain.Specification;");
-			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(false) + ".generic.GenericRepository" + ";");
+			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(false) + ".GenericRepository" + ";");
+			file.writeln(0, Utils.getApplicationExceptionImport());
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "");
-			file.writeln(0, "@Service");
-			file.writeln(0, "public class GenericService<T> {");
+			file.writeln(0, "public abstract class GenericService<T> {");
 			file.writeln(1, "private final GenericRepository<T> repository;");
 			file.writeln(0, "");
 			file.writeln(1, "public GenericService(GenericRepository<T> repository) {");
@@ -46,10 +45,10 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 
 			writeSaveMethod(file);
 
-			writeRepositoryGetter(file);
+//			writeRepositoryGetter(file);
 
 			writeDeleteByIdMethod(file);
-
+			file.writeln(0, "}");
 		}
 
 	}
@@ -59,42 +58,55 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(true), upperCaseName + "GenericService.java", true)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(false, entity.getName()), upperCaseName + "ServiceBasic.java", true)) {
 
-			file.writeln(0, "package " + Utils.getImportServicePackageName(true) + ";");
+			file.writeln(0, "package " + Utils.getImportServicePackageName(false, entity.getName()) + ";");
 			file.writeln(0, "");
-			file.writeln(0, "import org.springframework.stereotype.Service;");
-			file.writeln(0, "import org.springframework.data.domain.Page;");
-			file.writeln(0, "import org.springframework.data.domain.Pageable;");
-			file.writeln(0, "import org.springframework.beans.factory.annotation.Autowired;");
-			file.writeln(0, "import org.springframework.data.jpa.domain.Specification;");
 			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
-			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(false) + "." + upperCaseName + "Repository" + ";");
+			file.writeln(0, "import " + Utils.getImportServicePackageName(false) + ".GenericService;");
+			file.writeln(0, Utils.getApplicationExceptionImport());
+			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(false, entity.getName()) + "." + upperCaseName + "Repository" + ";");
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "");
-			file.writeln(0, "@Service");
-			file.writeln(0, "public class " + upperCaseName + "GenericService {");
-			file.writeln(1, "private final " + upperCaseName + "Repository repository;");
+			file.writeln(0, "public class " + upperCaseName + "ServiceBasic extends GenericService<" + upperCaseName +"> {");
+			file.writeln(1, "protected final " + upperCaseName + "Repository repository;");
 			file.writeln(0, "");
-//			file.writeln(1, "@Autowired");
-			file.writeln(1, "public " + upperCaseName + "GenericService(" + upperCaseName + "Repository repository) {");
+			file.writeln(1, "public " + upperCaseName + "ServiceBasic(" + upperCaseName + "Repository repository) {");
+			file.writeln(2, "super(repository);");
 			file.writeln(2, "this.repository = repository;");
 			file.writeln(1, "}");
-
-			writeGetDataMethods(upperCaseName, file);
-
-			writeFindByIdMethod(upperCaseName, file);
-
-			writeSaveMethod(upperCaseName, file);
-
-			writeRepositoryGetter(upperCaseName, file);
-
-			writeDeleteByIdMethod(file);
-
+			file.writeln(0, "");
+			file.writeln(1, "@Override");
+			file.writeln(1, "public " + upperCaseName + " insert(" + upperCaseName + " object) throws " + Utils.getApplicationExceptionName() + " {");
+			file.writeln(2, "if(object.getId() != null) throw new " + Utils.getApplicationExceptionName() + "(\"\");");
+			file.writeln(2, "return repository.save(object);");
+			file.writeln(1, "}");
+			file.writeln(0, "");
+			file.writeln(1, "@Override");
+			file.writeln(1, "public " + upperCaseName + " update(" + upperCaseName + " object) throws " + Utils.getApplicationExceptionName() + " {");
+			file.writeln(2, "if(object.getId() == null || !repository.findById(object.getId()).isPresent()) throw new " + Utils.getApplicationExceptionName() + "(\"\");");
+			file.writeln(2, "return repository.save(object);");
+			file.writeln(1, "}");
+			file.writeln(0, "}");
 		}
+			
 
+			
+				// TODO Auto-generated method stub
+				
+
+//			writeGetDataMethods(upperCaseName, file);
+//
+//			writeFindByIdMethod(upperCaseName, file);
+//
+//			writeSaveMethod(upperCaseName, file);
+//
+//			writeRepositoryGetter(upperCaseName, file);
+//
+//			writeDeleteByIdMethod(file);
+	
 	}
-
+	
 	private void writeGetDataMethods(String upperCaseName, GeneratorOutputFile file) throws IOException {
 		file.writeln(1, "public List<" + upperCaseName + "> findAll() {");
 		file.writeln(2, "return repository.findAll();");
@@ -119,7 +131,6 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 		file.writeln(2, "repository.deleteById(id);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
-		file.writeln(0, "}");
 	}
 
 	private void writeSaveMethod(String upperCaseName, GeneratorOutputFile file) throws IOException {
@@ -143,11 +154,6 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 		file.writeln(0, "");
 	}
 	
-	
-	
-	
-	
-	
 	private void writeGetDataMethods(GeneratorOutputFile file) throws IOException {
 		file.writeln(1, "public List<T> findAll() {");
 		file.writeln(2, "return repository.findAll();");
@@ -168,7 +174,13 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 	}
 
 	private void writeSaveMethod(GeneratorOutputFile file) throws IOException {
-		file.writeln(1, "public T save(T object) {");
+		file.writeln(1, "public abstract T insert(T object) throws " + Utils.getApplicationExceptionName() + ";");
+		file.writeln(0, "");
+		
+		file.writeln(1, "public abstract T update(T object) throws " + Utils.getApplicationExceptionName() + ";");
+		file.writeln(0, "");
+		
+		file.writeln(1, "public T save(T object) throws " + Utils.getApplicationExceptionName() + " {");
 		file.writeln(2, "return repository.save(object);");
 		file.writeln(1, "}");
 		file.writeln(0, "");

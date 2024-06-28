@@ -29,6 +29,7 @@ import com.generator.writer.java.config.security.JavaJwtUtilWriter;
 import com.generator.writer.java.config.security.JavaSpringSecurityConfigWriter;
 import com.generator.writer.java.dto.JavaErrorResponseDTOWriter;
 import com.generator.writer.java.dto.JavaGenericResponseWriter;
+import com.generator.writer.java.exceptions.JavaApplicationExceptionWriter;
 import com.generator.writer.java.exceptions.JavaExceptionHandlerWriter;
 import com.generator.writer.java.exceptions.JavaOperationNotSupprotedExceptionWriter;
 import com.generator.writer.java.utils.JavaApiUtilWriter;
@@ -50,6 +51,7 @@ public class ApplicationGenerator {
 		JavaErrorResponseDTOWriter javaErrorResponseDTOWriter = new JavaErrorResponseDTOWriter();
 		JavaGenericResponseWriter javaGenericResponseWriter = new JavaGenericResponseWriter();
 		JavaExceptionHandlerWriter javaExceptionHandlerWriter = new JavaExceptionHandlerWriter();
+		JavaApplicationExceptionWriter javaApplicationExceptionWriter = new JavaApplicationExceptionWriter();
 		JavaOperationNotSupprotedExceptionWriter javaOperationNotSupprotedExceptionWriter = new JavaOperationNotSupprotedExceptionWriter();
 		
 		for (Writer writer : writers) {
@@ -71,6 +73,7 @@ public class ApplicationGenerator {
 			javaGenericResponseWriter.create();
 			javaExceptionHandlerWriter.create();
 			javaOperationNotSupprotedExceptionWriter.create();
+			javaApplicationExceptionWriter.create();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
