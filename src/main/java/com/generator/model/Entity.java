@@ -27,6 +27,8 @@ import lombok.NoArgsConstructor;
 public class Entity {
 	@XmlAttribute(name = "name", required = true)
 	private String name;
+	@XmlAttribute(name = "tableName", required = false)
+	private String tableName;
 	@XmlAttribute(name = "inherits")
 	private String inherits;
 	@XmlAttribute(name = "inheritanceType")

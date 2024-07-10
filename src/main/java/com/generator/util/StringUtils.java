@@ -32,4 +32,27 @@ public class StringUtils {
 		}
 		return s;
 	}
+	public static String camelToKebabCase(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        StringBuilder kebabCase = new StringBuilder();
+        char[] charArray = input.toCharArray();
+
+        for (int i = 0; i < charArray.length; i++) {
+            char currentChar = charArray[i];
+            if (Character.isUpperCase(currentChar)) {
+                // Append a hyphen before uppercase letters, except at the start
+                if (i != 0) {
+                    kebabCase.append("-");
+                }
+                kebabCase.append(Character.toLowerCase(currentChar));
+            } else {
+                kebabCase.append(currentChar);
+            }
+        }
+
+        return kebabCase.toString();
+    }
 }

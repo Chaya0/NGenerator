@@ -20,7 +20,9 @@ import lombok.NoArgsConstructor;
 public class Relation {
 	@XmlAttribute(name = "entityName", required = true)
 	private String entityName;
-	@XmlAttribute(name = "relationName", required = true)
+	@XmlAttribute(name = "tableName", required = true)
+	private String tableName;
+	@XmlAttribute(name = "relationName", required = false)
 	private String relationName;
 	@XmlAttribute(name = "owningSide", required = true)
 	private boolean owningSide;

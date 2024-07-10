@@ -1,5 +1,7 @@
 package com.generator.writer.java.components.generic;
 
+import org.jsoup.internal.StringUtil;
+
 import com.generator.model.AppModel;
 import com.generator.model.Attribute;
 import com.generator.model.Entity;
@@ -30,6 +32,8 @@ public class JavaEntityWriter implements DefaultWriter {
 			file.writeln(0, "package " + Utils.getImportModelPackageName() + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import jakarta.persistence.*;");
+			file.writeln(0, "import jakarta.validation.constraints.NotEmpty;");
+			file.writeln(0, "import jakarta.validation.constraints.NotNull;");
 			file.writeln(0, "import lombok.Data;");
 			file.writeln(0, "import lombok.AllArgsConstructor;");
 			file.writeln(0, "import lombok.NoArgsConstructor;");
@@ -50,7 +54,7 @@ public class JavaEntityWriter implements DefaultWriter {
 			if (!entity.getInheritanceType().equals(InheritanceType.NULL)) {
 				file.writeln(0, entity.getInheritanceType().getGeneratorCode());
 			}
-			file.writeln(0, "@Table(name = \"" + entity.getName() + "\")");
+			file.writeln(0, "@Table(name = \"" + (StringUtil.isBlank(entity.getTableName()) ? entity.getName() : entity.getTableName()) + "\")");
 			if (entity.getInherits() != null && !entity.getInherits().isEmpty()) {
 				file.writeln(0, "@PrimaryKeyJoinColumn(name = \"id\")");
 				file.writeln(0, "public class " + upperCaseName + " extends " + StringUtils.uppercaseFirst(entity.getInherits()) + " {");
@@ -84,20 +88,30 @@ public class JavaEntityWriter implements DefaultWriter {
 
 	private void writeAttributes(GeneratorOutputFile file, Entity entity) throws Exception {
 		for (Attribute attribute : entity.getAttributes()) {
-			StringBuilder annotation = new StringBuilder("@Column(");
+			StringBuilder annotation = new StringBuilder("@Column");
 			boolean addComma = false;
+			boolean closeBracket = false;
 			if (!attribute.isNullable()) {
+				annotation.append("(");
+				file.writeln(1, attribute.getType().equals(AttributeType.ENUM) ? "@NotNull" : "@NotEmpty");
 				annotation.append("nullable = false");
+				closeBracket = true;
 				addComma = true;
 			}
 			if (attribute.isUnique()) {
 				if (addComma) {
 					annotation.append(", ");
 //					addComma = false;
+				} else {
+					annotation.append("(");
 				}
 				annotation.append("unique = true");
+				closeBracket = true;
 			}
-			annotation.append(")");
+			if (closeBracket) {
+				annotation.append(")");
+			}
+			
 			file.writeln(1, annotation.toString());
 			if (attribute.getType().equals(AttributeType.ENUM)) {
 				if (attribute.getEnumName().isEmpty()) throw new Exception("Attribute defined as Enum but enum name wasn't provided.");
@@ -112,43 +126,44 @@ public class JavaEntityWriter implements DefaultWriter {
 	private void writeRelations(GeneratorOutputFile file, Entity entity) throws Exception {
 		for (Relation relation : entity.getRelations()) {
 			String fetchType = relation.getFetchType().equals(FetchType.NULL) ? "" : (", " + relation.getFetchType().getGeneratorCode());
+			String relationName = StringUtil.isBlank(relation.getRelationName()) ? relation.getEntityName() : relation.getRelationName();
 			switch (relation.getRelationType()) {
 			case ONE_TO_MANY:
 				file.writeln(1, relation.getRelationType().getGeneratorCode() + "(mappedBy = \"" + entity.getName() + "\"" + fetchType + ")");
 				file.writeln(1, "@JsonIgnore");
-				file.writeln(1, "List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relation.getEntityName() + "List;");
+				file.writeln(1, "List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relationName + "List;");
 				file.writeln(0, "");
 				break;
 			case ONE_TO_ONE:
 				if (relation.isOwningSide()) {
-					file.writeln(1, relation.getRelationType().getGeneratorCode() + "(" + relation.getFetchType().getGeneratorCode() + ")");
+					file.writeln(1, relation.getRelationType().getGeneratorCode() + (relation.getFetchType().equals(FetchType.NULL) ? "" : ("(" + relation.getFetchType().getGeneratorCode() + ")")));
 					file.writeln(1, "@JoinColumn(name = \"" + relation.getEntityName() + "\", referencedColumnName = \"id\")");
-					file.writeln(1, "private " + StringUtils.uppercaseFirst(relation.getEntityName()) + " " + relation.getEntityName() + ";");
+					file.writeln(1, "private " + StringUtils.uppercaseFirst(relation.getEntityName()) + " " + relationName + ";");
 					file.writeln(0, "");
 				} else {
 					file.writeln(1, relation.getRelationType().getGeneratorCode() + "(mappedBy = \"" + entity.getName() + "\")");
-					file.writeln(1, "private " + StringUtils.uppercaseFirst(relation.getEntityName()) + " " + relation.getEntityName() + ";");
+					file.writeln(1, "private " + StringUtils.uppercaseFirst(relation.getEntityName()) + " " + relationName + ";");
 					file.writeln(0, "");
 				}
 				break;
 			case MANY_TO_MANY:
 				if (relation.isOwningSide()) {
-					file.writeln(1, relation.getRelationType().getGeneratorCode() + "(" + relation.getFetchType().getGeneratorCode() + ")");
+					file.writeln(1, relation.getRelationType().getGeneratorCode() + (relation.getFetchType().equals(FetchType.NULL) ? "" : ("(" + relation.getFetchType().getGeneratorCode() + ")")));
 					file.writeln(1, "@JsonIgnore");
 					file.writeln(1, "@JoinTable(name = \"" + entity.getName() + "_" + relation.getEntityName() + "\",");
 					file.writeln(2, "joinColumns = @JoinColumn(name = \"" + entity.getName() + "\", referencedColumnName = \"id\"),");
 					file.writeln(1, "inverseJoinColumns = @JoinColumn(name = \"" + relation.getEntityName() + "\", referencedColumnName = \"id\"))");
-					file.writeln(1, "private List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relation.getEntityName() + "List;");
+					file.writeln(1, "private List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relationName + "List;");
 					file.writeln(0, "");
 				} else {
 					file.writeln(1, relation.getRelationType().getGeneratorCode() + "(mappedBy = \"" + entity.getName() + "List\")");
-					file.writeln(0, "private List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relation.getEntityName() + "List;");
+					file.writeln(0, "private List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relationName + "List;");
 				}
 				break;
 			case MANY_TO_ONE:
-				file.writeln(1, relation.getRelationType().getGeneratorCode() + "(" + relation.getFetchType().getGeneratorCode() + ")");
-				file.writeln(1, "@JoinColumn(name = \"" + relation.getEntityName() + "\", referencedColumnName = \"id\")");
-				file.writeln(1, "private " + StringUtils.uppercaseFirst(relation.getEntityName()) + " " + relation.getEntityName() + ";");
+				file.writeln(1, relation.getRelationType().getGeneratorCode() + (relation.getFetchType().equals(FetchType.NULL) ? "" : ("(" + relation.getFetchType().getGeneratorCode() + ")")));
+				file.writeln(1, "@JoinColumn(name = \"" + (StringUtil.isBlank(relation.getTableName()) ? relation.getEntityName() : relation.getTableName()) + "\", referencedColumnName = \"id\")");
+				file.writeln(1, "private " + StringUtils.uppercaseFirst(relation.getEntityName()) + " " + relationName + ";");
 				file.writeln(0, "");
 				break;
 			default:

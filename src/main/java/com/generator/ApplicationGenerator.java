@@ -12,13 +12,14 @@ import com.generator.reader.XMLModelReader;
 import com.generator.writer.SpringStartExtractor;
 import com.generator.writer.Writer;
 import com.generator.writer.java.components.JavaControllerWriter;
-import com.generator.writer.java.components.JavaControllerWriterType;
 import com.generator.writer.java.components.JavaRepositoryWriter;
 import com.generator.writer.java.components.JavaServiceWriter;
+import com.generator.writer.java.components.basic.JavaBasicControllerWriter;
+import com.generator.writer.java.components.basic.JavaBasicRepositoryWriter;
+import com.generator.writer.java.components.basic.JavaBasicServiceWriter;
 import com.generator.writer.java.components.generic.JavaEntityWriter;
 import com.generator.writer.java.components.generic.JavaEnumWriter;
 import com.generator.writer.java.components.generic.JavaGenericControllerWriter;
-import com.generator.writer.java.components.generic.JavaGenericControllerWriterType;
 import com.generator.writer.java.components.generic.JavaGenericRepositoryWriter;
 import com.generator.writer.java.components.generic.JavaGenericServiceWriter;
 import com.generator.writer.java.config.JavaSwaggerWriter;
@@ -77,22 +78,23 @@ public class ApplicationGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Done");
+		System.out.println("Splendid.");
 
 	}
 
 	private static List<Writer> initJavaWriters() {
 		Writer entityWriter = new JavaEntityWriter();
-//		Writer genControllerWriter = new JavaGenericControllerWriter();
-		Writer genControllerWriter = new JavaGenericControllerWriterType();
-		Writer genRepositoryWriter = new JavaGenericRepositoryWriter();
-		Writer genServiceWriter = new JavaGenericServiceWriter();
-//		Writer controllerWriter = new JavaControllerWriter();
-		Writer controllerWriter = new JavaControllerWriterType();
-		Writer repositoryWriter = new JavaRepositoryWriter();
-		Writer serviceWriter = new JavaServiceWriter();
 		Writer enumWriter = new JavaEnumWriter();
-		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter, enumWriter);
+		Writer genControllerWriter = new JavaGenericControllerWriter();
+		Writer basicControllerWriter = new JavaBasicControllerWriter();
+		Writer controllerWriter = new JavaControllerWriter();
+		Writer genRepositoryWriter = new JavaGenericRepositoryWriter();
+		Writer basicRepositoryWriter = new JavaBasicRepositoryWriter();
+		Writer repositoryWriter = new JavaRepositoryWriter();
+		Writer genServiceWriter = new JavaGenericServiceWriter();
+		Writer basicServiceWriter = new JavaBasicServiceWriter();
+		Writer serviceWriter = new JavaServiceWriter();
+		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter, enumWriter,basicControllerWriter, basicRepositoryWriter, basicServiceWriter);
 	}
 
 	private static void extractAppIfItDoesntExists() {

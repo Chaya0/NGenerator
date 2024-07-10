@@ -1,21 +1,21 @@
 <app>
 	<entities>
-		<entity name="user">
+		<entity name="user" tableName="merv_user">
 			<attributes>
-				<attribute name="username" type="string" nullable="false"/>
-				<attribute name="password" type="string" nullable="false"/>
-				<attribute name="email" type="string" nullable="false"/>
-				<attribute name="creationDate" type="date" nullable="false"/>
-				<attribute name="modifyDate" type="date" nullable="false"/>
+				<attribute name="username" type="string" unique="true"/>
+				<attribute name="password" type="string"/>
+				<attribute name="email" type="string"/>
+				<attribute name="creationDate" type="date" />
+				<attribute name="modifyDate" type="date" />
 				<attribute name="firstName" type="string" nullable="false"/>
 				<attribute name="lastName" type="string" nullable="false"/>
-				<attribute name="parentName" type="string" nullable="false"/>
-				<attribute name="recordNumber" type="string" nullable="false"/>
-				<attribute name="birthDate" type="date" nullable="false"/>
-				<attribute name="jmbg" type="string" nullable="false"/>
-				<attribute name="jobTitle" type="string" nullable="false"/>
-				<attribute name="officeNumber" type="string" nullable="false"/>
-				<attribute name="avatar" type="string" nullable="false"/>
+				<attribute name="parentName" type="string" />
+				<attribute name="recordNumber" type="string" />
+				<attribute name="birthDate" type="date" />
+				<attribute name="jmbg" type="string" />
+				<attribute name="jobTitle" type="string" />
+				<attribute name="officeNumber" type="string" />
+				<attribute name="avatar" type="string" />
 				<attribute name="userType" enumName="userType" type="enum" nullable="false"/>
 			</attributes>
 			<relations>
@@ -29,44 +29,40 @@
 		<entity name="shift">
 			<attributes>
 				<attribute name="startFrom" type="string" nullable="false"/>
-				<attribute name="starsTo" type="string" nullable="false"/>
+				<attribute name="startTo" type="string" nullable="false"/>
 				<attribute name="endFrom" type="string" nullable="false"/>
 				<attribute name="endTo" type="string" nullable="false"/>
 				<attribute name="durationHours" type="integer" nullable="false"/>
 				<attribute name="durationMinutes" type="integer" nullable="false"/>
-				<attribute name="date" type="localDate" nullable="false"/>
 			</attributes>
 			<relations>
-				<relation entityName="user" relationType="manyToOne" owningSide="false"/>
+				<relation entityName="user" tableName="merv_user" relationType="manyToOne" owningSide="false"/>
 			</relations>
 		</entity>
 		<entity name="role">
 			<attributes>
-				<attribute name="name" type="string" nullable="false"/>
-				<attribute name ="description" type="string" nullable="false"/>
+				<attribute name="name" type="string" nullable="false" unique="true"/>
+				<attribute name ="description" type="string"/>
 			</attributes>
 			<relations>
-				<relation entityName="user" relationType="oneToOne" owningSide="false"/>
-				<relation entityName="permission" relationType="oneToMany" owningSide="true"/>
+				<relation entityName="user" tableName="merv_user" relationType="oneToOne" owningSide="false"/>
+				<relation entityName="permission" relationType="manyToMany" owningSide="true" fetchType="eager"/>
 			</relations>
 		</entity>
 		<entity name="permission">
 			<attributes>
-				<attribute name="name" type="string" nullable="false"/>
-				<attribute name ="description" type="string" nullable="false"/>
+				<attribute name="name" type="string" nullable="false"  unique="true"/>
+				<attribute name ="description" type="string"/>
 			</attributes>
-			<relations>
-				<relation entityName="role" relationType="manyToOne" owningSide="false"/>
-			</relations>
 		</entity>
 		<entity name="timetable">
 			<attributes>
 				<attribute name="actionType" enumName="actionType" type="enum" nullable="false"/>
-				<attribute name="image" type="string" nullable="false"/>
-				<attribute name="date" type="date" nullable="false"/>
+				<attribute name="image" type="string"/>
+				<attribute name="dateTime" type="localDateTime" nullable="false"/>
 			</attributes>
 			<relations>
-				<relation entityName="user" relationType="manyToOne" owningSide="false"/>
+				<relation entityName="user" tableName="merv_user" relationType="manyToOne" owningSide="false"/>
 				<relation entityName="shift" relationType="manyToOne" owningSide="true"/>
 				<relation entityName="device" relationType="manyToOne" owningSide="false"/>
 			</relations>
@@ -74,18 +70,19 @@
 		<entity name="departmentUnit">
 			<attributes>
 				<attribute name="code" type="string" nullable="false"/>
-				<attribute name="description" type="string" nullable="false"/>
+				<attribute name="description" type="string"/>
 			</attributes>
 			<relations>
-				<relation entityName="user" relationType="oneToMany" owningSide="false"/>
-				<relation entityName="departmentUnit" relationType="manyToOne" owningSide="true"/>
+				<relation entityName="user" tableName="merv_user" relationType="oneToMany" owningSide="false"/>
+				<relation entityName="departmentUnit" relationType="manyToOne" owningSide="true" relationName="parent"/>
 			</relations>
 		</entity>
 		<entity name="device">
 			<attributes>
 				<attribute name="code" type="string" nullable="false"/>
-				<attribute name="ipAddress" type="string" nullable="false"/>
-				<attribute name="description" type="string" nullable="false"/>
+				<attribute name="ipAddress" type="string"/>
+				<attribute name="active" type="boolean"/>
+				<attribute name="description" type="string"/>
 			</attributes>
 			<relations>
 				<relation entityName="location" relationType="manyToOne" owningSide="true"></relation>
@@ -95,10 +92,11 @@
 		<entity name="location">
 			<attributes>
 				<attribute name="name" type="string" nullable="false"/>
-				<attribute name="street" type="string" nullable="false"/>
-				<attribute name="address" type="string" nullable="false"/>
-				<attribute name="phone" type="string" nullable="false"/>
-				<attribute name="description" type="string" nullable="false"/>
+				<attribute name="street" type="string"/>
+				<attribute name="address" type="string"/>
+				<attribute name="city" type="string"/>
+				<attribute name="phone" type="string"/>
+				<attribute name="description" type="string"/>
 			</attributes>
 			<relations>
 				<relation entityName="device" relationType="oneToMany" owningSide="true"></relation>
@@ -106,16 +104,16 @@
 		</entity>
 		<entity name="card">
 			<attributes>
-				<attribute name="pin" type="string" nullable="false"/>
+				<attribute name="pin" type="string"/>
 				<attribute name="rfid" type="string" nullable="false"/>
 				<attribute name="active" type="boolean" nullable="false"/>
-				<attribute name="description" type="string" nullable="false"/>
-				<attribute name="creationDate" type="localDate" nullable="false"/>
-				<attribute name="expirationDate" type="localDate" nullable="false"/>
+				<attribute name="description" type="string"/>
+				<attribute name="creationDate" type="localDate"/>
+				<attribute name="expirationDate" type="localDate"/>
 				<attribute name="cardType" enumName="cardType" type="enum" nullable="false"/>
 			</attributes>
 			<relations>
-				<relation entityName="user" relationType="manyToOne" owningSide="false"></relation>
+				<relation entityName="user" tableName="merv_user" relationType="manyToOne" owningSide="false"></relation>
 			</relations>
 		</entity>
 	</entities>

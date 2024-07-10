@@ -20,27 +20,39 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GeneratorProperties {
-	@XmlAttribute(name = "name", required = true)
-	private boolean generateSwagger;
-	@XmlAttribute(name = "name", required = true)
-	private boolean generateAuthorisation;
-	@XmlAttribute(name = "name", required = true)
-	private boolean generateQuartz;
-	@XmlAttribute(name = "name", required = true)
+//	@XmlAttribute(name = "name", required = true)
+	private boolean generateSwaggerComponent;
+//	@XmlAttribute(name = "name", required = true)
+	private boolean generateAuthorisationComponents;
+//	@XmlAttribute(name = "name", required = true)
+	private boolean generateQuartzComponents;
+//	@XmlAttribute(name = "name", required = true)
 	private boolean generateFrontend;
-	@XmlAttribute(name = "generationType")
-	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
+//	@XmlAttribute(name = "generationType")
+//	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
 	private DatabaseType databaseType;
-	@XmlAttribute(name = "generationType")
-	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
+//	@XmlAttribute(name = "generationType")
+//	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
 	private AuthorisationType authorisationType;
-	@XmlAttribute(name = "generationType")
-	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
+//	@XmlAttribute(name = "generationType")
+//	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
 	private FrontendType frontendType;
-	@XmlAttribute(name = "generationType")
-	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
+//	@XmlAttribute(name = "generationType")
+//	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
 	private ModelFileType modelFileType;
-	@XmlAttribute(name = "generationType")
-	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
+//	@XmlAttribute(name = "generationType")
+//	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
 	private ApplicationStructureType applicationStructureType;
+	
+	private boolean generateBasicRepository;
+	private boolean generateGenericRepository;
+	private boolean generateBasicService;
+	private boolean generateGenericService;
+	private boolean generateBasicController;
+	private boolean generateGenericController;
+	private boolean generateGenericEntity;
+	private boolean generateGenericEnums;
+	private boolean generateDTOs;
+	
+	private String frontendProjectPath;
 }
