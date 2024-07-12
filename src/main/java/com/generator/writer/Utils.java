@@ -190,4 +190,13 @@ public class Utils {
 	public static String getApplicationExceptionName() {
 		return StringUtils.uppercaseFirst(Application.getSpringProperties().getName()) + "Exception";
 	}
+	
+	public static String getFrontendPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getSpringProperties().getProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "");
+		stringBuilder.append("/src/main/java/");
+		stringBuilder.append(getCorrectPath(Application.getSpringProperties().getPackageName()));
+		return stringBuilder.toString();
+	}
 }

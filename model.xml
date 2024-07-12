@@ -69,6 +69,7 @@
 		</entity>
 		<entity name="departmentUnit">
 			<attributes>
+				<attribute name="name" type="string" nullable="false"/>
 				<attribute name="code" type="string" nullable="false"/>
 				<attribute name="description" type="string"/>
 			</attributes>
