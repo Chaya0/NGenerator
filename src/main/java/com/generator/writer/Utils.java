@@ -111,7 +111,7 @@ public class Utils {
 	public static String getResourcesPath() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getSpringProperties().getProjectPath());
-		stringBuilder.append(Application.getSpringProperties().getBaseDir());
+		stringBuilder.append(Application.getSpringProperties().getBaseDir()+"");
 		stringBuilder.append("/src/main/resources/");
 		return stringBuilder.toString();
 	}
@@ -191,12 +191,19 @@ public class Utils {
 		return StringUtils.uppercaseFirst(Application.getSpringProperties().getName()) + "Exception";
 	}
 	
-	public static String getFrontendPath() {
+	public static String getFrontendRootPackagePath() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getSpringProperties().getProjectPath());
-		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "");
-		stringBuilder.append("/src/main/java/");
-		stringBuilder.append(getCorrectPath(Application.getSpringProperties().getPackageName()));
+		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "-frontend");
+		stringBuilder.append("/src/app/");
+		return stringBuilder.toString();
+	}
+	
+	public static String getFrontendFeaturesEntitiesPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getSpringProperties().getProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "-frontend");
+		stringBuilder.append("/src/app/features/entities/");
 		return stringBuilder.toString();
 	}
 }

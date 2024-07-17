@@ -55,4 +55,28 @@ public class StringUtils {
 
         return kebabCase.toString();
     }
+
+	public static String camelToSnakeCase(String input) {
+		if (input == null || input.isEmpty()) {
+            return input;
+        }
+
+        StringBuilder snakeCase = new StringBuilder();
+        char[] charArray = input.toCharArray();
+
+        for (int i = 0; i < charArray.length; i++) {
+            char currentChar = charArray[i];
+            if (Character.isUpperCase(currentChar)) {
+                // Append a hyphen before uppercase letters, except at the start
+                if (i != 0) {
+                	snakeCase.append("_");
+                }
+                snakeCase.append(Character.toLowerCase(currentChar));
+            } else {
+            	snakeCase.append(currentChar);
+            }
+        }
+
+        return snakeCase.toString();
+	}
 }
