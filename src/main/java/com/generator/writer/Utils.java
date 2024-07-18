@@ -17,19 +17,16 @@ public class Utils {
 		return file.exists();
 	}
 
-	public static GeneratorOutputFile getOutputResource(String folder, String filename, String charset,
-			boolean overwrite) throws Exception {
+	public static GeneratorOutputFile getOutputResource(String folder, String filename, String charset, boolean overwrite) throws Exception {
 		folder = getCorrectPath(folder);
 		String fullPath = folder + "/" + filename;
 		GFolder fullFolderPath = new GFolder(folder);
-		if (!fullFolderPath.create())
-			throw new Exception("Could not create folder " + folder);
+		if (!fullFolderPath.create()) throw new Exception("Could not create folder " + folder);
 
 		return new GeneratorOutputFile(fullPath, charset, overwrite);
 	}
 
-	public static GeneratorOutputFile getOutputResource(String folder, String filename, boolean overwrite)
-			throws Exception {
+	public static GeneratorOutputFile getOutputResource(String folder, String filename, boolean overwrite) throws Exception {
 		return getOutputResource(folder, filename, "UTF-8", overwrite);
 	}
 
@@ -111,7 +108,7 @@ public class Utils {
 	public static String getResourcesPath() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getSpringProperties().getProjectPath());
-		stringBuilder.append(Application.getSpringProperties().getBaseDir()+"");
+		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "");
 		stringBuilder.append("/src/main/resources/");
 		return stringBuilder.toString();
 	}
@@ -149,21 +146,22 @@ public class Utils {
 	public static String getImportRepositoryPackageName(boolean generic) {
 		return generic ? getImportDefaultPackage() + ".repository.generic" : getImportDefaultPackage() + ".repository";
 	}
+
 	/**
 	 * @param generic true - returns generic package name
 	 */
 	public static String getImportControllerPackageName(boolean generic, String entityName) {
 		return generic ? getImportDefaultPackage() + ".controller.generic." + entityName.toLowerCase() : getImportDefaultPackage() + ".controller." + entityName.toLowerCase();
 	}
-	
+
 	/**
 	 * @param generic true - returns generic package name
 	 */
 	public static String getImportServicePackageName(boolean generic, String entityName) {
 		return generic ? getImportDefaultPackage() + ".service.generic." + entityName.toLowerCase() : getImportDefaultPackage() + ".service." + entityName.toLowerCase();
-		
+
 	}
-	
+
 	/**
 	 * @param generic true - returns generic package name
 	 */
@@ -174,11 +172,11 @@ public class Utils {
 	public static String getImportModelPackageName() {
 		return getImportDefaultPackage() + ".model";
 	}
-	
+
 	public static String getImportExceptionsPackageName() {
 		return getImportDefaultPackage() + ".exceptions";
 	}
-	
+
 	public static String getApplicationExceptionImport() {
 		return "import " + getImportExceptionsPackageName() + "." + getApplicationExceptionName() + ";";
 	}
@@ -186,11 +184,11 @@ public class Utils {
 	public static String getImportModelEnumsPackageName() {
 		return getImportModelPackageName() + ".enums";
 	}
-	
+
 	public static String getApplicationExceptionName() {
 		return StringUtils.uppercaseFirst(Application.getSpringProperties().getName()) + "Exception";
 	}
-	
+
 	public static String getFrontendRootPackagePath() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getSpringProperties().getProjectPath());
@@ -198,12 +196,12 @@ public class Utils {
 		stringBuilder.append("/src/app/");
 		return stringBuilder.toString();
 	}
-	
+
 	public static String getFrontendFeaturesEntitiesPath() {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(Application.getSpringProperties().getProjectPath());
-		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "-frontend");
-		stringBuilder.append("/src/app/features/entities/");
-		return stringBuilder.toString();
+		return getFrontendFeaturesEntitiesPath() + "features/entities/";
+	}
+
+	public static String getFrontendPagesPath() {
+		return getFrontendFeaturesEntitiesPath() + "pages/";
 	}
 }
