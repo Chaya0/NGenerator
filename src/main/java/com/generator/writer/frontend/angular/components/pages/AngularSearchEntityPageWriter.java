@@ -20,9 +20,9 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 
 	@Override
 	public void writeScript(Entity entity) throws Exception {
-		String snakeCaseName = StringUtils.camelToSnakeCase(entity.getName());
+		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + snakeCaseName, StringUtils.camelToKebabCase(entity.getName()) + ".component.ts", false)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-search-page", StringUtils.camelToKebabCase(entity.getName()) + "-search-page.component.ts", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -30,32 +30,46 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "import {RouterLink, RouterOutlet} from \"@angular/router\";");
 			file.writeln(0, "import {NgIf} from \"@angular/common\";");
 			file.writeln(0, "import {MaterialModule} from \"../../../shared/material/material.module\";");
-			file.writeln(0, "import { " + upperCaseName + " } from \"../../../features/entities/" + snakeCaseName + "/" + entity.getName() + "\";");
-			file.writeln(0, "import {SearchService} from \"../../../core/services/search.service\";");
 			file.writeln(0, "import {Page} from \"../../../core/entity-utils/page\";");
-			file.writeln(0, "import { " + upperCaseName + "Structure } from ../../../features/entities/" + snakeCaseName + "/" + entity.getName() + ".structure");
-			file.writeln(0, "import { " + upperCaseName + "TableViewComponent } from ../../../features/entities/" + snakeCaseName + "/" + snakeCaseName + "/-table-view/" + "/" + snakeCaseName
-					+ "/-table.view.component");
-			file.writeln(0, "import { " + upperCaseName + "SearchFormComponent } from ../../../features/entities/" + snakeCaseName + "/" + snakeCaseName + "/-search-form/" + snakeCaseName + "-search-form.component\";");
+			file.writeln(0, "import {SearchService} from \"../../../core/services/search.service\";");
+			file.writeln(0, "import { " + upperCaseName + " } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "';");
+			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
+			file.writeln(0, "import { " + upperCaseName + "TableViewComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-table-view/" + kebabCase + "-table-view.component';");
+			file.writeln(0, "import { " + upperCaseName + "SearchFormComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-search-form/" + kebabCase + "-search-form.component';");
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
-			file.writeln(1, "selector: 'app-" + snakeCaseName + "-create-page',");
-			file.writeln(1, "standalnoe: true,");
-			file.writeln(1, "imports: [" + upperCaseName + "InsertFormComponent],");
-			file.writeln(1, "templateUrl: './" + snakeCaseName + "-create-page.component.html,'");
-			file.writeln(1, "styleUrl: './" + snakeCaseName + "-create-page.component.css'");
+			file.writeln(1, "selector: 'app-" + kebabCase + "-search-page',");
+			file.writeln(1, "standalone: true,");
+			file.writeln(1, "imports: [");
+			file.writeln(2, upperCaseName + "TableViewComponent,");
+			file.writeln(2, upperCaseName + "SearchFormComponent,");
+			file.writeln(2, "MaterialModule,");
+			file.writeln(2, "RouterLink,");
+			file.writeln(2, "RouterOutlet,");
+			file.writeln(2, "NgIf");
+			file.writeln(1, "],");
+			file.writeln(1, "templateUrl: './" + kebabCase + "-search-page.component.html',");
+			file.writeln(1, "styleUrl: './" + kebabCase + "-search-page.component.css'");
 			file.writeln(0, "})");
 			file.writeln(0, "");
-			file.writeln(0, "export class " + upperCaseName + "CreatePageComponent {");
-			file.writeln(1, "structure: " + upperCaseName + " Structure = " + upperCaseName + "Structure.instance;");
+			file.writeln(0, "export class " + upperCaseName + "SearchPageComponent implements OnInit {");
+			file.writeln(1, "structure: " + upperCaseName + "Structure = " + upperCaseName + "Structure.instance;");
+			file.writeln(1, "public page?: Page<" + upperCaseName + ">;");
+			file.writeln(1, "searchService: SearchService = inject(SearchService);");
+			file.writeln(0, "");
+			file.writeln(1, "ngOnInit() { ");
+			file.writeln(2, "this.searchService.event$.subscribe(data => {");
+			file.writeln(3, "this.page = data as Page<" + upperCaseName + ">;");
+			file.writeln(2, "});");
+			file.writeln(1, "}");
 			file.writeln(0, "}");
 		}
 	}
 
 	@Override
 	public void writeStyles(Entity entity) throws Exception {
-		String snakeCaseName = StringUtils.camelToSnakeCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + snakeCaseName, StringUtils.camelToKebabCase(entity.getName()) + ".component.css", false)) {
+		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-search-page", StringUtils.camelToKebabCase(entity.getName()) + "-search-page.component.css", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -74,8 +88,8 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 
 	@Override
 	public void writeHTML(Entity entity) throws Exception {
-		String snakeCaseName = StringUtils.camelToSnakeCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + snakeCaseName, StringUtils.camelToKebabCase(entity.getName()) + ".component.html", false)) {
+		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-search-page", StringUtils.camelToKebabCase(entity.getName()) + "-search-page.component.html", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -94,10 +108,10 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(1, "</mat-menu>");
 			file.writeln(1, "<mat-card-content>");
 			file.writeln(2, "<div class=\"search-form\">");
-			file.writeln(3, "<app-" + snakeCaseName + "-search-form class=\"search-form-container\" [structure]=\"structure\"></app-" + snakeCaseName + "-search-form>");
+			file.writeln(3, "<app-" + kebabCase + "-search-form class=\"search-form-container\" [structure]=\"structure\"></app-" + kebabCase + "-search-form>");
 			file.writeln(2, "</div>");
 			file.writeln(2, "<mat-divider></mat-divider>");
-			file.writeln(2, "<app-" + snakeCaseName + "-table-view [structure]=\"structure\" [page]=\"page\"></app-" + snakeCaseName + "-table-view>");
+			file.writeln(2, "<app-" + kebabCase + "-table-view [attributes]=\"structure.attributes\" [entity]=\"structure.entityName\" [page]=\"page\"></app-" + kebabCase + "-table-view>");
 			file.writeln(1, "</mat-card-content>");
 			file.writeln(0, "</mat-card>");
 		}

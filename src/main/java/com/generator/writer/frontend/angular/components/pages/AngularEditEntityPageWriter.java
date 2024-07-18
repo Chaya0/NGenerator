@@ -20,28 +20,27 @@ public class AngularEditEntityPageWriter implements ComponentWriter {
 
 	@Override
 	public void writeScript(Entity entity) throws Exception {
-		String snakeCaseName = StringUtils.camelToSnakeCase(entity.getName());
+		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + snakeCaseName, StringUtils.camelToKebabCase(entity.getName()) + ".component.ts", false)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-edit-page", StringUtils.camelToKebabCase(entity.getName()) + "-edit-page.component.ts", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
 			file.writeln(0, "import { Component, inject, OnInit } from '@angular/core';");
 			file.writeln(0, "import {ActivatedRoute} from \"@angular/router\";");
-			file.writeln(0, "import { " + upperCaseName + "UpdateFormComponent } from ../../../features/entities/" + snakeCaseName + "/" + snakeCaseName + "/-update-form/" + "/" + snakeCaseName
-					+ "/-insert-form.component");
-			file.writeln(0, "import { " + upperCaseName + "Structure } from ../../../features/entities/" + snakeCaseName + "/" + snakeCaseName + "/-insert-form/");
+			file.writeln(0, "import { " + upperCaseName + "UpdateFormComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-update-form/" +  kebabCase + "-update-form.component';");
+			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
-			file.writeln(1, "selector: 'app-" + snakeCaseName + "-edit-page',");
-			file.writeln(1, "standalnoe: true,");
+			file.writeln(1, "selector: 'app-" + kebabCase + "-edit-page',");
+			file.writeln(1, "standalone: true,");
 			file.writeln(1, "imports: [" + upperCaseName + "UpdateFormComponent],");
-			file.writeln(1, "templateUrl: './" + snakeCaseName + "-edit-page.component.html,'");
-			file.writeln(1, "styleUrl: './" + snakeCaseName + "-edit-page.component.css'");
+			file.writeln(1, "templateUrl: './" + kebabCase + "-edit-page.component.html',");
+			file.writeln(1, "styleUrl: './" + kebabCase + "-edit-page.component.css'");
 			file.writeln(0, "})");
 			file.writeln(0, "");
 			file.writeln(0, "export class " + upperCaseName + "EditPageComponent implements OnInit {");
-			file.writeln(1, "structure: " + upperCaseName + " Structure = " + upperCaseName + "Structure.instance;");
+			file.writeln(1, "structure: " + upperCaseName + "Structure = " + upperCaseName + "Structure.instance;");
 			file.writeln(1, "id: any;");
 			file.writeln(1, "route = inject(ActivatedRoute);");
 			file.writeln(0, "");
@@ -56,8 +55,8 @@ public class AngularEditEntityPageWriter implements ComponentWriter {
 
 	@Override
 	public void writeStyles(Entity entity) throws Exception {
-		String snakeCaseName = StringUtils.camelToSnakeCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + snakeCaseName, StringUtils.camelToKebabCase(entity.getName()) + ".component.css", false)) {
+		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-edit-page", StringUtils.camelToKebabCase(entity.getName()) + "-edit-page.component.css", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -67,12 +66,12 @@ public class AngularEditEntityPageWriter implements ComponentWriter {
 
 	@Override
 	public void writeHTML(Entity entity) throws Exception {
-		String snakeCaseName = StringUtils.camelToSnakeCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + snakeCaseName, StringUtils.camelToKebabCase(entity.getName()) + ".component.html", false)) {
+		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-edit-page", StringUtils.camelToKebabCase(entity.getName()) + "-edit-page.component.html", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "<app-" + snakeCaseName + "-update-form [structure]=\"structure\" [id]=\"id\" ></app-" + snakeCaseName + "-update-form>");
+			file.writeln(0, "<app-" + kebabCase + "-update-form [structure]=\"structure\" [id]=\"id\" ></app-" + kebabCase + "-update-form>");
 		}
 	}
 

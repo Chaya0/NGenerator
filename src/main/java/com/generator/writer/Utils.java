@@ -198,10 +198,10 @@ public class Utils {
 	}
 
 	public static String getFrontendFeaturesEntitiesPath() {
-		return getFrontendFeaturesEntitiesPath() + "features/entities/";
+		return getFrontendRootPackagePath() + "features/entities/";
 	}
 
 	public static String getFrontendPagesPath() {
-		return getFrontendFeaturesEntitiesPath() + "pages/";
+		return getFrontendRootPackagePath() + "pages/";
 	}
 }

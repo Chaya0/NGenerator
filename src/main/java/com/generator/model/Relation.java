@@ -22,7 +22,7 @@ public class Relation {
 	private String entityName;
 	@XmlAttribute(name = "tableName", required = true)
 	private String tableName;
-	@XmlAttribute(name = "relationName", required = true)
+	@XmlAttribute(name = "relationName", required = false)
 	private String relationName;
 	@XmlAttribute(name = "owningSide", required = true)
 	private boolean owningSide;

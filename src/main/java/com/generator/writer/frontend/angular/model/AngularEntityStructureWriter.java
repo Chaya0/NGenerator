@@ -2,14 +2,24 @@ package com.generator.writer.frontend.angular.model;
 
 import java.io.IOException;
 
+import com.generator.model.AppModel;
 import com.generator.model.Attribute;
 import com.generator.model.Entity;
 import com.generator.model.Relation;
+import com.generator.model.enums.RelationType;
 import com.generator.util.StringUtils;
 import com.generator.writer.GeneratorOutputFile;
 import com.generator.writer.Utils;
 
 public class AngularEntityStructureWriter {
+	
+	public void create(AppModel appModel) throws Exception{
+		for(Entity entity : appModel.getEntities()) {
+			create(entity);
+		}
+	}
+	
+	
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendFeaturesEntitiesPath() + StringUtils.camelToKebabCase(entity.getName()),
@@ -18,7 +28,7 @@ public class AngularEntityStructureWriter {
 				return;
 			}
 			file.writeln(0, "import {Attribute} from \"../../../core/entity-utils/attribute\";");
-			file.writeln(0, "import {Structure} from \"./structure\";");
+			file.writeln(0, "import {Structure} from \"../structure\";");
 			file.writeln(0, "");
 			file.writeln(0, "export class " + upperCaseName + "Structure implements Structure {");
 			file.writeln(0, "");
@@ -70,8 +80,9 @@ public class AngularEntityStructureWriter {
 
 	private void writeRelationsAttributes(Entity entity, GeneratorOutputFile file) throws IOException {
 		for (Relation relation : entity.getRelations()) {
+			if(relation.getRelationType().equals(RelationType.ONE_TO_MANY) || relation.getRelationType().equals(RelationType.MANY_TO_MANY)) continue;
 			file.writeln(2, "new Attribute(");
-			file.writeln(3, "'" + relation.getRelationName() == null ? relation.getEntityName() : relation.getRelationName() + "',");
+			file.writeln(3, "'" + (relation.getRelationName() == null ? relation.getEntityName() : relation.getRelationName()) + "',");
 			file.writeln(3, "'" + StringUtils.uppercaseFirst(relation.getEntityName()) + "',");
 			file.writeln(3, "null,");
 			file.writeln(3, "null,");
