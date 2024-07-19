@@ -188,6 +188,13 @@ public class Utils {
 	public static String getApplicationExceptionName() {
 		return StringUtils.uppercaseFirst(Application.getSpringProperties().getName()) + "Exception";
 	}
+	public static String getFrontendSourceDirectoryPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getSpringProperties().getProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "-frontend");
+		stringBuilder.append("/src/");
+		return stringBuilder.toString();
+	}
 
 	public static String getFrontendRootPackagePath() {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -203,5 +210,9 @@ public class Utils {
 
 	public static String getFrontendPagesPath() {
 		return getFrontendRootPackagePath() + "pages/";
+	}
+
+	public static String getFrontendLocalizationPath() {
+		return getFrontendSourceDirectoryPath() + "assets/i18n/";
 	}
 }

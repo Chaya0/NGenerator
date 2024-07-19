@@ -17,6 +17,7 @@ import com.generator.writer.frontend.angular.components.pages.AngularSearchEntit
 import com.generator.writer.frontend.angular.model.AngularEntitiesWriter;
 import com.generator.writer.frontend.angular.model.AngularEntityStructureWriter;
 import com.generator.writer.frontend.angular.model.AngularEntityWriter;
+import com.generator.writer.frontend.angular.utils.LocalizationWriter;
 
 public class FrontendApplicationGenerator {
 	private static AppModel appModel = XMLModelReader.readModel();
@@ -48,7 +49,9 @@ public class FrontendApplicationGenerator {
 			for (ComponentWriter writer : writers) {
 				writer.create(appModel);
 			}
-			
+//			
+//			LocalizationWriter writer = new LocalizationWriter();
+//			writer.create(appModel);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

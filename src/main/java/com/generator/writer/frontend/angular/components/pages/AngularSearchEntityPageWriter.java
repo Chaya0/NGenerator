@@ -32,10 +32,12 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "import {MaterialModule} from \"../../../shared/material/material.module\";");
 			file.writeln(0, "import {Page} from \"../../../core/entity-utils/page\";");
 			file.writeln(0, "import {SearchService} from \"../../../core/services/search.service\";");
+			file.writeln(0, "import { AppUtils } from '../../../shared/utils/app-utils';");
 			file.writeln(0, "import { " + upperCaseName + " } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "';");
 			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
 			file.writeln(0, "import { " + upperCaseName + "TableViewComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-table-view/" + kebabCase + "-table-view.component';");
 			file.writeln(0, "import { " + upperCaseName + "SearchFormComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-search-form/" + kebabCase + "-search-form.component';");
+			
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
 			file.writeln(1, "selector: 'app-" + kebabCase + "-search-page',");
@@ -55,6 +57,7 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "export class " + upperCaseName + "SearchPageComponent implements OnInit {");
 			file.writeln(1, "structure: " + upperCaseName + "Structure = " + upperCaseName + "Structure.instance;");
 			file.writeln(1, "public page?: Page<" + upperCaseName + ">;");
+			file.writeln(1, "protected readonly AppUtils = AppUtils;");
 			file.writeln(1, "searchService: SearchService = inject(SearchService);");
 			file.writeln(0, "");
 			file.writeln(1, "ngOnInit() { ");
@@ -98,7 +101,7 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(2, "<button mat-icon-button [matMenuTriggerFor]=\"menu\" aria-label=\"Example icon-button with a menu\">");
 			file.writeln(3, "<mat-icon>more_vert</mat-icon>");
 			file.writeln(2, "</button>");
-			file.writeln(2, "<mat-card-title>{{ structure.title | translate }}</mat-card-title>");
+			file.writeln(2, "<mat-card-title>{{ AppUtils.toFirstLetterLowercase(structure.entityName) + \".title\" | translate }}</mat-card-title>");
 			file.writeln(1, "</div>");
 			file.writeln(1, "<mat-menu #menu=\"matMenu\">");
 			file.writeln(2, "<a routerLink=\"create\" mat-menu-item>");
