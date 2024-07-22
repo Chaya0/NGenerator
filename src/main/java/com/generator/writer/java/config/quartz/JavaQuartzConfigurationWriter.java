@@ -2,17 +2,17 @@ package com.generator.writer.java.config.quartz;
 
 import java.io.IOException;
 
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaQuartzConfigurationWriter {
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath() + "/quartz", "QuartzConfiguration.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getConfigPackagePath() + "/quartz", "QuartzConfiguration.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
 
-			file.writeln(0, "package " + Utils.getImportDefaultPackage() + ".config.quartz;");
+			file.writeln(0, "package " + WriterUtils.getImportDefaultPackage() + ".config.quartz;");
 			file.writeln(0, "");
 			file.writeln(0, "import java.io.IOException;");
 			file.writeln(0, "import java.util.Properties;");

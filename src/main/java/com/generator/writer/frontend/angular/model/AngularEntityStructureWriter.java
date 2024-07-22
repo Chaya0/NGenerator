@@ -8,8 +8,8 @@ import com.generator.model.Entity;
 import com.generator.model.Relation;
 import com.generator.model.enums.RelationType;
 import com.generator.util.StringUtils;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class AngularEntityStructureWriter {
 	
@@ -22,7 +22,7 @@ public class AngularEntityStructureWriter {
 	
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendFeaturesEntitiesPath() + StringUtils.camelToKebabCase(entity.getName()),
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + StringUtils.camelToKebabCase(entity.getName()),
 				StringUtils.camelToKebabCase(entity.getName()) + "-structure.ts", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;

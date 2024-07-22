@@ -1,12 +1,12 @@
 package com.generator.writer.java.utils;
 
 import com.generator.Application;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaApiUtilWriter {
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getUtilsPackagePath(), "ApiUtil.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getUtilsPackagePath(), "ApiUtil.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

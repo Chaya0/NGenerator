@@ -3,12 +3,12 @@ package com.generator.writer.java.dto;
 import java.io.IOException;
 
 import com.generator.Application;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaGenericResponseWriter {
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getDTOPackagePath(), "GenericResponse.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getDTOPackagePath(), "GenericResponse.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

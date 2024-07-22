@@ -5,8 +5,8 @@ import java.io.IOException;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.writer.DefaultWriter;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaGenericControllerWriter implements DefaultWriter {
 
@@ -17,9 +17,9 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 
 	public void create() throws Exception {
 
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getControllerPackagePath(false), "GenericController.java", true)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getControllerPackagePath(false), "GenericController.java", true)) {
 
-			file.writeln(0, "package " + Utils.getImportControllerPackageName(false) + ";");
+			file.writeln(0, "package " + WriterUtils.getImportControllerPackageName(false) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.web.bind.annotation.*;");
 			file.writeln(0, "import org.springframework.http.*;");
@@ -30,12 +30,12 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 			file.writeln(0, "import jakarta.validation.constraints.Min;");
 			file.writeln(0, "import jakarta.validation.Valid;");
 			file.writeln(0, "import jakarta.persistence.EntityNotFoundException;");
-			file.writeln(0, Utils.getApplicationExceptionImport());
+			file.writeln(0, WriterUtils.getApplicationExceptionImport());
 			// TODO dodati logiku za generisanje anotacije za autorizaciju
-			file.writeln(0, "import " + Utils.getImportServicePackageName(false) + ".GenericService;");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".utils.ApiUtil;");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".specification.SpecificationBasic;");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".specification.SearchDTO;");
+			file.writeln(0, "import " + WriterUtils.getImportServicePackageName(false) + ".GenericService;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".utils.ApiUtil;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".specification.SpecificationBasic;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".specification.SearchDTO;");
 			file.writeln(0, "");
 //			file.writeln(0, "@CrossOrigin");
 //			file.writeln(0, "@RestController");
@@ -89,14 +89,14 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 //		file.writeln(0, "");
 		
 		file.writeln(1, "@PostMapping(value = \"/search\", produces = MediaType.APPLICATION_JSON_VALUE)");
-		file.writeln(1, "public ResponseEntity<?> searchPost(@RequestBody SearchDTO request) throws " + Utils.getApplicationExceptionName() + " {");
+		file.writeln(1, "public ResponseEntity<?> searchPost(@RequestBody SearchDTO request) throws " + WriterUtils.getApplicationExceptionName() + " {");
 		file.writeln(2, "SpecificationBasic<T> specification = request.buildSpecification(service.getEntityClass());");
 		file.writeln(2, "return ResponseEntity.ok(service.findAll(specification.getSpecification()));");
 		file.writeln(1, "}");
 		file.writeln(0, "");
 		
 		file.writeln(1, "@PostMapping(value = \"/searchPageable\", produces = MediaType.APPLICATION_JSON_VALUE)");
-		file.writeln(1, "public ResponseEntity<?> searchPageablePost(@RequestBody SearchDTO request) throws " + Utils.getApplicationExceptionName() + " {");
+		file.writeln(1, "public ResponseEntity<?> searchPageablePost(@RequestBody SearchDTO request) throws " + WriterUtils.getApplicationExceptionName() + " {");
 		file.writeln(2, "SpecificationBasic<T> specification = request.buildSpecification(service.getEntityClass());");
 		file.writeln(2, "return ResponseEntity.ok(service.findAll(specification.getSpecification(), request.createPageable()));");
 		file.writeln(1, "}");
@@ -159,7 +159,7 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 
 	private void writeUpdateEndpoint(GeneratorOutputFile file) throws IOException {
 		file.writeln(1, "@PutMapping(value = \"/update\", produces = MediaType.APPLICATION_JSON_VALUE)");
-		file.writeln(1, "public ResponseEntity<?> update(@Valid @RequestBody T object) throws " + Utils.getApplicationExceptionName() + " {");
+		file.writeln(1, "public ResponseEntity<?> update(@Valid @RequestBody T object) throws " + WriterUtils.getApplicationExceptionName() + " {");
 //		file.writeln(2, "Optional<T> optional = service.findById(id);");
 //		file.writeln(2, "if (optional.isPresent()) {");
 		file.writeln(2, "return ResponseEntity.ok(service.update(object));");
@@ -171,7 +171,7 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 
 	private void writeInsertEndpoint(GeneratorOutputFile file) throws IOException {
 		file.writeln(1, "@PostMapping(value = \"\", produces = MediaType.APPLICATION_JSON_VALUE)");
-		file.writeln(1, "public ResponseEntity<?> insert(@Valid @RequestBody T object) throws " + Utils.getApplicationExceptionName() + " {");
+		file.writeln(1, "public ResponseEntity<?> insert(@Valid @RequestBody T object) throws " + WriterUtils.getApplicationExceptionName() + " {");
 		file.writeln(2, "return ResponseEntity.ok(service.insert(object));");
 		file.writeln(1, "}");
 		file.writeln(0, "");

@@ -3,7 +3,7 @@ package com.generator.writer.frontend.angular;
 import java.io.File;
 
 import com.generator.util.StringUtils;
-import com.generator.writer.GFolder;
+import com.generator.writer.utils.GFolder;
 
 public class AngularBashUtil {
 

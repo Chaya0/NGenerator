@@ -3,9 +3,9 @@ package com.generator.writer.frontend.angular.components;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
 import com.generator.writer.frontend.ComponentWriter;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class AngularSearchFormComponentWriter implements ComponentWriter {
 	
@@ -22,7 +22,7 @@ public class AngularSearchFormComponentWriter implements ComponentWriter {
 	public void writeScript(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-search-form", StringUtils.camelToKebabCase(entity.getName()) + "-search-form.component.ts", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-search-form", StringUtils.camelToKebabCase(entity.getName()) + "-search-form.component.ts", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -45,7 +45,7 @@ public class AngularSearchFormComponentWriter implements ComponentWriter {
 	@Override
 	public void writeStyles(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-search-form", StringUtils.camelToKebabCase(entity.getName()) + "-search-form.component.css", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-search-form", StringUtils.camelToKebabCase(entity.getName()) + "-search-form.component.css", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -56,7 +56,7 @@ public class AngularSearchFormComponentWriter implements ComponentWriter {
 	@Override
 	public void writeHTML(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-search-form", StringUtils.camelToKebabCase(entity.getName()) + "-search-form.component.html", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-search-form", StringUtils.camelToKebabCase(entity.getName()) + "-search-form.component.html", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

@@ -1,16 +1,16 @@
 package com.generator.writer.java.config.security;
 
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaJwtUtilWriter {
 
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath() + "/security", "JwtUtil.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getConfigPackagePath() + "/security", "JwtUtil.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "package " + Utils.getImportDefaultPackage() + ".config.security;");
+			file.writeln(0, "package " + WriterUtils.getImportDefaultPackage() + ".config.security;");
 			file.writeln(0, "");
 			file.writeln(0, "import java.util.Date;");
 			file.writeln(0, "import java.util.HashMap;");

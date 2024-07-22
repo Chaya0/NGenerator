@@ -3,8 +3,8 @@ package com.generator.writer.java.components.generic;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.writer.DefaultWriter;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaGenericRepositoryWriter implements DefaultWriter {
 
@@ -19,8 +19,8 @@ public class JavaGenericRepositoryWriter implements DefaultWriter {
 	 */
 	public void create() throws Exception {
 		
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getRepositoryPackagePath(false), "GenericRepository.java", true)) {
-			file.writeln(0, "package " + Utils.getImportRepositoryPackageName(false) + ";");
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getRepositoryPackagePath(false), "GenericRepository.java", true)) {
+			file.writeln(0, "package " + WriterUtils.getImportRepositoryPackageName(false) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.data.jpa.domain.Specification;");
 			file.writeln(0, "import org.springframework.data.jpa.repository.JpaRepository;");

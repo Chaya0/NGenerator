@@ -1,16 +1,16 @@
 package com.generator.writer.java.config.security;
 
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaJwtFilterWriter {
 
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath() + "/security", "JwtFilter.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getConfigPackagePath() + "/security", "JwtFilter.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "package " + Utils.getImportDefaultPackage() + ".config.security;");
+			file.writeln(0, "package " + WriterUtils.getImportDefaultPackage() + ".config.security;");
 			file.writeln(0, "");
 			file.writeln(0, "import java.io.IOException;");
 			file.writeln(0, "");
@@ -21,8 +21,8 @@ public class JavaJwtFilterWriter {
 			file.writeln(0, "import org.springframework.stereotype.Component;");
 			file.writeln(0, "import org.springframework.web.filter.OncePerRequestFilter;");
 			file.writeln(0, "");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".service.UserService;");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".config.security.JwtUtil;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".service.UserService;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".config.security.JwtUtil;");
 			file.writeln(0, "");
 			file.writeln(0, "import jakarta.servlet.FilterChain;");
 			file.writeln(0, "import jakarta.servlet.ServletException;");

@@ -5,8 +5,8 @@ import com.generator.model.Attribute;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
 import com.generator.writer.DefaultWriter;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaBasicRepositoryWriter implements DefaultWriter{
 
@@ -21,18 +21,18 @@ public class JavaBasicRepositoryWriter implements DefaultWriter{
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 		
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getRepositoryPackagePath(false, entity.getName()), upperCaseName + "RepositoryBasic.java", true)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getRepositoryPackagePath(false, entity.getName()), upperCaseName + "RepositoryBasic.java", true)) {
 
-			file.writeln(0, "package " + Utils.getImportRepositoryPackageName(false, entity.getName()) + ";");
+			file.writeln(0, "package " + WriterUtils.getImportRepositoryPackageName(false, entity.getName()) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.data.repository.NoRepositoryBean;");
-			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
-			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(false) + ".GenericRepository;");
+			file.writeln(0, "import " + WriterUtils.getImportModelPackageName() + "." + upperCaseName + ";");
+			file.writeln(0, "import " + WriterUtils.getImportRepositoryPackageName(false) + ".GenericRepository;");
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "import java.time.*;");
 			for(Attribute attribute : entity.getAttributes()) {
 				if(attribute.getEnumName() != null && !attribute.getEnumName().isBlank()) {
-					file.writeln(0, "import " + Utils.getImportModelEnumsPackageName() + "." + StringUtils.uppercaseFirst(attribute.getEnumName()) + ";");
+					file.writeln(0, "import " + WriterUtils.getImportModelEnumsPackageName() + "." + StringUtils.uppercaseFirst(attribute.getEnumName()) + ";");
 				}
 			}
 			file.writeln(0, "");

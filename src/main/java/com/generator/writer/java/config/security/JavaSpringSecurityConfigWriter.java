@@ -1,15 +1,15 @@
 package com.generator.writer.java.config.security;
 
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaSpringSecurityConfigWriter {
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath() + "/security", "SpringSecurityConfig.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getConfigPackagePath() + "/security", "SpringSecurityConfig.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "package " + Utils.getImportDefaultPackage() + ".config.security;");
+			file.writeln(0, "package " + WriterUtils.getImportDefaultPackage() + ".config.security;");
 
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.context.annotation.Bean;");
@@ -26,8 +26,8 @@ public class JavaSpringSecurityConfigWriter {
 			file.writeln(0, "import org.springframework.security.web.SecurityFilterChain;");
 			file.writeln(0, "import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;");
 			file.writeln(0, "");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".config.security.JwtFilter;");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".model.User;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".config.security.JwtFilter;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".model.User;");
 			file.writeln(0, "");
 			file.writeln(0, "@EnableWebSecurity");
 			file.writeln(0, "@Configuration");

@@ -1,12 +1,12 @@
 package com.generator.writer.java.dto;
 
 import com.generator.Application;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaErrorResponseDTOWriter {
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getDTOPackagePath(), "ErrorResponse.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getDTOPackagePath(), "ErrorResponse.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

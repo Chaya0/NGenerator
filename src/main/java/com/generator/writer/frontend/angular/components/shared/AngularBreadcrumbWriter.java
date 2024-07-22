@@ -1,8 +1,8 @@
 package com.generator.writer.frontend.angular.components.shared;
 import java.io.IOException;
 
-import com.generator.writer.GeneratorOutputFile;
 import com.generator.writer.frontend.SimpleComponentWriter;
+import com.generator.writer.utils.GeneratorOutputFile;
 
 public class AngularBreadcrumbWriter implements SimpleComponentWriter{
 

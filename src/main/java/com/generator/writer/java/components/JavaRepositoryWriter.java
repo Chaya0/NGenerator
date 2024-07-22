@@ -4,8 +4,8 @@ import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
 import com.generator.writer.DefaultWriter;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaRepositoryWriter implements DefaultWriter {
 
@@ -19,15 +19,15 @@ public class JavaRepositoryWriter implements DefaultWriter {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		if (Utils.fileExists(Utils.getRepositoryPackagePath(false, entity.getName()), upperCaseName + "Repository.java")) {
+		if (WriterUtils.fileExists(WriterUtils.getRepositoryPackagePath(false, entity.getName()), upperCaseName + "Repository.java")) {
 			return;
 		}
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getRepositoryPackagePath(false, entity.getName()), upperCaseName + "Repository.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getRepositoryPackagePath(false, entity.getName()), upperCaseName + "Repository.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
 
-			file.writeln(0, "package " + Utils.getImportRepositoryPackageName(false, entity.getName()) + ";");
+			file.writeln(0, "package " + WriterUtils.getImportRepositoryPackageName(false, entity.getName()) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.stereotype.Repository;");
 //			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");

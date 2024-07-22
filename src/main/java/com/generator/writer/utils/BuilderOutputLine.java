@@ -1,4 +1,4 @@
-package com.generator.writer;
+package com.generator.writer.utils;
 
 class BuilderOutputLine {
 	private int indent;

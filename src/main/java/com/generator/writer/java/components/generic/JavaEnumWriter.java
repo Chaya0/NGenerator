@@ -4,8 +4,8 @@ import com.generator.model.AppModel;
 import com.generator.model.EnumModel;
 import com.generator.util.StringUtils;
 import com.generator.writer.EnumWriter;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaEnumWriter implements EnumWriter {
 
@@ -22,8 +22,8 @@ public class JavaEnumWriter implements EnumWriter {
 	public void create(EnumModel enumModel) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(enumModel.getName());
 
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getModelEnumsPackagePath(), upperCaseName + ".java", true)) {
-			file.writeln(0, "package " + Utils.getImportModelPackageName() + ".enums;");
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getModelEnumsPackagePath(), upperCaseName + ".java", true)) {
+			file.writeln(0, "package " + WriterUtils.getImportModelPackageName() + ".enums;");
 			file.writeln(0, "");
 			file.writeln(0, "public enum " + upperCaseName + " {");
 			file.writeln(0, "");

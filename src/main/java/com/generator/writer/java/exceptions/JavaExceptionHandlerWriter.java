@@ -3,13 +3,13 @@ package com.generator.writer.java.exceptions;
 import java.io.IOException;
 
 import com.generator.Application;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaExceptionHandlerWriter {
 
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getExceptionsPackagePath() + "/handler", "DefaultExceptionHandler.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getExceptionsPackagePath() + "/handler", "DefaultExceptionHandler.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -28,8 +28,8 @@ public class JavaExceptionHandlerWriter {
 			file.writeln(0, "import org.springframework.web.context.request.WebRequest;");
 			file.writeln(0, "import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;");
 			file.writeln(0, "");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".dto.ErrorResponse;");
-			file.writeln(0, "import " + Utils.getImportDefaultPackage() + ".exceptions.OperationNotSupportedException;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".dto.ErrorResponse;");
+			file.writeln(0, "import " + WriterUtils.getImportDefaultPackage() + ".exceptions.OperationNotSupportedException;");
 			file.writeln(0, "");
 			file.writeln(0, "import jakarta.persistence.EntityNotFoundException;");
 			file.writeln(0, "import jakarta.validation.ConstraintViolationException;");

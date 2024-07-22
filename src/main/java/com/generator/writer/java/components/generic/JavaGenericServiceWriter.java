@@ -5,8 +5,8 @@ import java.io.IOException;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.writer.DefaultWriter;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaGenericServiceWriter implements DefaultWriter {
 
@@ -17,15 +17,15 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 
 	public void create() throws Exception {
 
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getServicePackagePath(false), "GenericService.java", true)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getServicePackagePath(false), "GenericService.java", true)) {
 
-			file.writeln(0, "package " + Utils.getImportServicePackageName(false) + ";");
+			file.writeln(0, "package " + WriterUtils.getImportServicePackageName(false) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.data.domain.Page;");
 			file.writeln(0, "import org.springframework.data.domain.Pageable;");
 			file.writeln(0, "import org.springframework.data.jpa.domain.Specification;");
-			file.writeln(0, "import " + Utils.getImportRepositoryPackageName(false) + ".GenericRepository" + ";");
-			file.writeln(0, Utils.getApplicationExceptionImport());
+			file.writeln(0, "import " + WriterUtils.getImportRepositoryPackageName(false) + ".GenericRepository" + ";");
+			file.writeln(0, WriterUtils.getApplicationExceptionImport());
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "");
 			file.writeln(0, "public abstract class GenericService<T> {");
@@ -81,10 +81,10 @@ public class JavaGenericServiceWriter implements DefaultWriter {
 	}
 
 	private void writeSaveMethod(GeneratorOutputFile file) throws IOException {
-		file.writeln(1, "public abstract T insert(T object) throws " + Utils.getApplicationExceptionName() + ";");
+		file.writeln(1, "public abstract T insert(T object) throws " + WriterUtils.getApplicationExceptionName() + ";");
 		file.writeln(0, "");
 
-		file.writeln(1, "public abstract T update(T object) throws " + Utils.getApplicationExceptionName() + ";");
+		file.writeln(1, "public abstract T update(T object) throws " + WriterUtils.getApplicationExceptionName() + ";");
 		file.writeln(0, "");
 
 		file.writeln(1, "public T save(T object) {");

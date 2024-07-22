@@ -1,17 +1,17 @@
 package com.generator.writer.java.config;
 
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaSwaggerWriter {
 
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath(), "OpenApiConfiguration.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getConfigPackagePath(), "OpenApiConfiguration.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
 
-			file.writeln(0, "package " + Utils.getImportDefaultPackage() + ".config;");
+			file.writeln(0, "package " + WriterUtils.getImportDefaultPackage() + ".config;");
 			file.writeln(0, "");
 			file.writeln(0, "import io.swagger.v3.oas.annotations.OpenAPIDefinition;");
 			file.writeln(0, "import io.swagger.v3.oas.annotations.info.Info;");

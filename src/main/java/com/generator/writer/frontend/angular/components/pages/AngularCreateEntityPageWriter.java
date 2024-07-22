@@ -3,9 +3,9 @@ package com.generator.writer.frontend.angular.components.pages;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
 import com.generator.writer.frontend.ComponentWriter;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class AngularCreateEntityPageWriter implements ComponentWriter {
 
@@ -22,7 +22,7 @@ public class AngularCreateEntityPageWriter implements ComponentWriter {
 	public void writeScript(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.ts", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.ts", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -47,7 +47,7 @@ public class AngularCreateEntityPageWriter implements ComponentWriter {
 	@Override
 	public void writeStyles(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.css", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.css", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -58,7 +58,7 @@ public class AngularCreateEntityPageWriter implements ComponentWriter {
 	@Override
 	public void writeHTML(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.html", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.html", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

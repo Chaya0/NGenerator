@@ -3,9 +3,9 @@ package com.generator.writer.frontend.angular.components;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
 import com.generator.writer.frontend.ComponentWriter;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class AngularTableViewComponentWriter implements ComponentWriter {
 
@@ -22,7 +22,7 @@ public class AngularTableViewComponentWriter implements ComponentWriter {
 	public void writeScript(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.ts", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.ts", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -45,7 +45,7 @@ public class AngularTableViewComponentWriter implements ComponentWriter {
 	@Override
 	public void writeStyles(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.css", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.css", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
@@ -56,7 +56,7 @@ public class AngularTableViewComponentWriter implements ComponentWriter {
 	@Override
 	public void writeHTML(Entity entity) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.html", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.html", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

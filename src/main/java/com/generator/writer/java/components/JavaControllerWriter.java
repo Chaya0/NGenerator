@@ -4,8 +4,8 @@ import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
 import com.generator.writer.DefaultWriter;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaControllerWriter implements DefaultWriter {
 
@@ -19,22 +19,22 @@ public class JavaControllerWriter implements DefaultWriter {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		if (Utils.fileExists(Utils.getControllerPackagePath(false, entity.getName()), upperCaseName + "Controller.java")) {
+		if (WriterUtils.fileExists(WriterUtils.getControllerPackagePath(false, entity.getName()), upperCaseName + "Controller.java")) {
 			return;
 		}
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getControllerPackagePath(false), upperCaseName + "Controller.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getControllerPackagePath(false), upperCaseName + "Controller.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "package " + Utils.getImportControllerPackageName(false, entity.getName()) + ";");
+			file.writeln(0, "package " + WriterUtils.getImportControllerPackageName(false, entity.getName()) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.springframework.web.bind.annotation.*;");
 			file.writeln(0, "import org.springframework.context.annotation.*;");
 			// TODO dodati logiku za generisanje anotacije za autorizaciju
 			file.writeln(0, "import io.swagger.v3.oas.annotations.security.SecurityRequirement;");
 //			file.writeln(0, "import " + Utils.getImportControllerPackageName(false) + upperCaseName + "ControllerBasic;");
-			file.writeln(0, "import " + Utils.getImportServicePackageName(false) + "." + entity.getName().toLowerCase() + "." + upperCaseName + "Service;");
-			file.writeln(0, "import " + Utils.getImportModelPackageName() + "." + upperCaseName + ";");
+			file.writeln(0, "import " + WriterUtils.getImportServicePackageName(false) + "." + entity.getName().toLowerCase() + "." + upperCaseName + "Service;");
+			file.writeln(0, "import " + WriterUtils.getImportModelPackageName() + "." + upperCaseName + ";");
 
 			file.writeln(0, "");
 			file.writeln(0, "@Primary");

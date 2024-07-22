@@ -1,16 +1,16 @@
 package com.generator.writer.java.config.quartz;
 
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaAutowiringSpringBeanJobFactoryWriter {
 	public void create() throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getConfigPackagePath() + "/quartz", "AutowiringSpringBeanJobFactory.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getConfigPackagePath() + "/quartz", "AutowiringSpringBeanJobFactory.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
 
-			file.writeln(0, "package " + Utils.getImportDefaultPackage() + ".config.quartz;");
+			file.writeln(0, "package " + WriterUtils.getImportDefaultPackage() + ".config.quartz;");
 			file.writeln(0, "");
 			file.writeln(0, "import org.quartz.spi.TriggerFiredBundle;");
 			file.writeln(0, "import org.springframework.beans.factory.annotation.Autowired;");

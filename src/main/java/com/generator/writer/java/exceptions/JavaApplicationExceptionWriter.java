@@ -2,13 +2,13 @@ package com.generator.writer.java.exceptions;
 
 import com.generator.Application;
 import com.generator.util.StringUtils;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaApplicationExceptionWriter {
 	public void create() throws Exception {
 		String appName = StringUtils.uppercaseFirst(Application.getSpringProperties().getName());
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getExceptionsPackagePath(), appName + "Exception.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getExceptionsPackagePath(), appName + "Exception.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

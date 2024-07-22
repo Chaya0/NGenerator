@@ -11,8 +11,8 @@ import com.generator.model.enums.FetchType;
 import com.generator.model.enums.InheritanceType;
 import com.generator.util.StringUtils;
 import com.generator.writer.DefaultWriter;
-import com.generator.writer.GeneratorOutputFile;
-import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
+import com.generator.writer.utils.WriterUtils;
 
 public class JavaEntityWriter implements DefaultWriter {
 
@@ -27,9 +27,9 @@ public class JavaEntityWriter implements DefaultWriter {
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getModelPackagePath(), upperCaseName + ".java", true)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getModelPackagePath(), upperCaseName + ".java", true)) {
 
-			file.writeln(0, "package " + Utils.getImportModelPackageName() + ";");
+			file.writeln(0, "package " + WriterUtils.getImportModelPackageName() + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import jakarta.persistence.*;");
 			file.writeln(0, "import jakarta.validation.constraints.NotEmpty;");
@@ -44,7 +44,7 @@ public class JavaEntityWriter implements DefaultWriter {
 				file.writeln(0, "import org.springframework.security.core.GrantedAuthority;");
 			}
 			for (String enumToImort : entity.getEnumsForImport()) {
-				file.writeln(0, "import " + Utils.getImportModelEnumsPackageName() + "." + enumToImort + ";");
+				file.writeln(0, "import " + WriterUtils.getImportModelEnumsPackageName() + "." + enumToImort + ";");
 			}
 			file.writeln(0, "");
 			file.writeln(0, "@Data");
