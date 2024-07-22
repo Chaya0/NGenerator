@@ -6,11 +6,8 @@ import com.generator.model.AppModel;
 import com.generator.model.Attribute;
 import com.generator.model.Entity;
 import com.generator.model.Relation;
-import com.generator.model.enums.AttributeType;
-import com.generator.model.enums.RelationType;
-import com.generator.util.StringUtils;
-import com.generator.writer.GeneratorOutputFile;
 import com.generator.writer.Utils;
+import com.generator.writer.utils.GeneratorOutputFile;
 
 public class LocalizationWriter {
 

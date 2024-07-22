@@ -4,6 +4,8 @@ import java.io.File;
 
 import com.generator.Application;
 import com.generator.util.StringUtils;
+import com.generator.writer.utils.GFolder;
+import com.generator.writer.utils.GeneratorOutputFile;
 
 public class Utils {
 	/**
