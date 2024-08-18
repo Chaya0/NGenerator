@@ -4,15 +4,15 @@
 			<attributes>
 				<attribute name="username" type="string" unique="true"/>
 				<attribute name="password" type="string"/>
-				<attribute name="email" type="string"/>
-				<attribute name="creationDate" type="date" />
+				<attribute name="email" type="string" unique="true"/>
+				<attribute name="creationDate" type="date"/>
 				<attribute name="modifyDate" type="date" />
 				<attribute name="firstName" type="string" nullable="false"/>
 				<attribute name="lastName" type="string" nullable="false"/>
 				<attribute name="parentName" type="string" />
-				<attribute name="recordNumber" type="string" />
+				<attribute name="recordNumber" type="string" unique="true"/>
 				<attribute name="birthDate" type="date" />
-				<attribute name="jmbg" type="string" />
+				<attribute name="jmbg" type="string" unique="true"/>
 				<attribute name="jobTitle" type="string" />
 				<attribute name="officeNumber" type="string" />
 				<attribute name="avatar" type="string" />
@@ -67,6 +67,14 @@
 				<relation entityName="device" relationType="manyToOne" owningSide="false"/>
 			</relations>
 		</entity>
+		<entity name="timetableDevice">
+			<attributes>
+				<attribute name="actionType" enumName="actionType" type="enum" nullable="false"/>
+				<attribute name="image" type="string"/>
+				<attribute name="rfid" type="string"/>
+				<attribute name="dateTime" type="localDateTime" nullable="false"/>
+			</attributes>
+		</entity>
 		<entity name="departmentUnit">
 			<attributes>
 				<attribute name="name" type="string" nullable="false"/>
@@ -80,8 +88,8 @@
 		</entity>
 		<entity name="device">
 			<attributes>
-				<attribute name="code" type="string" nullable="false"/>
-				<attribute name="ipAddress" type="string"/>
+				<attribute name="code" type="string" nullable="false" unique="true"/>
+				<attribute name="ipAddress" type="string" unique="true"/>
 				<attribute name="active" type="boolean"/>
 				<attribute name="description" type="string"/>
 			</attributes>
@@ -105,8 +113,8 @@
 		</entity>
 		<entity name="card">
 			<attributes>
-				<attribute name="pin" type="string"/>
-				<attribute name="rfid" type="string" nullable="false"/>
+				<attribute name="pin" type="string" unique="true"/>
+				<attribute name="rfid" type="string" nullable="false" unique="true"/>
 				<attribute name="active" type="boolean" nullable="false"/>
 				<attribute name="description" type="string"/>
 				<attribute name="creationDate" type="localDate"/>

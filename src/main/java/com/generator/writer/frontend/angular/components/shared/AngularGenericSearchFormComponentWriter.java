@@ -85,7 +85,7 @@ public class AngularGenericSearchFormComponentWriter implements SimpleComponentW
 			file.writeln(2, "// We are saving searchDTO inside the service, so we can reuse it in the table component for page changes etc.");
 			file.writeln(2, "this.service.searchDTO = searchDTO;");
 			file.writeln(0, "");
-			file.writeln(2, "this.search(searchDTO, this.entity, (data: Page<any>) => {");
+			file.writeln(2, "this.search(searchDTO, this.entity, (data: Page) => {");
 			file.writeln(3, "this.searchService.emitEvent(data);");
 			file.writeln(2, "});");
 			file.writeln(1, "}");

@@ -26,11 +26,10 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "import { Component, inject, OnInit } from '@angular/core';");
+			file.writeln(0, "import { Component, inject } from '@angular/core';");
 			file.writeln(0, "import {RouterLink, RouterOutlet} from \"@angular/router\";");
 			file.writeln(0, "import {NgIf} from \"@angular/common\";");
 			file.writeln(0, "import {MaterialModule} from \"../../../shared/material/material.module\";");
-			file.writeln(0, "import {Page} from \"../../../core/entity-utils/page\";");
 			file.writeln(0, "import {SearchService} from \"../../../core/services/search.service\";");
 			file.writeln(0, "import { AppUtils } from '../../../shared/utils/app-utils';");
 			file.writeln(0, "import { " + upperCaseName + " } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "';");
@@ -54,17 +53,9 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(1, "styleUrl: './" + kebabCase + "-search-page.component.css'");
 			file.writeln(0, "})");
 			file.writeln(0, "");
-			file.writeln(0, "export class " + upperCaseName + "SearchPageComponent implements OnInit {");
+			file.writeln(0, "export class " + upperCaseName + "SearchPageComponent {");
 			file.writeln(1, "structure: " + upperCaseName + "Structure = " + upperCaseName + "Structure.instance;");
-			file.writeln(1, "public page?: Page<" + upperCaseName + ">;");
-			file.writeln(1, "protected readonly AppUtils = AppUtils;");
 			file.writeln(1, "searchService: SearchService = inject(SearchService);");
-			file.writeln(0, "");
-			file.writeln(1, "ngOnInit() { ");
-			file.writeln(2, "this.searchService.event$.subscribe(data => {");
-			file.writeln(3, "this.page = data as Page<" + upperCaseName + ">;");
-			file.writeln(2, "});");
-			file.writeln(1, "}");
 			file.writeln(0, "}");
 		}
 	}
@@ -76,16 +67,16 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, ".title {");
-			file.writeln(1, "display: flex;");
-			file.writeln(1, "align-items: center;");
-			file.writeln(1, "padding: 16px 16px 24px;");
-			file.writeln(1, "font-weight: 500;");
-			file.writeln(0, "}");
 			file.writeln(0, "");
-			file.writeln(0, ".search-form {");
-			file.writeln(0, "margin-bottom: 16px;");
-			file.writeln(0, "}");
+//			file.writeln(1, "display: flex;");
+//			file.writeln(1, "align-items: center;");
+//			file.writeln(1, "padding: 16px 16px 24px;");
+//			file.writeln(1, "font-weight: 500;");
+//			file.writeln(0, "}");
+//			file.writeln(0, "");
+//			file.writeln(0, ".search-form {");
+//			file.writeln(0, "margin-bottom: 16px;");
+//			file.writeln(0, "}");
 		}
 	}
 
@@ -96,13 +87,13 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "<mat-card class=\"card\" appearance=\"outlined\" style=\"margin-bottom: 30px\">");
-			file.writeln(1, "<div class=\"title\">");
-			file.writeln(2, "<button mat-icon-button [matMenuTriggerFor]=\"menu\" aria-label=\"Example icon-button with a menu\">");
-			file.writeln(3, "<mat-icon>more_vert</mat-icon>");
-			file.writeln(2, "</button>");
-			file.writeln(2, "<mat-card-title>{{ AppUtils.toFirstLetterLowercase(structure.entityName) + \".title\" | translate }}</mat-card-title>");
-			file.writeln(1, "</div>");
+			file.writeln(0, "<div class=\"title fw-bold\">");
+			file.writeln(1, "{{ structure.title | translate }}");
+			file.writeln(1, "<button mat-icon-button [matMenuTriggerFor]=\"menu\" aria-label=\"Example icon-button with a menu\">");
+			file.writeln(2, "<mat-icon>arrow_drop_down</mat-icon>");
+			file.writeln(1, "</button>");
+			file.writeln(0, "</div>");
+			file.writeln(0, "<mat-card class=\"card\" style=\"margin-bottom: 30px\">");
 			file.writeln(1, "<mat-menu #menu=\"matMenu\">");
 			file.writeln(2, "<a routerLink=\"create\" mat-menu-item>");
 			file.writeln(3, "<mat-icon color=\"primary\">add</mat-icon>");
@@ -114,7 +105,7 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(3, "<app-" + kebabCase + "-search-form class=\"search-form-container\" [structure]=\"structure\"></app-" + kebabCase + "-search-form>");
 			file.writeln(2, "</div>");
 			file.writeln(2, "<mat-divider></mat-divider>");
-			file.writeln(2, "<app-" + kebabCase + "-table-view [attributes]=\"structure.attributes\" [entity]=\"structure.entityName\" [page]=\"page\"></app-" + kebabCase + "-table-view>");
+			file.writeln(2, "<app-" + kebabCase + "-table-view [attributes]=\"structure.attributes\" [entity]=\"structure.entityName\"></app-" + kebabCase + "-table-view>");
 			file.writeln(1, "</mat-card-content>");
 			file.writeln(0, "</mat-card>");
 		}

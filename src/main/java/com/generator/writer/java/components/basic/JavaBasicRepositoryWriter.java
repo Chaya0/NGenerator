@@ -40,10 +40,18 @@ public class JavaBasicRepositoryWriter implements DefaultWriter{
 			file.writeln(0, "public interface " + upperCaseName + "RepositoryBasic extends GenericRepository<" + upperCaseName + "> {");
 			file.writeln(0, "");
 			for(Attribute attribute : entity.getAttributes()) {
-				if(attribute.getEnumName() != null && !attribute.getEnumName().isBlank()) {
-					file.writeln(1, "Optional<" + upperCaseName + "> findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + StringUtils.uppercaseFirst(attribute.getEnumName()) + " " + attribute.getName() + ");");
-				}else{
-					file.writeln(1, "Optional<" + upperCaseName + "> findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + attribute.getType().getGeneratorCode() + " " + attribute.getName() + ");");
+				if(attribute.isUnique()) {
+					if(attribute.getEnumName() != null && !attribute.getEnumName().isBlank()) {
+						file.writeln(1, "Optional<" + upperCaseName + "> findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + StringUtils.uppercaseFirst(attribute.getEnumName()) + " " + attribute.getName() + ");");
+					}else{
+						file.writeln(1, "Optional<" + upperCaseName + "> findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + attribute.getType().getGeneratorCode() + " " + attribute.getName() + ");");
+					}
+				}else {
+					if(attribute.getEnumName() != null && !attribute.getEnumName().isBlank()) {
+						file.writeln(1, "List<" + upperCaseName + "> findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + StringUtils.uppercaseFirst(attribute.getEnumName()) + " " + attribute.getName() + ");");
+					}else{
+						file.writeln(1, "List<" + upperCaseName + "> findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + attribute.getType().getGeneratorCode() + " " + attribute.getName() + ");");
+					}
 				}
 			}
 			file.writeln(0, "");

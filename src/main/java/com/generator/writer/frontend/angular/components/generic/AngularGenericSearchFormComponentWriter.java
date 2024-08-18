@@ -37,7 +37,8 @@ public class AngularGenericSearchFormComponentWriter implements ComponentWriter 
 			file.writeln(1, "styleUrl: './" + kebabCase + "-search-form.component.css'");
 			file.writeln(0, "})");
 			file.writeln(0, "");
-			file.writeln(0, "export class " + upperCaseName + "SearchFormComponent extends GenericSearchFormComponent {");
+			file.writeln(0, "export class " + upperCaseName + "SearchFormComponent {");
+			file.writeln(1, "@Input() structure!: " + upperCaseName + "Structure;");
 			file.writeln(0, "}");
 		}
 	}
