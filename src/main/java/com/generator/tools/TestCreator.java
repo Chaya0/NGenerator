@@ -38,28 +38,47 @@ public class TestCreator {
 	}
 
 	private static void scanDirectory(File directory, Map<String, String> classMap) {
-		if (directory.isDirectory()) {
-			File[] files = directory.listFiles();
-			if (files != null) {
-				for (File file : files) {
-					if (file.isDirectory()) {
-						scanDirectory(file, classMap);
-					} else if (file.getName().endsWith(".class")) {
-						String className = getClassName(directory, file);
-						System.out.println(file.getParent());
-						String classPath = file.getParent().replace("target\\classes", "src\\test\\java");;
-						classMap.put(className, classPath);
-					}
-				}
-			}
-		}
+	    if (directory.isDirectory()) {
+	        File[] files = directory.listFiles();
+	        if (files != null) {
+	            for (File file : files) {
+	                if (file.isDirectory()) {
+	                    scanDirectory(file, classMap);
+	                } else if (file.getName().endsWith(".class")) {
+	                    String className = getClassName(directory, file);
+	                    String classPath = file.getParent().replace("target\\classes", "src\\test\\java");
+	                    if (isValidClass(className, classPath)) {
+	                        classMap.put(className, classPath);
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
+
+	private static boolean isValidClass(String className, String classPath) {
+	    try {
+	        System.out.println("Attempting to load class: " + getClassPackage(classPath) + "." +className); 
+	        Class<?> clazz = Class.forName(getClassPackage(classPath) + "." +className);
+	        return !clazz.isEnum() && !clazz.isAnnotation() && !clazz.isInterface();
+	    } catch (ClassNotFoundException e) {
+	        System.err.println("Class not found: " + className);  // Debugging line
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
 
 	private static String getClassName(File baseDir, File classFile) {
-		String relativePath = classFile.getAbsolutePath().substring(baseDir.getAbsolutePath().length() + 1);
-		String className = relativePath.replace(File.separatorChar, '.').replace(".class", "");
-		return className;
+	    String relativePath = classFile.getAbsolutePath().substring(baseDir.getAbsolutePath().length() + 1);
+	    String className = relativePath.replace(File.separatorChar, '.').replace(".class", "");
+	    return className;
 	}
+	
+	private static String getClassPackage(String path) {
+		String relativePath = path.substring(path.indexOf("src\\test\\java\\") + "src\\test\\java\\".length());
+		return relativePath.replace("\\", ".");
+	}
+
 
 	public static void main(String[] args) {
 		try {
@@ -74,7 +93,21 @@ public class TestCreator {
 					}
 					System.out.println(path);
 					System.out.println("Class: " + name + " generated successfuly on path: " + path);
+					String relativePath = path.substring(path.indexOf("src\\test\\java\\") + "src\\test\\java\\".length());
+					file.writeln(0, "package " + relativePath.replace("\\", ".") + ";");
+
 					file.writeln(0, "");
+					file.writeln(0, "import org.junit.jupiter.api.Test;");
+					file.writeln(0, "import static org.junit.jupiter.api.Assertions.*;");
+					file.writeln(0, "");
+					file.writeln(0, "public class " + name + "Test {");
+					file.writeln(0, "");
+					file.writeln(1, "@Test");
+					file.writeln(1, "void testPlaceholder() {");
+					file.writeln(2, "fail(\"Not yet implemented\");");
+					file.writeln(1, "}");
+					file.writeln(0, "}");
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

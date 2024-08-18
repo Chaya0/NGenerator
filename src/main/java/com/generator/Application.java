@@ -14,12 +14,12 @@ public class Application {
 	private static final Logger logger = LogManager.getLogger(Application.class);
 	private static SpringProperties springProperties = new SpringProperties(loadProperties());
 	private static GeneratorProperties generatorProperties = loadGeneratorProperties();
-	
+
 	public static void main(String[] args) throws Exception {
 		try {
 			logger.info("Generating application...");
-			ApplicationGenerator.generateApp();			
-		}catch (Exception e) {
+			ApplicationGenerator.generateApp();
+		} catch (Exception e) {
 			logger.error(e);
 			ErrorLogHandler.writeErrorLog(e);
 		}
@@ -39,7 +39,7 @@ public class Application {
 		logger.info("Application properties loaded successfuly!");
 		return properties;
 	}
-	
+
 	private static GeneratorProperties loadGeneratorProperties() {
 		logger.info("Loading application.properties...");
 		try (InputStream input = new FileInputStream("./application.properties")) {
@@ -57,8 +57,12 @@ public class Application {
 		return springProperties;
 	}
 
+	public static void setSpringProperties(SpringProperties springProperties) {
+		Application.springProperties = springProperties;
+	}
+
 	public static GeneratorProperties getGeneratorProperties() {
 		return generatorProperties;
 	}
-	
+
 }

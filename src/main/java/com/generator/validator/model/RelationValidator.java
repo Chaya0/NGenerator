@@ -30,7 +30,7 @@ public class RelationValidator implements Validator<Relation> {
 		Set<String> relationNames = new HashSet<>();
 		if (!relationNames.add(relation.getRelationName())) {
 			System.err.println("Duplicate relation name found: " + relation.getRelationName());
-			throw new DuplicateRelationNameException();
+			throw new DuplicateRelationNameException(relation.getRelationName());
 		}
 	}
 

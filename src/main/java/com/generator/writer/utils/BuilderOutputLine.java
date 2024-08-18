@@ -9,7 +9,7 @@ class BuilderOutputLine {
 		setText(text);
 	}
 
-	public int getindent() {
+	public int getIndent() {
 		return indent;
 	}
 
