@@ -2,6 +2,7 @@ package com.generator.model.enums;
 
 public enum AuthorisationType {
 	JWT("jwt"),
+	JWT_COOKIE("jwt_cookie"),
 	NULL("");
 
 	private String code;

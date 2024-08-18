@@ -27,6 +27,13 @@ public class Attribute {
 	private boolean nullable = true;
 	@XmlAttribute(name = "unique")
 	private boolean unique = false;
+	/**
+	 * System variable represents attribute that should not be included in DTO's or
+	 * request sent to the frontend...
+	 * It's attribute that's important only to the bussines logic of the application
+	 */
+	@XmlAttribute(name = "systemVariable")
+	private boolean systemVariable = false;
 
 	@Override
 	public String toString() {

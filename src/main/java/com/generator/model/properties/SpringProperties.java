@@ -1,4 +1,4 @@
-package com.generator.model;
+package com.generator.model.properties;
 
 import java.util.Arrays;
 import java.util.List;

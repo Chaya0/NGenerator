@@ -11,34 +11,34 @@ import com.generator.writer.utils.GeneratorOutputFile;
 
 public class LocalizationWriter {
 
-	public void create(AppModel appModel) throws Exception{
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendLocalizationPath(),"en.json", true)) {
+	public void create(AppModel appModel) throws Exception {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendLocalizationPath(), "en.json", true)) {
 //			if (file.hasAlreadyExisted()) {
 //				return;
 //			}
 			Iterator<Entity> entityIterator = appModel.getEntities().iterator();
-			while(entityIterator.hasNext()) {
+			while (entityIterator.hasNext()) {
 				Entity entity = entityIterator.next();
 				file.writeln(1, "\"" + entity.getName() + "\": {");
 				Iterator<Attribute> attributeIterator = entity.getAttributes().iterator();
-				for(Relation relation : entity.getRelations()) {
+				for (Relation relation : entity.getRelations()) {
 					file.writeln(2, "\"" + (relation.getRelationName() == null ? relation.getEntityName() : relation.getRelationName()) + "\": \"\",");
 				}
-				while(attributeIterator.hasNext()) {
+				while (attributeIterator.hasNext()) {
 					Attribute attribute = attributeIterator.next();
-					if(attributeIterator.hasNext()) {
+					if (attributeIterator.hasNext()) {
 						file.writeln(2, "\"" + attribute.getName() + "\": \"\",");
-					}else {
+					} else {
 						file.writeln(2, "\"" + attribute.getName() + "\": \"\"");
 					}
 				}
-				if(entityIterator.hasNext()) {
+				if (entityIterator.hasNext()) {
 					file.writeln(1, "},");
-				}else {
+				} else {
 					file.writeln(1, "}");
 				}
 			}
 		}
 	}
-	
+
 }

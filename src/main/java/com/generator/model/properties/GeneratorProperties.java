@@ -1,4 +1,4 @@
-package com.generator.model;
+package com.generator.model.properties;
 
 import com.generator.model.enums.ApplicationStructureType;
 import com.generator.model.enums.AuthorisationType;
@@ -21,38 +21,42 @@ import lombok.NoArgsConstructor;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class GeneratorProperties {
 //	@XmlAttribute(name = "name", required = true)
-	private boolean generateSwaggerComponent;
+	private boolean generateSwaggerComponent = false;
 //	@XmlAttribute(name = "name", required = true)
-	private boolean generateAuthorisationComponents;
+	private boolean generateAuthorisationComponents = false;
 //	@XmlAttribute(name = "name", required = true)
-	private boolean generateQuartzComponents;
+	/**
+	 * Only works if {@link generateAuthorisationComponents} is true.
+	 */
+	private boolean generatePermissionsOnEndpoints = false;
 //	@XmlAttribute(name = "name", required = true)
-	private boolean generateFrontend;
+	private boolean generateQuartzComponents = false;
+//	@XmlAttribute(name = "name", required = true)
+	private boolean generateFrontend = false;
 //	@XmlAttribute(name = "generationType")
 //	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
-	private DatabaseType databaseType;
+	private DatabaseType databaseType = DatabaseType.POSTGRES;
 //	@XmlAttribute(name = "generationType")
 //	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
-	private AuthorisationType authorisationType;
+	private AuthorisationType authorisationType = AuthorisationType.JWT;
 //	@XmlAttribute(name = "generationType")
 //	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
-	private FrontendType frontendType;
+	private FrontendType frontendType = FrontendType.ANGULAR;
 //	@XmlAttribute(name = "generationType")
 //	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
-	private ModelFileType modelFileType;
+	private ModelFileType modelFileType = ModelFileType.XML;
 //	@XmlAttribute(name = "generationType")
 //	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
-	private ApplicationStructureType applicationStructureType;
+	private ApplicationStructureType applicationStructureType = ApplicationStructureType.MONOLITHIC;
 	
-	private boolean generateBasicRepository;
-	private boolean generateGenericRepository;
-	private boolean generateBasicService;
-	private boolean generateGenericService;
-	private boolean generateBasicController;
-	private boolean generateGenericController;
-	private boolean generateGenericEntity;
-	private boolean generateGenericEnums;
-	private boolean generateDTOs;
+	private boolean generateBasicRepository = true;
+	private boolean generateGenericRepository = true;
+	private boolean generateBasicService = true;
+	private boolean generateGenericService = true;
+	private boolean generateBasicController = true;
+	private boolean generateGenericController = true;
+	private boolean generateGenericEntity = true;
+	private boolean generateGenericEnums = true;
+	private boolean generateDTOs = true;
 	
-	private String frontendProjectPath;
 }
