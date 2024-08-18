@@ -44,7 +44,7 @@ public class AngularGenericTableViewComponentWriter implements SimpleComponentWr
 			file.writeln(1, "@Input() structure?: Structure;");
 			file.writeln(1, "attributes: Attribute[] = [];");
 			file.writeln(1, "entity: string = \"\";");
-			file.writeln(1, "@Input() page?: Page<any>;");
+			file.writeln(1, "@Input() page?: Page;");
 			file.writeln(1, "@ViewChild(MatSort) sort!: MatSort;");
 			file.writeln(1, "dataSource: any[] = this.page ? this.page.content : [];");
 			file.writeln(1, "displayedColumns: string[] = [];");
@@ -70,7 +70,7 @@ public class AngularGenericTableViewComponentWriter implements SimpleComponentWr
 			file.writeln(2, "searchDto.sort = [new Order(sortState.active, sortState.direction)];");
 			file.writeln(2, "this.service.searchDTO = searchDto;");
 			file.writeln(0, "");
-			file.writeln(2, "this.search(searchDto, this.entity, (data: Page<any>) => {");
+			file.writeln(2, "this.search(searchDto, this.entity, (data: Page) => {");
 			file.writeln(3, "this.page = data;");
 			file.writeln(3, "this.dataSource = this.page ? this.page.content : [];");
 			file.writeln(3, "this.dataSource = this.transformContent(this.dataSource);");
@@ -100,7 +100,7 @@ public class AngularGenericTableViewComponentWriter implements SimpleComponentWr
 			file.writeln(2, "let searchDto = this.service.searchDTO;");
 			file.writeln(2, "if (searchDto) {");
 			file.writeln(3, "searchDto.pageNumber = event.pageIndex;");
-			file.writeln(3, "this.search(searchDto, this.entity, (data: Page<any>) => {");
+			file.writeln(3, "this.search(searchDto, this.entity, (data: Page) => {");
 			file.writeln(4, "this.page = data;");
 			file.writeln(4, "this.dataSource = this.page ? this.page.content : [];");
 			file.writeln(4, "this.dataSource = this.transformContent(this.dataSource);");
@@ -110,7 +110,7 @@ public class AngularGenericTableViewComponentWriter implements SimpleComponentWr
 			file.writeln(0, "");
 			file.writeln(1, "refreshData() {");
 			file.writeln(2, "if (!this.service.searchDTO) return;");
-			file.writeln(2, "this.search(this.service.searchDTO, this.entity, (data: Page<any>) => {");
+			file.writeln(2, "this.search(this.service.searchDTO, this.entity, (data: Page) => {");
 			file.writeln(3, "this.page = data;");
 			file.writeln(3, "this.dataSource = this.page ? this.page.content : [];");
 			file.writeln(3, "this.dataSource = this.transformContent(this.dataSource);");

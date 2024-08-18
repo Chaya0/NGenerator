@@ -36,7 +36,7 @@ public class AngularEntityStructureWriter {
 			file.writeln(0, "");
 			file.writeln(1, "entityName: string = '" + upperCaseName + "';");
 			file.writeln(1, "title: string = '" + StringUtils.camelToSnakeCase(entity.getName()) + "';");
-			file.writeln(1, "fkSearchAttribute: string = '';");
+			file.writeln(1, "fkSearchAttribute: string[] = [''];");
 			file.writeln(0, "");
 			file.writeln(1, "private constructor() {}");
 			file.writeln(1, "public static get instance(): " + upperCaseName + "Structure {");

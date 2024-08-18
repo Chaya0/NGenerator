@@ -13,7 +13,7 @@ import com.generator.writer.utils.WriterUtils;
 public class AngularEntityWriter {
 	
 	public void create(AppModel appModel) throws Exception{
-		for(Entity entity : appModel.getEntities()) {
+		for(Entity entity : appModel.getEntities()) { 
 			create(entity);
 		}
 	}
@@ -24,10 +24,16 @@ public class AngularEntityWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
+			for (Relation relation : entity.getRelations()) {
+				if(relation.getRelationType().equals(RelationType.ONE_TO_MANY) || relation.getRelationType().equals(RelationType.MANY_TO_MANY)) continue;
+				String kebabCaseNameImport = StringUtils.camelToKebabCase(relation.getEntityName());
+				file.writeln(0, "import { " + StringUtils.uppercaseFirst(relation.getEntityName()) + " } from '../" + kebabCaseNameImport + "/" + kebabCaseNameImport +  "';");
+			}
+			file.writeln(0, "");
 			file.writeln(0, "export class " + upperCaseName + " {");
 			for (Attribute attribute : entity.getAttributes()) {
 				if (attribute.getType().equals(AttributeType.ENUM)) {
-					file.writeln(1, attribute.getName() + "?: " + attribute.getEnumName() + ";");
+					file.writeln(1, "// " +  attribute.getName() + "?: " + attribute.getEnumName() + ";");
 				} else {
 					file.writeln(1, attribute.getName() + "?: " + attribute.getType().getAngularTypeCode() + ";");
 				}

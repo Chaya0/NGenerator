@@ -63,12 +63,22 @@ public class JavaBasicServiceWriter implements DefaultWriter {
 			file.writeln(1, "}");
 			file.writeln(0, "");
 			for(Attribute attribute : entity.getAttributes()) {
-				if(attribute.getEnumName() != null && !attribute.getEnumName().isBlank()) {
-					file.writeln(1, "public " + upperCaseName + " findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + StringUtils.uppercaseFirst(attribute.getEnumName()) + " " + attribute.getName() + ") {");
-				}else{
-					file.writeln(1, "public " + upperCaseName + " findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + attribute.getType().getGeneratorCode() + " " + attribute.getName() + ") {");
+				if(attribute.isUnique()) {
+					if(attribute.getEnumName() != null && !attribute.getEnumName().isBlank()) {
+						file.writeln(1, "public " + upperCaseName + " findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + StringUtils.uppercaseFirst(attribute.getEnumName()) + " " + attribute.getName() + ") {");
+					}else{
+						file.writeln(1, "public " + upperCaseName + " findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + attribute.getType().getGeneratorCode() + " " + attribute.getName() + ") {");
+					}				
+					file.writeln(2, "return repository.findBy" + StringUtils.uppercaseFirst(attribute.getName())+ "(" + attribute.getName() + ").orElseThrow();");
+
+				}else {
+					if(attribute.getEnumName() != null && !attribute.getEnumName().isBlank()) {
+						file.writeln(1, "public List<" + upperCaseName + "> findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + StringUtils.uppercaseFirst(attribute.getEnumName()) + " " + attribute.getName() + ") {");
+					}else{
+						file.writeln(1, "public List<" + upperCaseName + "> findBy" + StringUtils.uppercaseFirst(attribute.getName()) + "(" + attribute.getType().getGeneratorCode() + " " + attribute.getName() + ") {");
+					}
+					file.writeln(2, "return repository.findBy" + StringUtils.uppercaseFirst(attribute.getName())+ "(" + attribute.getName() + ");");
 				}
-				file.writeln(2, "return repository.findBy" + StringUtils.uppercaseFirst(attribute.getName())+ "(" + attribute.getName() + ").orElseThrow();");
 				file.writeln(1, "}");
 			}
 			file.writeln(0, "}");

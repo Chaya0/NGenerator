@@ -26,8 +26,9 @@ public class AngularTableViewComponentWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "import { Component } from '@angular/core';");
+			file.writeln(0, "import { Component, Input } from '@angular/core';");
 			file.writeln(0, "import { GenericTableViewComponent } from \"../../../../shared/components/generic-table-view/generic-table-view.component\";");
+			file.writeln(0, "import { Attribute } from \"../../../../core/entity-utils/attribute\";");
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
 			file.writeln(1, "selector: 'app-" + kebabCase + "-table-view',");
@@ -37,7 +38,9 @@ public class AngularTableViewComponentWriter implements ComponentWriter {
 			file.writeln(1, "styleUrl: './" + kebabCase + "-table-view.component.css'");
 			file.writeln(0, "})");
 			file.writeln(0, "");
-			file.writeln(0, "export class " + upperCaseName + "TableViewComponent extends GenericTableViewComponent {");
+			file.writeln(0, "export class " + upperCaseName + "TableViewComponent {");
+			file.writeln(1, "@Input() attributes!: Attribute[];");
+			file.writeln(1, "@Input() entity!: string;");
 			file.writeln(0, "}");
 		}
 	}
@@ -60,7 +63,7 @@ public class AngularTableViewComponentWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "<app-generic-table-view [attributes]=\"attributes\" [entity]=\"entity\" [page]=\"page\"></app-generic-table-view>");
+			file.writeln(0, "<app-generic-table-view [attributes]=\"attributes\" [entity]=\"entity\"></app-generic-table-view>");
 		}
 	}
 }

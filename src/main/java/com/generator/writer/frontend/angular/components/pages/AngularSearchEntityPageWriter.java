@@ -26,11 +26,10 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "import { Component, inject, OnInit } from '@angular/core';");
+			file.writeln(0, "import { Component, inject } from '@angular/core';");
 			file.writeln(0, "import {RouterLink, RouterOutlet} from \"@angular/router\";");
 			file.writeln(0, "import {NgIf} from \"@angular/common\";");
 			file.writeln(0, "import {MaterialModule} from \"../../../shared/material/material.module\";");
-			file.writeln(0, "import {Page} from \"../../../core/entity-utils/page\";");
 			file.writeln(0, "import {SearchService} from \"../../../core/services/search.service\";");
 			file.writeln(0, "import { AppUtils } from '../../../shared/utils/app-utils';");
 			file.writeln(0, "import { " + upperCaseName + " } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "';");
@@ -68,16 +67,16 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, ".title {");
-			file.writeln(1, "display: flex;");
-			file.writeln(1, "align-items: center;");
-			file.writeln(1, "padding: 16px 16px 24px;");
-			file.writeln(1, "font-weight: 500;");
-			file.writeln(0, "}");
 			file.writeln(0, "");
-			file.writeln(0, ".search-form {");
-			file.writeln(0, "margin-bottom: 16px;");
-			file.writeln(0, "}");
+//			file.writeln(1, "display: flex;");
+//			file.writeln(1, "align-items: center;");
+//			file.writeln(1, "padding: 16px 16px 24px;");
+//			file.writeln(1, "font-weight: 500;");
+//			file.writeln(0, "}");
+//			file.writeln(0, "");
+//			file.writeln(0, ".search-form {");
+//			file.writeln(0, "margin-bottom: 16px;");
+//			file.writeln(0, "}");
 		}
 	}
 
@@ -106,8 +105,8 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(3, "<app-" + kebabCase + "-search-form class=\"search-form-container\"");
 			file.writeln(4, "[structure]=\"structure\"></app-" + kebabCase + "-search-form>");
 			file.writeln(2, "</div>");
-			file.writeln(2, "<app-" + kebabCase + "-table-view [attributes]=\"structure.attributes\"");
-			file.writeln(3, "[entity]=\"structure.entityName\"></app-" + kebabCase + "-table-view>");
+			file.writeln(2, "<mat-divider></mat-divider>");
+			file.writeln(2, "<app-" + kebabCase + "-table-view [attributes]=\"structure.attributes\" [entity]=\"structure.entityName\"></app-" + kebabCase + "-table-view>");
 			file.writeln(1, "</mat-card-content>");
 			file.writeln(0, "</mat-card>");
 		}

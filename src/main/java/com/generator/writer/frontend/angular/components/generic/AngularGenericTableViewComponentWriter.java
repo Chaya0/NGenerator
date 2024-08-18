@@ -37,7 +37,9 @@ public class AngularGenericTableViewComponentWriter implements ComponentWriter {
 			file.writeln(1, "styleUrl: './" + kebabCase + "-table-view.component.css'");
 			file.writeln(0, "})");
 			file.writeln(0, "");
-			file.writeln(0, "export class " + upperCaseName + "TableViewComponent extends GenericTableViewComponent {");
+			file.writeln(0, "export class " + upperCaseName + "TableViewComponent {");
+			file.writeln(1, "@Input() attributes!: Attribute[];");
+			file.writeln(1, "@Input() entity!: string;");
 			file.writeln(0, "}");
 		}
 	}
@@ -60,7 +62,7 @@ public class AngularGenericTableViewComponentWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "<app-generic-table-view [structure]=\"structure\" [page]=\"page\"></app-generic-table-view>\r\n"
+			file.writeln(0, "<app-generic-table-view [attributes]=\"attributes\" [entity]=\"entity\"></app-generic-table-view>\r\n"
 					+ "");
 		}
 	}

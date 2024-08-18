@@ -52,6 +52,7 @@ public class FrontendApplicationGenerator {
 //			
 //			LocalizationWriter writer = new LocalizationWriter();
 //			writer.create(appModel);
+			System.out.println("Frontend components generated successfully!");
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
