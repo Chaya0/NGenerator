@@ -2,13 +2,18 @@ package com.generator.writer.java.components.basic;
 
 import java.io.IOException;
 
+import com.generator.annotations.BasicComponent;
+import com.generator.annotations.WriterVersion;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
+import com.generator.model.enums.ComponentType;
 import com.generator.util.StringUtils;
 import com.generator.writer.DefaultWriter;
 import com.generator.writer.utils.GeneratorOutputFile;
 import com.generator.writer.utils.WriterUtils;
 
+@BasicComponent(ComponentType.CONTROLLER)
+@WriterVersion("1.0")
 public class JavaBasicControllerWriter implements DefaultWriter{
 
 	@Override

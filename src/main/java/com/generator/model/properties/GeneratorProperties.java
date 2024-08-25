@@ -5,12 +5,9 @@ import com.generator.model.enums.AuthorisationType;
 import com.generator.model.enums.DatabaseType;
 import com.generator.model.enums.FrontendType;
 import com.generator.model.enums.ModelFileType;
-import com.generator.reader.adapter.GenerationTypeXmlAdapter;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlAttribute;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,10 +47,10 @@ public class GeneratorProperties {
 	private ApplicationStructureType applicationStructureType = ApplicationStructureType.MONOLITHIC;
 	
 	private boolean generateBasicRepository = true;
-	private boolean generateGenericRepository = true;
 	private boolean generateBasicService = true;
-	private boolean generateGenericService = true;
 	private boolean generateBasicController = true;
+	private boolean generateGenericRepository = true;
+	private boolean generateGenericService = true;
 	private boolean generateGenericController = true;
 	private boolean generateGenericEntity = true;
 	private boolean generateGenericEnums = true;

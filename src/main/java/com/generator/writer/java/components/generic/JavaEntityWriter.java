@@ -2,11 +2,14 @@ package com.generator.writer.java.components.generic;
 
 import org.jsoup.internal.StringUtil;
 
+import com.generator.annotations.GenericComponent;
+import com.generator.annotations.WriterVersion;
 import com.generator.model.AppModel;
 import com.generator.model.Attribute;
 import com.generator.model.Entity;
 import com.generator.model.Relation;
 import com.generator.model.enums.AttributeType;
+import com.generator.model.enums.ComponentType;
 import com.generator.model.enums.FetchType;
 import com.generator.model.enums.InheritanceType;
 import com.generator.util.StringUtils;
@@ -14,6 +17,8 @@ import com.generator.writer.DefaultWriter;
 import com.generator.writer.utils.GeneratorOutputFile;
 import com.generator.writer.utils.WriterUtils;
 
+@GenericComponent(ComponentType.MODEL)
+@WriterVersion("1.0")
 public class JavaEntityWriter implements DefaultWriter {
 
 	@Override

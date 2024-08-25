@@ -1,5 +1,7 @@
 package com.generator.writer.java.components;
 
+import com.generator.annotations.CustomComponent;
+import com.generator.annotations.WriterVersion;
 import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.util.StringUtils;
@@ -7,6 +9,8 @@ import com.generator.writer.DefaultWriter;
 import com.generator.writer.utils.GeneratorOutputFile;
 import com.generator.writer.utils.WriterUtils;
 
+@CustomComponent
+@WriterVersion("1.0")
 public class JavaServiceWriter implements DefaultWriter {
 
 	@Override
