@@ -35,9 +35,9 @@ public class JavaBasicControllerWriter implements DefaultWriter{
 			file.writeln(0, WriterUtils.getApplicationExceptionImport());
 			file.writeln(0, "");
 			file.writeln(0, "import jakarta.validation.Valid;");
-			file.writeln(0, "import org.springframework.security.access.prepost.PreAuthorize;");
 			file.writeln(0, "import org.springframework.http.ResponseEntity;");
 			file.writeln(0, "import com.mds.merv.specification.SearchDTO;");
+			file.writeln(0, "import com.mds.merv.utils.SecurityUtils;");
 			file.writeln(0, "");
 			file.writeln(0, "public class " + upperCaseName + "ControllerBasic extends GenericController<"
 					+ upperCaseName + "> {");
@@ -75,8 +75,9 @@ public class JavaBasicControllerWriter implements DefaultWriter{
 
 	private void writeFindAllEndpoint(GeneratorOutputFile file, String snakeCaseName) throws IOException {
 		file.writeln(1, "@Override");
-		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
+//		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> findAll() {");
+		file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.findAll();");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -89,15 +90,17 @@ public class JavaBasicControllerWriter implements DefaultWriter{
 //		file.writeln(1, "}");
 //		file.writeln(0, "");
 		file.writeln(1, "@Override");
-		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
+//		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> searchPost(SearchDTO request) throws " + WriterUtils.getApplicationExceptionName() + " {");
+		file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.searchPost(request);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
 		
 		file.writeln(1, "@Override");
-		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
+//		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> searchPageablePost(SearchDTO request) throws " + WriterUtils.getApplicationExceptionName() + " {");
+		file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.searchPageablePost(request);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -105,8 +108,9 @@ public class JavaBasicControllerWriter implements DefaultWriter{
 
 	private void writeDeleteByIdEndpoint(GeneratorOutputFile file, String snakeCaseName) throws IOException {
 		file.writeln(1, "@Override");
-		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_delete_" + snakeCaseName + "')\")");
+//		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_delete_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> delete(Long id) {");
+		file.writeln(2, "SecurityUtils.checkAuthority(\"can_delete_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.delete(id);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -114,8 +118,9 @@ public class JavaBasicControllerWriter implements DefaultWriter{
 
 	private void writeGetByIdEndpoint(GeneratorOutputFile file, String snakeCaseName) throws IOException {
 		file.writeln(1, "@Override");
-		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
+//		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> getById(Long id) {");
+		file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.getById(id);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -123,9 +128,9 @@ public class JavaBasicControllerWriter implements DefaultWriter{
 
 	private void writeUpdateEndpoint(GeneratorOutputFile file, String upperCaseName, String snakeCaseName) throws IOException {
 		file.writeln(1, "@Override");
-		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_update_" + snakeCaseName + "')\")");
+//		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_update_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> update(@Valid " + upperCaseName +  " object) throws " + WriterUtils.getApplicationExceptionName() + " {");
-
+		file.writeln(2, "SecurityUtils.checkAuthority(\"can_update_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.update(object);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -133,8 +138,9 @@ public class JavaBasicControllerWriter implements DefaultWriter{
 
 	private void writeInsertEndpoint(GeneratorOutputFile file, String upperCaseName, String snakeCaseName) throws IOException {
 		file.writeln(1, "@Override");
-		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_create_" + snakeCaseName + "')\")");
+//		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_create_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> insert(@Valid " + upperCaseName + " object) throws " + WriterUtils.getApplicationExceptionName() + " {");
+		file.writeln(2, "SecurityUtils.checkAuthority(\"can_create_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.insert(object);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
