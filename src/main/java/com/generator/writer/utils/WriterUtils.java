@@ -392,4 +392,13 @@ public class WriterUtils {
 	public static String getFrontendPagesPath() {
 		return getFrontendRootPackagePath() + "pages/";
 	}
+	
+	public static String getSpecificationPackagePath() {
+		return getMainPackagePath() + "/specification";
+	}
+	
+	public static String getSpecificationPackageImportPath() {
+		return getImportDefaultPackage() + ".specification";
+	}
+	
 }

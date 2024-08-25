@@ -4,5 +4,6 @@ public enum ComponentType {
 	REPOSITORY,
 	SERVICE,
 	CONTROLLER,
-	MODEL
+	MODEL,
+	SPECIFICATION
 }
