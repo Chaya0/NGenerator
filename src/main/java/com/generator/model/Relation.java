@@ -3,6 +3,7 @@ package com.generator.model;
 import com.generator.model.enums.CascadeType;
 import com.generator.model.enums.FetchType;
 import com.generator.model.enums.RelationType;
+import com.generator.reader.adapter.CascadeTypeXmlAdapter;
 import com.generator.reader.adapter.FetchTypeXmlAdapter;
 import com.generator.reader.adapter.RelationTypeXmlAdapter;
 
@@ -33,7 +34,7 @@ public class Relation {
 	@XmlAttribute(name = "fetchType")
 	@XmlJavaTypeAdapter(FetchTypeXmlAdapter.class)
 	private FetchType fetchType = FetchType.NULL;
-	@XmlAttribute(name = "fetchType")
-	@XmlJavaTypeAdapter(FetchTypeXmlAdapter.class)
+	@XmlAttribute(name = "fetchType", required = false)
+	@XmlJavaTypeAdapter(CascadeTypeXmlAdapter.class)
 	private CascadeType cascadeType = CascadeType.NULL;
 }
