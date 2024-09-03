@@ -9,7 +9,7 @@ The Generator Spring Boot Application is a tool designed to streamline the proce
 - **CRUD Operations**: The generated applications come with built-in support for CRUD (Create, Read, Update, Delete) operations for each entity defined in the data model.
 - **RESTful APIs**: RESTful APIs are automatically generated for interacting with the application, providing seamless integration with frontend or external systems.
 - **Customization Options**: Developers have the flexibility to customize the generated code to suit their specific requirements, including modifying templates, adding additional functionality, or integrating third-party libraries.
-- **Integration with Frontend Frameworks**: The generator can be extended to support integration with frontend frameworks like Angular, React, or Vue.js, enabling full-stack application development.
+- **Integration with Frontend Frameworks**: The generator can be extended to support the generation of frontend frameworks like Angular, React, or Vue.js, with automatic communication setup between the frontend and the generated backend, enabling seamless full-stack application developmen.
 
 ## Usage
 
