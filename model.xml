@@ -1,153 +1,116 @@
 <app>
 	<entities>
-		<entity name="user" tableName="merv_user">
+		<entity name="dokument" inheritanceType="joined">
 			<attributes>
-				<attribute name="username" type="string" unique="true"/>
-				<attribute name="password" type="string"/>
-				<attribute name="email" type="string" unique="true"/>
-				<attribute name="creationDate" type="date"/>
-				<attribute name="modifyDate" type="date" />
-				<attribute name="firstName" type="string" nullable="false"/>
-				<attribute name="lastName" type="string" nullable="false"/>
-				<attribute name="parentName" type="string" />
-				<attribute name="recordNumber" type="string" unique="true"/>
-				<attribute name="birthDate" type="date" />
-				<attribute name="jmbg" type="string" unique="true"/>
-				<attribute name="jobTitle" type="string" />
-				<attribute name="officeNumber" type="string" />
-				<attribute name="avatar" type="string" />
-				<attribute name="userType" enumName="userType" type="enum" nullable="false"/>
+				<attribute name="brojDokumenta" type="string" nullable="false" />
+				<attribute name="tipDokumenta" type="enum" nullable="false" enumName="tipDokumenta" />
 			</attributes>
 			<relations>
-				<relation entityName="shift" relationType="oneToMany" owningSide="true"/>
-				<relation entityName="role" relationType="oneToOne" owningSide="true"/>
-				<relation entityName="card" relationType="oneToMany" owningSide="true"/>
-				<relation entityName="timetable" relationType="oneToMany" owningSide="true"/>
-				<relation entityName="departmentUnit" relationType="manyToOne" owningSide="true"/>
+				<relation entityName="knjizenje" relationType="oneToMany" owningSide="true" />
 			</relations>
 		</entity>
-		<entity name="shift">
+		<entity name="faktura" inherits="dokument">
 			<attributes>
-				<attribute name="startFrom" type="string" nullable="false"/>
-				<attribute name="startTo" type="string" nullable="false"/>
-				<attribute name="endFrom" type="string" nullable="false"/>
-				<attribute name="endTo" type="string" nullable="false"/>
-				<attribute name="durationHours" type="integer" nullable="false"/>
-				<attribute name="durationMinutes" type="integer" nullable="false"/>
+				<attribute name="brojFakture" type="string" nullable="false" />
+				<attribute name="datumIzdavanja" type="date" nullable="false" />
+				<attribute name="rokZaPlacanje" type="date" nullable="false" />
+				<attribute name="datumPlacanja" type="date" nullable="false" />
+				<attribute name="prodajnaVrednost" type="double" nullable="false" />
+				<attribute name="rabatProcenat" type="double" />
+				<attribute name="rabat" type="double" />
+				<attribute name="porezProcenat" type="double" nullable="false" />
+				<attribute name="porez" type="double" nullable="false" />
+				<attribute name="iznos" type="double" nullable="false" />
+				<attribute name="valuta" type="string" nullable="false" />
+				<attribute name="kurs" type="double" nullable="false" />
+				<attribute name="naplata" type="double" nullable="false" />
+				<attribute name="komentar" type="string" />
+				<attribute name="tipFakture" type="enum" nullable="false" enumName="tipFakture" />
 			</attributes>
 			<relations>
-				<relation entityName="user" tableName="merv_user" relationType="manyToOne" owningSide="false"/>
+				<relation entityName="preduzece" relationType="manyToOne" owningSide="false" />
 			</relations>
 		</entity>
-		<entity name="role">
+		<entity name="knjizenje">
 			<attributes>
-				<attribute name="name" type="string" nullable="false" unique="true"/>
-				<attribute name ="description" type="string"/>
+				<attribute name="brojNaloga" type="string" nullable="false" />
+				<attribute name="datumKnjizenja" type="date" nullable="false" />
+				<attribute name="komentar" type="string" />
 			</attributes>
 			<relations>
-				<relation entityName="user" tableName="merv_user" relationType="oneToOne" owningSide="false"/>
-				<relation entityName="permission" relationType="manyToMany" owningSide="true" fetchType="eager"/>
+				<relation entityName="konto" relationType="oneToMany" owningSide="true" fetchType="eager" />
+				<relation entityName="dokument" relationType="manyToOne" owningSide="false" />
+			</relations>
+		</entity>
+		<entity name="kontnaGrupa">
+			<attributes>
+				<attribute name="brojKonta" type="string" nullable="false" />
+				<attribute name="nazivKonta" type="string" nullable="false" />
+			</attributes>
+			<relations>
+				<relation entityName="konto" relationType="oneToMany" owningSide="true" fetchType="eager" />
+			</relations>
+		</entity>
+		<entity name="konto">
+			<attributes>
+				<attribute name="potrazuje" type="double" />
+				<attribute name="duguje" type="double" />
+			</attributes>
+			<relations>
+				<relation entityName="knjizenje" relationType="manyToOne" owningSide="false" />
+				<relation entityName="kontnaGrupa" relationType="manyToOne" owningSide="false" />
 			</relations>
 		</entity>
 		<entity name="permission">
 			<attributes>
-				<attribute name="name" type="string" nullable="false"  unique="true"/>
-				<attribute name ="description" type="string"/>
-			</attributes>
-		</entity>
-		<entity name="timetable">
-			<attributes>
-				<attribute name="actionType" enumName="actionType" type="enum" nullable="false"/>
-				<attribute name="image" type="string"/>
-				<attribute name="dateTime" type="localDateTime" nullable="false"/>
+				<attribute name="name" type="string" />
 			</attributes>
 			<relations>
-				<relation entityName="user" tableName="merv_user" relationType="manyToOne" owningSide="false"/>
-				<relation entityName="shift" relationType="manyToOne" owningSide="true"/>
-				<relation entityName="device" relationType="manyToOne" owningSide="false"/>
+				<relation entityName="user" relationType="manyToMany" owningSide="false" />
 			</relations>
 		</entity>
-		<entity name="timetableDevice">
+		<entity name="preduzece">
 			<attributes>
-				<attribute name="actionType" enumName="actionType" type="enum" nullable="false"/>
-				<attribute name="image" type="string"/>
-				<attribute name="rfid" type="string"/>
-				<attribute name="dateTime" type="localDateTime" nullable="false"/>
-			</attributes>
-		</entity>
-		<entity name="departmentUnit">
-			<attributes>
-				<attribute name="name" type="string" nullable="false"/>
-				<attribute name="code" type="string" nullable="false"/>
-				<attribute name="description" type="string"/>
+				<attribute name="naziv" type="string" nullable="false" />
+				<attribute name="pib" type="string" nullable="false" />
+				<attribute name="racun" type="string" />
+				<attribute name="adresa" type="string" nullable="false" />
+				<attribute name="grad" type="string" nullable="false" />
+				<attribute name="telefon" type="string" />
+				<attribute name="email" type="string" />
+				<attribute name="fax" type="string" />
+				<attribute name="webAdresa" type="string" />
+				<attribute name="komentar" type="string" />
 			</attributes>
 			<relations>
-				<relation entityName="user" tableName="merv_user" relationType="oneToMany" owningSide="false"/>
-				<relation entityName="departmentUnit" relationType="manyToOne" owningSide="true" relationName="parent"/>
+				<relation entityName="faktura" relationType="oneToMany" owningSide="true" fetchType="eager" />
 			</relations>
 		</entity>
-		<entity name="device">
+		<entity name="user">
 			<attributes>
-				<attribute name="code" type="string" nullable="false" unique="true"/>
-				<attribute name="ipAddress" type="string" unique="true"/>
-				<attribute name="active" type="boolean"/>
-				<attribute name="description" type="string"/>
+				<attribute name="firstName" type="string" />
+				<attribute name="lastName" type="string" />
+				<attribute name="username" type="string" />
+				<attribute name="password" type="string" />
 			</attributes>
 			<relations>
-				<relation entityName="location" relationType="manyToOne" owningSide="true"></relation>
-				<relation entityName="timetable" relationType="oneToMany" owningSide="false"></relation>
-			</relations>
-		</entity>
-		<entity name="location">
-			<attributes>
-				<attribute name="name" type="string" nullable="false"/>
-				<attribute name="street" type="string"/>
-				<attribute name="address" type="string"/>
-				<attribute name="city" type="string"/>
-				<attribute name="phone" type="string"/>
-				<attribute name="description" type="string"/>
-			</attributes>
-			<relations>
-				<relation entityName="device" relationType="oneToMany" owningSide="true"></relation>
-			</relations>
-		</entity>
-		<entity name="card">
-			<attributes>
-				<attribute name="pin" type="string" unique="true"/>
-				<attribute name="rfid" type="string" nullable="false" unique="true"/>
-				<attribute name="active" type="boolean" nullable="false"/>
-				<attribute name="description" type="string"/>
-				<attribute name="creationDate" type="localDate"/>
-				<attribute name="expirationDate" type="localDate"/>
-				<attribute name="cardType" enumName="cardType" type="enum" nullable="false"/>
-			</attributes>
-			<relations>
-				<relation entityName="user" tableName="merv_user" relationType="manyToOne" owningSide="false"></relation>
+				<relation entityName="permission" relationType="manyToMany" owningSide="true" fetchType="eager" />
 			</relations>
 		</entity>
 	</entities>
 	<enums>
-		<enum name="userType">
+		<enum name="tipDokumenta">
 			<values>
-				<value>ADMIN</value>
-				<value>EMPLOYEE</value>
+				<value>faktura</value>
 			</values>
 		</enum>
-		<enum name="cardType">
+		<enum name="tipFakture">
 			<values>
-				<value>PERSONAL</value>
-				<value>TEMPORARY</value>
-			</values>
-		</enum>
-		<enum name="actionType">
-			<values>
-				<value>CHECK_IN</value>
-				<value>CHECK_OUT</value>
-				<value>PAUSE_START</value>
-				<value>PAUSE_END</value>
-				<value>BUSINESS_IN</value>
-				<value>BUSINESS_OUT</value>
+				<value>ulazna_faktura</value>
+				<value>izlazna_faktura</value>
 			</values>
 		</enum>
 	</enums>
 </app>
+
+
