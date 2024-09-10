@@ -19,7 +19,7 @@ public class GenerationTypeXmlAdapterTest {
 
 	@Test
 	public void testUnmarshal() throws Exception {
-		String code = "IDENTITY";
+		String code = "identity";
 		GenerationType result = adapter.unmarshal(code);
 		assertEquals(GenerationType.IDENTITY, result);
 	}
@@ -28,13 +28,14 @@ public class GenerationTypeXmlAdapterTest {
 	public void testMarshal() throws Exception {
 		GenerationType generationType = GenerationType.IDENTITY;
 		String result = adapter.marshal(generationType);
-		assertEquals("IDENTITY", result);
+		assertEquals("identity", result);
 	}
 
 	@Test
-	public void testUnmarshalInvalidValue() {
-		String invalidCode = "INVALID";
-		assertThrows(Exception.class, () -> adapter.unmarshal(invalidCode));
+	public void testUnmarshalInvalidValue() throws Exception {
+		String code = "invalidCode";
+		GenerationType result = adapter.unmarshal(code);
+		assertEquals(GenerationType.NULL, result);
 	}
 
 	@Test

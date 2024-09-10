@@ -29,6 +29,7 @@ public class AngularCreateEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "import { Component } from '@angular/core';");
 			file.writeln(0, "import { " + upperCaseName + "InsertFormComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-insert-form/" +  kebabCase + "-insert-form.component';");
 			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
+			file.writeln(0, "import { BreadcrumbComponent } from \"../../../shared/components/breadcrumb/breadcrumb.component\";");
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
 			file.writeln(1, "selector: 'app-" + kebabCase + "-create-page',");
@@ -62,8 +63,15 @@ public class AngularCreateEntityPageWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "<div class=\"page-container\">");
-			file.writeln(0, "<app-" + kebabCase + "-insert-form [structure]=\"structure\"></app-" + kebabCase + "-insert-form>");
+			file.writeln(0, "<div class=\"grid\">");
+			file.writeln(1, "<div class=\"col-12\">");
+			file.writeln(2, "<div class=\"card px-2 py-0 mb-4 flex flex-row justify-content-between align-items-center\">");
+			file.writeln(3, "<app-breadcrumb></app-breadcrumb>");
+			file.writeln(2, "</div>");
+			file.writeln(2, "<div class=\"card px-6 py-6\"");
+			file.writeln(3, "<app-" + kebabCase + "-insert-form [structure]=\"structure\"></app-" + kebabCase + "-insert-form>");
+			file.writeln(2, "</div>");
+			file.writeln(1, "</div>");
 			file.writeln(0, "</div>");
 		}
 	}

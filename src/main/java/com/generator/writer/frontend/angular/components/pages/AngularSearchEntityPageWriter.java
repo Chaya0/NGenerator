@@ -28,10 +28,11 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			}
 			file.writeln(0, "import { Component, inject } from '@angular/core';");
 			file.writeln(0, "import {RouterLink, RouterOutlet} from \"@angular/router\";");
-			file.writeln(0, "import {NgIf} from \"@angular/common\";");
-			file.writeln(0, "import {MaterialModule} from \"../../../shared/material/material.module\";");
-			file.writeln(0, "import {SearchService} from \"../../../core/services/search.service\";");
-			file.writeln(0, "import { AppUtils } from '../../../shared/utils/app-utils';");
+			file.writeln(0, "import { NgIf } from \"@angular/common\";");
+			file.writeln(0, "import {MenuItem} from \"primeng/api\";");
+			file.writeln(0, "import { AppUtils } from \"../../../shared/prime/prime.module\";");
+			file.writeln(0, "import { SearchService } from \"../../../core/services/search.service\";");
+			file.writeln(0, "import { TranslationService } from \"../../../core/services/translation.service\";");
 			file.writeln(0, "import { " + upperCaseName + " } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "';");
 			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
 			file.writeln(0, "import { " + upperCaseName + "TableViewComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-table-view/" + kebabCase + "-table-view.component';");
@@ -56,6 +57,15 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "export class " + upperCaseName + "SearchPageComponent {");
 			file.writeln(1, "structure: " + upperCaseName + "Structure = " + upperCaseName + "Structure.instance;");
 			file.writeln(1, "searchService: SearchService = inject(SearchService);");
+			file.writeln(1, "translationService = inject(TranslationService);");
+			file.writeln(1, "items: MenuItem[] = [");
+			file.writeln(2, "{");
+			file.writeln(3, "label: this.translationService.translate('new'),");
+			file.writeln(3, "icon: 'pi pi-plus',");
+			file.writeln(3, "routerLink: 'create',");
+			file.writeln(3, "command: () => {}");
+			file.writeln(2, "}");
+			file.writeln(1, "];");
 			file.writeln(0, "}");
 		}
 	}
@@ -68,15 +78,6 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 				return;
 			}
 			file.writeln(0, "");
-//			file.writeln(1, "display: flex;");
-//			file.writeln(1, "align-items: center;");
-//			file.writeln(1, "padding: 16px 16px 24px;");
-//			file.writeln(1, "font-weight: 500;");
-//			file.writeln(0, "}");
-//			file.writeln(0, "");
-//			file.writeln(0, ".search-form {");
-//			file.writeln(0, "margin-bottom: 16px;");
-//			file.writeln(0, "}");
 		}
 	}
 
@@ -87,28 +88,23 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
-			file.writeln(0, "<div class=\"title fw-bold\">");
-			file.writeln(1, "{{ structure.title | translate }}");
-			file.writeln(1, "<button mat-icon-button [matMenuTriggerFor]=\"menu\" aria-label=\"Example icon-button with a menu\">");
-			file.writeln(2, "<mat-icon>arrow_drop_down</mat-icon>");
-			file.writeln(1, "</button>");
-			file.writeln(0, "</div>");
-			file.writeln(0, "<mat-card class=\"card\" style=\"margin-bottom: 30px\">");
-			file.writeln(1, "<mat-menu #menu=\"matMenu\">");
-			file.writeln(2, "<a routerLink=\"create\" mat-menu-item>");
-			file.writeln(3, "<mat-icon color=\"primary\">add</mat-icon>");
-			file.writeln(3, "<span class=\"color-primary\">New</span>");
-			file.writeln(2, "</a>");
-			file.writeln(1, "</mat-menu>");
-			file.writeln(1, "<mat-card-content>");
-			file.writeln(2, "<div class=\"search-form\">");
-			file.writeln(3, "<app-" + kebabCase + "-search-form class=\"search-form-container\"");
-			file.writeln(4, "[structure]=\"structure\"></app-" + kebabCase + "-search-form>");
+			file.writeln(0, "<div class=\"grid\">");
+			file.writeln(1, "<div class=\"col-12\">");
+			file.writeln(2, "<div class=\"card px-2 py-0 mb-4 flex flex-row justify-content-between align-items-center\">");
+			file.writeln(3, "<app-breadcrumb></app-breadcrumb>");
+			file.writeln(3, "<div>");
+			file.writeln(4, "<p-menu #menu [model]=\"items\" [popup]=\"true\"/>");
+			file.writeln(4, "<p-button (onClick)=\"menu.toggle($event)\" [rounded]=\"true\" [text]=\"true\" icon=\"pi pi-ellipsis-v\"/>");
+			file.writeln(3, "</div>");
 			file.writeln(2, "</div>");
-			file.writeln(2, "<mat-divider></mat-divider>");
-			file.writeln(2, "<app-" + kebabCase + "-table-view [attributes]=\"structure.attributes\" [entity]=\"structure.entityName\"></app-" + kebabCase + "-table-view>");
-			file.writeln(1, "</mat-card-content>");
-			file.writeln(0, "</mat-card>");
+			file.writeln(2, "<div class=\"card px-6 py-6\"");
+			file.writeln(2, "<div class=\"mb-4\">");
+			file.writeln(0, "<app-" + kebabCase + "-table-view [structure]=\"structure\"></app-" + kebabCase + "-table-view>");
+			file.writeln(2, "</div>");
+			file.writeln(0, "<app-" + kebabCase + "-table-view [structure]=\"structure\"></app-" + kebabCase + "-table-view>");
+			file.writeln(2, "</div>");
+			file.writeln(1, "</div>");
+			file.writeln(0, "</div>");
 		}
 	}
 

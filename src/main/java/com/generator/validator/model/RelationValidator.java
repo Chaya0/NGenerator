@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.management.relation.RelationTypeNotFoundException;
+
 import com.generator.model.Entity;
 import com.generator.model.Relation;
 import com.generator.validator.Validator;
@@ -14,7 +16,7 @@ import com.generator.validator.exceptions.InvalidEntityNameException;
 public class RelationValidator implements Validator<Relation> {
 
 	private List<Entity> entities;
-
+	private static Set<String> relationNames = new HashSet<>();
 	public RelationValidator(List<Entity> entities) {
 		this.entities = entities;
 	}
@@ -27,7 +29,6 @@ public class RelationValidator implements Validator<Relation> {
 	}
 
 	private void validateDuplicateRelationNames(Relation relation) throws Exception {
-		Set<String> relationNames = new HashSet<>();
 		if (!relationNames.add(relation.getRelationName())) {
 			System.err.println("Duplicate relation name found: " + relation.getRelationName());
 			throw new DuplicateRelationNameException(relation.getRelationName());
@@ -37,6 +38,7 @@ public class RelationValidator implements Validator<Relation> {
 	private void validateRelationType(Relation relation) throws Exception {
 		if (relation.getRelationType() == null) {
 			System.err.println("Relation type cannot be null for relation: " + relation.getRelationName());
+			throw new RelationTypeNotFoundException("Relation type cannot be null for relation: " + relation.getRelationName());
 		}
 	}
 

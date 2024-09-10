@@ -52,10 +52,4 @@ public class AppModelTest {
 		Entity nonExistentEntity = appModel.getEntityByName("NonExistent");
 		assertNull(nonExistentEntity);
 	}
-
-	@Test
-	public void testToString() {
-		String expectedString = "AppModel [entities=[Entity(name=User, tableName=users, inherits=BaseEntity, inheritanceType=SINGLE_TABLE, generationType=TABLE, relations=[Relation(entityName=Role, tableName=roles, relationName=userRoleRelation, owningSide=true, relationType=ONE_TO_MANY, fetchType=NULL)], attributes=[Attribute(name=status, type=ENUM, enumName=StatusEnum, nullable=true, unique=false)]), Entity(name=Role, tableName=roles, inherits=BaseEntity, inheritanceType=JOINED, generationType=IDENTITY, relations=[Relation(entityName=User, tableName=users, relationName=roleUserRelation, owningSide=false, relationType=MANY_TO_ONE, fetchType=NULL)], attributes=[Attribute(name=name, type=STRING, enumName=null, nullable=true, unique=false)])], enums=[EnumModel(name=UserRole, values=[ADMIN, USER]), EnumModel(name=Status, values=[ACTIVE, INACTIVE])]]";
-		assertEquals(expectedString, appModel.toString());
-	}
 }

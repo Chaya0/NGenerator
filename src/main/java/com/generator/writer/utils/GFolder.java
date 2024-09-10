@@ -16,18 +16,20 @@ public class GFolder {
    }
    
    public static ArrayList<String> getSubfolders(String path) {
-      ArrayList<String> list = new ArrayList<>();
+       ArrayList<String> list = new ArrayList<>();
+       File pathFile = new File(path);
 
-      File pathFile = new File(path);
-      String[] files = pathFile.list();
-      for (String file : files) {
-         File l = new File(path + file);
-         if (l.isDirectory()) {
-            list.add(file);
-         }
-      }
-
-      return list;
+       if (pathFile.isDirectory()) {
+           File[] files = pathFile.listFiles();
+           if (files != null) {
+               for (File file : files) {
+                   if (file.isDirectory()) {
+                       list.add(file.getName());
+                   }
+               }
+           }
+       }
+       return list;
    }
    
    public List<String> getSubfolders() {

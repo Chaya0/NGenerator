@@ -25,7 +25,7 @@ public class EntityValidatorTest {
 
 	@Test
 	public void testValidateEntityNameWithNullName() {
-		Entity entity = new Entity("entity", null, null, null, null, null, null);
+		Entity entity = new Entity(null, null, null, null, null, null, null);
 		assertThrows(EmptyNameException.class, () -> entityValidator.validate(entity));
 	}
 

@@ -17,7 +17,7 @@ public class GeneratorOutputFileTest {
 		tempFile.deleteOnExit();
 
 		try (GeneratorOutputFile outputFile = new GeneratorOutputFile(tempFile.getAbsolutePath(), "UTF-8", true)) {
-			assertFalse(outputFile.hasAlreadyExisted());
+			assertTrue(outputFile.hasAlreadyExisted());
 			outputFile.writeln(1, "Hello World");
 			assertTrue(outputFile.writePermitted());
 		}

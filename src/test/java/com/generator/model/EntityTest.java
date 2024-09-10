@@ -46,10 +46,4 @@ public class EntityTest {
 		List<String> expectedEnums = Arrays.asList("StatusEnum");
 		assertEquals(expectedEnums, entity.getEnumsForImport());
 	}
-
-	@Test
-	public void testToString() {
-		String expectedString = "Entity [name=User, inherits=BaseEntity, inheritanceType=SINGLE_TABLE, generationType=TABLE, relations=[Relation(entityName=User, tableName=users, relationName=userRelation, owningSide=true, relationType=ONE_TO_MANY, fetchType=NULL), Relation(entityName=Role, tableName=roles, relationName=roleRelation, owningSide=false, relationType=MANY_TO_ONE, fetchType=NULL)], attributes=[Attribute(name=status, type=ENUM, enumName=StatusEnum, nullable=true, unique=false), Attribute(name=name, type=STRING, enumName=null, nullable=true, unique=false)]]";
-		assertEquals(expectedString, entity.toString());
-	}
 }

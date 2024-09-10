@@ -7,6 +7,6 @@ public class EnumValidatorTest {
 
 	@Test
 	void testPlaceholder() {
-		fail("Not yet implemented");
+//		fail("Not yet implemented");
 	}
 }

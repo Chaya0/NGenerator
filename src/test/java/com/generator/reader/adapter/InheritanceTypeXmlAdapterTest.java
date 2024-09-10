@@ -19,7 +19,7 @@ public class InheritanceTypeXmlAdapterTest {
 
 	@Test
 	public void testUnmarshal() throws Exception {
-		String code = "SINGLE_TABLE";
+		String code = "singleTable";
 		InheritanceType result = adapter.unmarshal(code);
 		assertEquals(InheritanceType.SINGLE_TABLE, result);
 	}
@@ -28,13 +28,14 @@ public class InheritanceTypeXmlAdapterTest {
 	public void testMarshal() throws Exception {
 		InheritanceType inheritanceType = InheritanceType.SINGLE_TABLE;
 		String result = adapter.marshal(inheritanceType);
-		assertEquals("SINGLE_TABLE", result);
+		assertEquals("singleTable", result);
 	}
 
 	@Test
-	public void testUnmarshalInvalidValue() {
-		String invalidCode = "INVALID";
-		assertThrows(Exception.class, () -> adapter.unmarshal(invalidCode));
+	public void testUnmarshalInvalidValue() throws Exception {
+		String code = "invalid";
+		InheritanceType result = adapter.unmarshal(code);
+		assertEquals(InheritanceType.NULL, result);
 	}
 
 	@Test

@@ -19,7 +19,7 @@ public class RelationTypeXmlAdapterTest {
 
 	@Test
 	public void testUnmarshal() throws Exception {
-		String code = "ONE_TO_MANY";
+		String code = "oneToMany";
 		RelationType result = adapter.unmarshal(code);
 		assertEquals(RelationType.ONE_TO_MANY, result);
 	}
@@ -28,13 +28,14 @@ public class RelationTypeXmlAdapterTest {
 	public void testMarshal() throws Exception {
 		RelationType relationType = RelationType.ONE_TO_MANY;
 		String result = adapter.marshal(relationType);
-		assertEquals("ONE_TO_MANY", result);
+		assertEquals("oneToMany", result);
 	}
 
 	@Test
-	public void testUnmarshalInvalidValue() {
-		String invalidCode = "INVALID";
-		assertThrows(Exception.class, () -> adapter.unmarshal(invalidCode));
+	public void testUnmarshalInvalidValue() throws Exception {
+		String code = "invalidCode";
+		RelationType result = adapter.unmarshal(code);
+		assertEquals(RelationType.NULL, result);
 	}
 
 	@Test

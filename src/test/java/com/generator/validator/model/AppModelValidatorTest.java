@@ -28,8 +28,8 @@ public class AppModelValidatorTest {
 
 	@Test
 	public void testValidateEntitiesWithDuplicateEntityName() throws Exception {
-		Entity entity1 = new Entity("Entity1", null, null, null, null, null, null);
-		Entity entity2 = new Entity("Entity1", null, null, null, null, null, null);
+		Entity entity1 = new Entity("entity", null, null, null, null, null, null);
+		Entity entity2 = new Entity("entity", null, null, null, null, null, null);
 		List<Entity> entities = Arrays.asList(entity1, entity2);
 
 		AppModel appModel = new AppModel();

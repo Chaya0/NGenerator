@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.generator.model.spring.SpringStartIOData;
 
-public class SpringInitializrDependencies {
+public class SpringInitializerDependencies {
 
 	public static void main(String[] args) {
 

@@ -15,19 +15,20 @@ public class Application {
 	private static SpringProperties springProperties = new SpringProperties(loadProperties());
 	private static GeneratorProperties generatorProperties = loadGeneratorProperties();
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		try {
 			logger.info("Generating application...");
 			ApplicationGenerator.generateApp();
 		} catch (Exception e) {
 			logger.error(e);
 			ErrorLogHandler.writeErrorLog(e);
+			e.printStackTrace();
 		}
 		logger.info("Application generated successfuly!");
 
 	}
 
-	private static Properties loadProperties() {
+	static Properties loadProperties() {
 		Properties properties = new Properties();
 		logger.info("Loading application.properties...");
 		try (InputStream input = new FileInputStream("./application.properties")) {
@@ -40,7 +41,7 @@ public class Application {
 		return properties;
 	}
 
-	private static GeneratorProperties loadGeneratorProperties() {
+	static GeneratorProperties loadGeneratorProperties() {
 		logger.info("Loading application.properties...");
 		try (InputStream input = new FileInputStream("./application.properties")) {
 			GeneratorProperties generatorProperties = PropertiesLoader.loadProperties(input, GeneratorProperties.class);

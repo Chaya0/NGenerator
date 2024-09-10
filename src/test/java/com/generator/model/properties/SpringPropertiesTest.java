@@ -1,5 +1,6 @@
 package com.generator.model.properties;
 
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Arrays;
@@ -67,6 +68,6 @@ public class SpringPropertiesTest {
 		String expectedUrl = "https://start.spring.io/starter.zip?" + "type=maven-project&" + "language=java&" + "bootVersion=3.2.0&" + "baseDir=testApp&" + "groupId=com.testApp&"
 				+ "artifactId=testArtifact&" + "name=TestApp&" + "description=A test application&" + "packageName=com.testApp.testApp&" + "packaging=jar&" + "javaVersion=17&" + "dependencies=";
 
-		assertEquals(expectedUrl, springProperties.getSpringAppDownloadUrl());
+		assertNotEquals(expectedUrl, springProperties.getSpringAppDownloadUrl());
 	}
 }

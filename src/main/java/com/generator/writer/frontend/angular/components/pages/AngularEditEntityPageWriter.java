@@ -30,6 +30,7 @@ public class AngularEditEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "import {ActivatedRoute} from \"@angular/router\";");
 			file.writeln(0, "import { " + upperCaseName + "UpdateFormComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-update-form/" +  kebabCase + "-update-form.component';");
 			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
+			file.writeln(0, "import { BreadcrumbComponent } from \"../../../shared/components/breadcrumb/breadcrumb.component\";");
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
 			file.writeln(1, "selector: 'app-" + kebabCase + "-edit-page',");
@@ -71,7 +72,16 @@ public class AngularEditEntityPageWriter implements ComponentWriter {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}
+			file.writeln(0, "<div class=\"grid\">");
+			file.writeln(1, "<div class=\"col-12\">");
+			file.writeln(2, "<div class=\"card px-2 py-0 mb-4 flex flex-row justify-content-between align-items-center\">");
+			file.writeln(3, "<app-breadcrumb></app-breadcrumb>");
+			file.writeln(2, "</div>");
+			file.writeln(2, "<div class=\"card px-6 py-6\"");
 			file.writeln(0, "<app-" + kebabCase + "-update-form [structure]=\"structure\" [id]=\"id\" ></app-" + kebabCase + "-update-form>");
+			file.writeln(2, "</div>");
+			file.writeln(1, "</div>");
+			file.writeln(0, "</div>");
 		}
 	}
 

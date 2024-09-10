@@ -20,7 +20,7 @@ public class AttributeTypeXmlAdapterTest {
 	@Test
 	public void testUnmarshal() throws Exception {
 		// Test unmarshalling from a string to an AttributeType enum
-		String code = "STRING";
+		String code = "string";
 		AttributeType result = adapter.unmarshal(code);
 		assertEquals(AttributeType.STRING, result);
 	}
@@ -30,14 +30,15 @@ public class AttributeTypeXmlAdapterTest {
 		// Test marshalling from an AttributeType enum to a string
 		AttributeType attributeType = AttributeType.STRING;
 		String result = adapter.marshal(attributeType);
-		assertEquals("STRING", result);
+		assertEquals("string", result);
 	}
 
 	@Test
-	public void testUnmarshalInvalidValue() {
+	public void testUnmarshalInvalidValue() throws Exception {
 		// Test unmarshalling with an invalid value
-		String invalidCode = "INVALID";
-		assertThrows(Exception.class, () -> adapter.unmarshal(invalidCode));
+		String code = "invalidCode";
+		AttributeType result = adapter.unmarshal(code);
+		assertEquals(AttributeType.NULL, result);
 	}
 
 	@Test

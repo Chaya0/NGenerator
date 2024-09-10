@@ -47,7 +47,7 @@ public class WriterUtilsTest {
 
 		GeneratorOutputFile file = WriterUtils.getOutputResource(tempDir.getAbsolutePath(), "testFile.txt", "UTF-8", true);
 		assertNotNull(file);
-		assertEquals(tempDir.getAbsolutePath() + "/testFile.txt", file);
+		assertEquals(tempDir.getAbsolutePath() + "\\testFile.txt", file.toString());
 	}
 
 	@Test

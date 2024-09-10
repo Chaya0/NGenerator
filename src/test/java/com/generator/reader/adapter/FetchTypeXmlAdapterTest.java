@@ -19,7 +19,7 @@ public class FetchTypeXmlAdapterTest {
 
 	@Test
 	public void testUnmarshal() throws Exception {
-		String code = "EAGER";
+		String code = "eager";
 		FetchType result = adapter.unmarshal(code);
 		assertEquals(FetchType.EAGER, result);
 	}
@@ -28,13 +28,14 @@ public class FetchTypeXmlAdapterTest {
 	public void testMarshal() throws Exception {
 		FetchType fetchType = FetchType.EAGER;
 		String result = adapter.marshal(fetchType);
-		assertEquals("EAGER", result);
+		assertEquals("eager", result);
 	}
 
 	@Test
-	public void testUnmarshalInvalidValue() {
-		String invalidCode = "INVALID";
-		assertThrows(Exception.class, () -> adapter.unmarshal(invalidCode));
+	public void testUnmarshalInvalidValue() throws Exception {
+		String code = "invalidCode";
+		FetchType result = adapter.unmarshal(code);
+		assertEquals(FetchType.NULL, result);
 	}
 
 	@Test

@@ -19,7 +19,7 @@ public class CascadeTypeXmlAdapterTest {
 
 	@Test
 	public void testUnmarshal() throws Exception {
-		String code = "ALL";
+		String code = "all";
 		CascadeType result = adapter.unmarshal(code);
 		assertEquals(CascadeType.ALL, result);
 	}
@@ -28,13 +28,14 @@ public class CascadeTypeXmlAdapterTest {
 	public void testMarshal() throws Exception {
 		CascadeType cascadeType = CascadeType.ALL;
 		String result = adapter.marshal(cascadeType);
-		assertEquals("ALL", result);
+		assertEquals("all", result);
 	}
 
 	@Test
-	public void testUnmarshalInvalidValue() {
-		String invalidCode = "INVALID";
-		assertThrows(Exception.class, () -> adapter.unmarshal(invalidCode));
+	public void testUnmarshalInvalidValue() throws Exception {
+		String code = "invalid";
+		CascadeType result = adapter.unmarshal(code);
+		assertEquals(CascadeType.NULL, result);
 	}
 
 	@Test
