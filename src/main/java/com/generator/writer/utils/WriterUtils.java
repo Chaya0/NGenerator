@@ -401,4 +401,12 @@ public class WriterUtils {
 		return getImportDefaultPackage() + ".specification";
 	}
 	
+	public static String getUtilsPackageImportPath() {
+		return getImportDefaultPackage() + ".utils";
+	}
+	
+	public static String getExceptionsPackageImportPath() {
+		return getImportDefaultPackage() + ".exceptions";
+	}
+	
 }

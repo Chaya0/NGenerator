@@ -11,12 +11,14 @@ import com.generator.model.AppModel;
 import com.generator.reader.XMLModelReader;
 import com.generator.writer.SpringStartExtractor;
 import com.generator.writer.Writer;
+import com.generator.writer.java.JavaPropertiesWriter;
 import com.generator.writer.java.components.JavaControllerWriter;
 import com.generator.writer.java.components.JavaRepositoryWriter;
 import com.generator.writer.java.components.JavaServiceWriter;
 import com.generator.writer.java.components.basic.JavaBasicControllerWriter;
 import com.generator.writer.java.components.basic.JavaBasicRepositoryWriter;
 import com.generator.writer.java.components.basic.JavaBasicServiceWriter;
+import com.generator.writer.java.components.generic.JavaEntityAttributeWriter;
 import com.generator.writer.java.components.generic.JavaEntityWriter;
 import com.generator.writer.java.components.generic.JavaEnumWriter;
 import com.generator.writer.java.components.generic.JavaGenericControllerWriter;
@@ -32,8 +34,12 @@ import com.generator.writer.java.dto.JavaErrorResponseDTOWriter;
 import com.generator.writer.java.dto.JavaGenericResponseWriter;
 import com.generator.writer.java.exceptions.JavaApplicationExceptionWriter;
 import com.generator.writer.java.exceptions.JavaExceptionHandlerWriter;
+import com.generator.writer.java.exceptions.JavaExceptionWriter;
 import com.generator.writer.java.exceptions.JavaOperationNotSupprotedExceptionWriter;
-import com.generator.writer.java.utils.JavaApiUtilWriter;
+import com.generator.writer.java.imports.ImportType;
+import com.generator.writer.java.imports.PackageType;
+import com.generator.writer.java.specification.JavaSpecificationWriter;
+import com.generator.writer.java.utils.JavaUtilWriter;
 
 public class ApplicationGenerator {
 	private static final Logger logger = LogManager.getLogger(ApplicationGenerator.class);
@@ -41,8 +47,9 @@ public class ApplicationGenerator {
 	private static AppModel appModel = XMLModelReader.readModel();
 
 	public static void generateApp() {
+		ImportType.loadProjectImports();
+		PackageType.loadProjectPackages();
 		extractAppIfItDoesntExists();
-		JavaApiUtilWriter utilWriter = new JavaApiUtilWriter();;
 		JavaAutowiringSpringBeanJobFactoryWriter autowiringSpringBeanJobFactoryWriter = new JavaAutowiringSpringBeanJobFactoryWriter();
 		JavaQuartzConfigurationWriter quartzWriter = new JavaQuartzConfigurationWriter();
 		JavaJwtFilterWriter jwtFilterWriter = new JavaJwtFilterWriter();
@@ -54,7 +61,11 @@ public class ApplicationGenerator {
 		JavaExceptionHandlerWriter javaExceptionHandlerWriter = new JavaExceptionHandlerWriter();
 		JavaApplicationExceptionWriter javaApplicationExceptionWriter = new JavaApplicationExceptionWriter();
 		JavaOperationNotSupprotedExceptionWriter javaOperationNotSupprotedExceptionWriter = new JavaOperationNotSupprotedExceptionWriter();
-		
+		JavaSpecificationWriter javaSpecificationWriter = new JavaSpecificationWriter();
+		JavaPropertiesWriter javaPropertiesWriter = new JavaPropertiesWriter();
+		JavaUtilWriter javaUtilWriter = new JavaUtilWriter();
+		JavaExceptionWriter javaExceptionWriter = new JavaExceptionWriter();
+
 		for (Writer writer : writers) {
 			try {
 				writer.create(appModel);
@@ -63,7 +74,6 @@ public class ApplicationGenerator {
 			}
 		}
 		try {
-			utilWriter.create();
 			autowiringSpringBeanJobFactoryWriter.create();
 			quartzWriter.create();
 			jwtFilterWriter.create();
@@ -75,11 +85,14 @@ public class ApplicationGenerator {
 			javaExceptionHandlerWriter.create();
 			javaOperationNotSupprotedExceptionWriter.create();
 			javaApplicationExceptionWriter.create();
+			javaSpecificationWriter.create();
+			javaUtilWriter.create();
+			javaPropertiesWriter.create();
+			javaExceptionWriter.create();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("Splendid.");
-
 	}
 
 	private static List<Writer> initJavaWriters() {
@@ -94,9 +107,10 @@ public class ApplicationGenerator {
 		Writer genServiceWriter = new JavaGenericServiceWriter();
 		Writer basicServiceWriter = new JavaBasicServiceWriter();
 		Writer serviceWriter = new JavaServiceWriter();
-		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter, enumWriter,basicControllerWriter, basicRepositoryWriter, basicServiceWriter);
+		Writer javaEntityAttributeWriter = new JavaEntityAttributeWriter();
+		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter, enumWriter,basicControllerWriter, basicRepositoryWriter, basicServiceWriter, javaEntityAttributeWriter);
 	}
-
+	
 	private static void extractAppIfItDoesntExists() {
 		String path = Application.getSpringProperties().getProjectPath() + Application.getSpringProperties().getBaseDir();
 		File file = new File(path);

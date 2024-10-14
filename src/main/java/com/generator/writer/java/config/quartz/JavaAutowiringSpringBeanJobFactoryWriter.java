@@ -1,5 +1,6 @@
 package com.generator.writer.java.config.quartz;
 
+import com.generator.writer.java.JavaImportUtil;
 import com.generator.writer.utils.GeneratorOutputFile;
 import com.generator.writer.utils.WriterUtils;
 
@@ -12,12 +13,12 @@ public class JavaAutowiringSpringBeanJobFactoryWriter {
 
 			file.writeln(0, "package " + WriterUtils.getImportDefaultPackage() + ".config.quartz;");
 			file.writeln(0, "");
-			file.writeln(0, "import org.quartz.spi.TriggerFiredBundle;");
-			file.writeln(0, "import org.springframework.beans.factory.annotation.Autowired;");
-			file.writeln(0, "import org.springframework.beans.factory.config.AutowireCapableBeanFactory;");
-			file.writeln(0, "import org.springframework.context.ApplicationContext;");
-			file.writeln(0, "import org.springframework.context.ApplicationContextAware;");
-			file.writeln(0, "import org.springframework.scheduling.quartz.SpringBeanJobFactory;");
+			file.writeln(0, JavaImportUtil.getQuartzTriggerFiredBundleImport());
+			file.writeln(0, JavaImportUtil.getSpringAutowiredImport());
+			file.writeln(0, JavaImportUtil.getSpringAutowireCapableBeanFactory());
+			file.writeln(0, JavaImportUtil.getSpringApplicationContextImport());
+			file.writeln(0, JavaImportUtil.getSpringApplicationContextAwareImport());
+			file.writeln(0, JavaImportUtil.getSpringBeanJobFactoryImport());
 			file.writeln(0, "");
 			file.writeln(0, "public class AutowiringSpringBeanJobFactory extends SpringBeanJobFactory implements ApplicationContextAware {");
 			file.writeln(1, "");

@@ -8,6 +8,7 @@ import com.generator.model.AppModel;
 import com.generator.model.Entity;
 import com.generator.model.enums.ComponentType;
 import com.generator.writer.DefaultWriter;
+import com.generator.writer.java.JavaImportUtil;
 import com.generator.writer.utils.GeneratorOutputFile;
 import com.generator.writer.utils.WriterUtils;
 
@@ -33,7 +34,7 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "import jakarta.validation.constraints.Max;");
 			file.writeln(0, "import jakarta.validation.constraints.Min;");
-			file.writeln(0, "import jakarta.validation.Valid;");
+			file.writeln(0, JavaImportUtil.getJakartaValidationValidImport());
 			file.writeln(0, "import jakarta.persistence.EntityNotFoundException;");
 			file.writeln(0, WriterUtils.getApplicationExceptionImport());
 			// TODO dodati logiku za generisanje anotacije za autorizaciju

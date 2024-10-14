@@ -55,5 +55,6 @@ public class GeneratorProperties {
 	private boolean generateGenericEntity = true;
 	private boolean generateGenericEnums = true;
 	private boolean generateDTOs = true;
+	private boolean generateUserFrontSettings = true;
 	
 }

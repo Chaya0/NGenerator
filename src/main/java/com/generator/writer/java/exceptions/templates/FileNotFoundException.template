@@ -1,0 +1,12 @@
+#GP(EXCEPTION)
+
+#GI(JAVA_IO, "Serial")
+
+public class FieldNotFoundException extends Exception {
+	@Serial
+    private static final long serialVersionUID = 1L;
+
+	public FieldNotFoundException(String message) {
+        super(message);
+    }
+}

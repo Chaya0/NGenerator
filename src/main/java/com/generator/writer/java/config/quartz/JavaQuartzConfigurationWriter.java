@@ -2,6 +2,7 @@ package com.generator.writer.java.config.quartz;
 
 import java.io.IOException;
 
+import com.generator.writer.java.JavaImportUtil;
 import com.generator.writer.utils.GeneratorOutputFile;
 import com.generator.writer.utils.WriterUtils;
 
@@ -14,18 +15,18 @@ public class JavaQuartzConfigurationWriter {
 
 			file.writeln(0, "package " + WriterUtils.getImportDefaultPackage() + ".config.quartz;");
 			file.writeln(0, "");
-			file.writeln(0, "import java.io.IOException;");
-			file.writeln(0, "import java.util.Properties;");
+			file.writeln(0, JavaImportUtil.getJavaIoIOExceptionImport());
+			file.writeln(0, JavaImportUtil.getJavaUtilImport());
 			file.writeln(0, "");
-			file.writeln(0, "import org.apache.commons.lang3.ArrayUtils;");
-			file.writeln(0, "import org.quartz.Trigger;");
-			file.writeln(0, "import org.springframework.beans.factory.config.PropertiesFactoryBean;");
-			file.writeln(0, "import org.springframework.context.ApplicationContext;");
-			file.writeln(0, "import org.springframework.context.annotation.Bean;");
-			file.writeln(0, "import org.springframework.context.annotation.Configuration;");
-			file.writeln(0, "import org.springframework.core.io.ClassPathResource;");
-			file.writeln(0, "import org.springframework.scheduling.quartz.SchedulerFactoryBean;");
-			file.writeln(0, "import org.springframework.scheduling.quartz.SpringBeanJobFactory;");
+			file.writeln(0, JavaImportUtil.getApacheCommonsArrayUtilsImport());
+			file.writeln(0, JavaImportUtil.getQuartzTriggerImport());
+			file.writeln(0, JavaImportUtil.getSpringPropertiesFactoryBeanImport());
+			file.writeln(0, JavaImportUtil.getSpringApplicationContextImport());
+			file.writeln(0, JavaImportUtil.getSpringBeanImport());
+			file.writeln(0, JavaImportUtil.getSpringConfigurationImport());
+			file.writeln(0, JavaImportUtil.getSpringCoreClassPathResourceImport());
+			file.writeln(0, JavaImportUtil.getSpringQuartzSchedulerFactoryBeanImport());
+			file.writeln(0, JavaImportUtil.getSpringBeanJobFactoryImport());
 			file.writeln(0, "");
 			file.writeln(0, "@Configuration");
 			file.writeln(0, "public class QuartzConfiguration {");

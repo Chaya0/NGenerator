@@ -1,0 +1,14 @@
+#GP(SPECIFICATION)
+
+#GI(JAVA_UTIL, "List")
+
+#GI(LOMBOK, "Data")
+
+@Data
+public class SearchFilter {
+    private String key;
+    private SearchOperator searchOperator;
+    private Object value;
+    private LogicalOperator logicalOperator;
+    private List<SearchFilter> filters;
+}

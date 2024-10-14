@@ -29,6 +29,9 @@ public class JavaImportUtil {
         return "import java.util.*;";
     }
 
+    public static String getJakartaValidationValidImport() {
+    	return "import jakarta.validation.Valid;";
+    }
     public static String getJavaTimeImport() {
         return "import java.time.*;";
     }
@@ -50,16 +53,21 @@ public class JavaImportUtil {
     }
 
     public static String getSearchDtoImport() {
-        return "import com.mds.merv.specification.SearchDTO;";
+        return "import " + WriterUtils.getSpecificationPackageImportPath() + ".SearchDTO;";
     }
 
     public static String getSecurityUtilsImport() {
-        return "import com.mds.merv.utils.SecurityUtils;";
+        return "import " + WriterUtils.getUtilsPackageImportPath() + ".SecurityUtils;";
     }
 
     public static String getSpringNoRepositoryBeanImport() {
         return "import org.springframework.data.repository.NoRepositoryBean;";
     }
+    
+    public static String getSpringBeanImport() {
+        return "import org.springframework.context.annotation.Bean;";
+    }
+
 
     public static String getSpringDataDomainImport() {
         return "import org.springframework.data.domain.*;";
@@ -108,6 +116,10 @@ public class JavaImportUtil {
     public static String getQuartzTriggerFiredBundleImport() {
         return "import org.quartz.spi.TriggerFiredBundle;";
     }
+    
+    public static String getQuartzTriggerImport() {
+        return "import org.quartz.Trigger;";
+    }
 
     public static String getSpringAutowiredImport() {
         return "import org.springframework.beans.factory.annotation.Autowired;";
@@ -143,6 +155,10 @@ public class JavaImportUtil {
 
     public static String getSpringCoreClassPathResourceImport() {
         return "import org.springframework.core.io.ClassPathResource;";
+    }
+    
+    public static String getSpringConfigurationImport() {
+    	return "import org.springframework.context.annotation.Configuration;";
     }
 
     public static String getSpringQuartzSchedulerFactoryBeanImport() {
@@ -196,4 +212,8 @@ public class JavaImportUtil {
     public static String getJakartaServletHttpServletResponseImport() {
         return "import jakarta.servlet.http.HttpServletResponse;";
     }
+
+	public static String getSpringAutowireCapableBeanFactory() {
+		return "import org.springframework.beans.factory.config.AutowireCapableBeanFactory;";
+	}
 }

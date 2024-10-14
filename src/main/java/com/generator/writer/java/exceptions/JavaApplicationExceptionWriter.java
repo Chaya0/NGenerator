@@ -15,7 +15,7 @@ public class JavaApplicationExceptionWriter {
 
 			file.writeln(0, "package " + Application.getSpringProperties().getPackageName() + ".exceptions;");
 			file.writeln(0, "");
-			file.writeln(0, "public class MervException extends Exception {");
+			file.writeln(0, "public class " + appName + "Exception extends Exception {");
 			file.writeln(1, "private static final long serialVersionUID = 1L;");
 			file.writeln(0, "");
 			file.writeln(1, "public " + appName + "Exception(String message) {");

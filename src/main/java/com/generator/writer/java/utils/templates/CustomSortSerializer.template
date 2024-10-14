@@ -1,0 +1,27 @@
+#GP(UTILS)
+
+#GI(FASTERXML_JACKSON_CORE)
+#GI(FASTERXML_JACKSON_DATABIND)
+#GI(SPRING_DATA_DOMAIN, "Sort")
+#GI(JAVA_IO, "IOException")
+
+public class CustomSortSerializer extends JsonSerializer<Sort> {
+
+	@Override
+	public void serialize(Sort value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+		gen.writeStartArray();
+		value.iterator().forEachRemaining(v -> {
+			try {
+				gen.writeObject(v);
+			} catch (IOException e) {
+				throw new RuntimeException("Couldn't serialize object " + v);
+			}
+		});
+		gen.writeEndArray();
+	}
+
+	@Override
+	public Class<Sort> handledType() {
+		return Sort.class;
+	}
+}

@@ -1,116 +1,139 @@
 <app>
-	<entities>
-		<entity name="dokument" inheritanceType="joined">
-			<attributes>
-				<attribute name="brojDokumenta" type="string" nullable="false" />
-				<attribute name="tipDokumenta" type="enum" nullable="false" enumName="tipDokumenta" />
-			</attributes>
-			<relations>
-				<relation entityName="knjizenje" relationType="oneToMany" owningSide="true" />
-			</relations>
-		</entity>
-		<entity name="faktura" inherits="dokument">
-			<attributes>
-				<attribute name="brojFakture" type="string" nullable="false" />
-				<attribute name="datumIzdavanja" type="date" nullable="false" />
-				<attribute name="rokZaPlacanje" type="date" nullable="false" />
-				<attribute name="datumPlacanja" type="date" nullable="false" />
-				<attribute name="prodajnaVrednost" type="double" nullable="false" />
-				<attribute name="rabatProcenat" type="double" />
-				<attribute name="rabat" type="double" />
-				<attribute name="porezProcenat" type="double" nullable="false" />
-				<attribute name="porez" type="double" nullable="false" />
-				<attribute name="iznos" type="double" nullable="false" />
-				<attribute name="valuta" type="string" nullable="false" />
-				<attribute name="kurs" type="double" nullable="false" />
-				<attribute name="naplata" type="double" nullable="false" />
-				<attribute name="komentar" type="string" />
-				<attribute name="tipFakture" type="enum" nullable="false" enumName="tipFakture" />
-			</attributes>
-			<relations>
-				<relation entityName="preduzece" relationType="manyToOne" owningSide="false" />
-			</relations>
-		</entity>
-		<entity name="knjizenje">
-			<attributes>
-				<attribute name="brojNaloga" type="string" nullable="false" />
-				<attribute name="datumKnjizenja" type="date" nullable="false" />
-				<attribute name="komentar" type="string" />
-			</attributes>
-			<relations>
-				<relation entityName="konto" relationType="oneToMany" owningSide="true" fetchType="eager" />
-				<relation entityName="dokument" relationType="manyToOne" owningSide="false" />
-			</relations>
-		</entity>
-		<entity name="kontnaGrupa">
-			<attributes>
-				<attribute name="brojKonta" type="string" nullable="false" />
-				<attribute name="nazivKonta" type="string" nullable="false" />
-			</attributes>
-			<relations>
-				<relation entityName="konto" relationType="oneToMany" owningSide="true" fetchType="eager" />
-			</relations>
-		</entity>
-		<entity name="konto">
-			<attributes>
-				<attribute name="potrazuje" type="double" />
-				<attribute name="duguje" type="double" />
-			</attributes>
-			<relations>
-				<relation entityName="knjizenje" relationType="manyToOne" owningSide="false" />
-				<relation entityName="kontnaGrupa" relationType="manyToOne" owningSide="false" />
-			</relations>
-		</entity>
-		<entity name="permission">
-			<attributes>
-				<attribute name="name" type="string" />
-			</attributes>
-			<relations>
-				<relation entityName="user" relationType="manyToMany" owningSide="false" />
-			</relations>
-		</entity>
-		<entity name="preduzece">
-			<attributes>
-				<attribute name="naziv" type="string" nullable="false" />
-				<attribute name="pib" type="string" nullable="false" />
-				<attribute name="racun" type="string" />
-				<attribute name="adresa" type="string" nullable="false" />
-				<attribute name="grad" type="string" nullable="false" />
-				<attribute name="telefon" type="string" />
-				<attribute name="email" type="string" />
-				<attribute name="fax" type="string" />
-				<attribute name="webAdresa" type="string" />
-				<attribute name="komentar" type="string" />
-			</attributes>
-			<relations>
-				<relation entityName="faktura" relationType="oneToMany" owningSide="true" fetchType="eager" />
-			</relations>
-		</entity>
-		<entity name="user">
-			<attributes>
-				<attribute name="firstName" type="string" />
-				<attribute name="lastName" type="string" />
-				<attribute name="username" type="string" />
-				<attribute name="password" type="string" />
-			</attributes>
-			<relations>
-				<relation entityName="permission" relationType="manyToMany" owningSide="true" fetchType="eager" />
-			</relations>
-		</entity>
-	</entities>
-	<enums>
-		<enum name="tipDokumenta">
-			<values>
-				<value>faktura</value>
-			</values>
-		</enum>
-		<enum name="tipFakture">
-			<values>
-				<value>ulazna_faktura</value>
-				<value>izlazna_faktura</value>
-			</values>
-		</enum>
-	</enums>
+    <entities>
+        <entity name="library" inheritanceType="none">
+            <attributes>
+                <attribute name="name" type="string" nullable="false" />
+                <attribute name="address" type="string" nullable="false" />
+                <attribute name="city" type="string" nullable="false" />
+                <attribute name="phone" type="string" />
+            </attributes>
+            <relations>
+                <relation entityName="book" relationType="oneToMany" owningSide="true" />
+            </relations>
+        </entity>
+
+        <entity name="book" inheritanceType="none">
+            <attributes>
+                <attribute name="title" type="string" nullable="false" />
+                <attribute name="isbn" type="string" />
+                <attribute name="publishedDate" type="localDate" />
+                <attribute name="language" type="string" />
+                <attribute name="availableCopies" type="integer" nullable="false" />
+                <attribute name="totalCopies" type="integer" nullable="false" />
+            </attributes>
+            <relations>
+            	<relation entityName="author" relationType="manyToOne" owningSide="false" />
+                <relation entityName="publisher" relationType="manyToOne" owningSide="false" />
+                <relation entityName="category" relationType="manyToOne" owningSide="false" />
+                <relation entityName="library" relationType="manyToOne" owningSide="false" />
+            </relations>
+        </entity>
+        
+        <entity name="author" inheritanceType="none">
+            <attributes>
+                <attribute name="firstName" type="string" nullable="false" />
+                <attribute name="lastName" type="string" nullable="false" />
+                <attribute name="birthDate" type="localDate" nullable="true" />
+            </attributes>
+            <relations>
+                <relation entityName="book" relationType="oneToMany" owningSide="true" />
+            </relations>
+        </entity>
+        
+        <entity name="publisher" inheritanceType="none">
+            <attributes>
+                <attribute name="name" type="string" nullable="false" />
+                <attribute name="address" type="string" />
+                <attribute name="website" type="string" />
+            </attributes>
+            <relations>
+                <relation entityName="book" relationType="oneToMany" owningSide="true" />
+            </relations>
+        </entity>
+
+        <entity name="category" inheritanceType="none">
+            <attributes>
+                <attribute name="name" type="string" nullable="false" />
+            </attributes>
+            <relations>
+                <relation entityName="book" relationType="oneToMany" owningSide="true" />
+            </relations>
+        </entity>
+
+        <entity name="checkout" inheritanceType="none">
+            <attributes>
+                <attribute name="checkoutDate" type="localDateTime" nullable="false" />
+                <attribute name="dueDate" type="localDate" nullable="false" />
+                <attribute name="returnDate" type="localDate" />
+                <attribute name="status" type="enum" nullable="false" enumName="checkoutStatus" />
+            </attributes>
+            <relations>
+                <relation entityName="user" relationType="manyToOne" owningSide="false" />
+                <relation entityName="book" relationType="manyToOne" owningSide="false" />
+            </relations>
+        </entity>
+
+        <entity name="fine" inheritanceType="none">
+            <attributes>
+                <attribute name="fineAmount" type="double" nullable="false" />
+                <attribute name="paid" type="boolean" nullable="false" />
+                <attribute name="fineDate" type="localDate" nullable="false" />
+            </attributes>
+            <relations>
+                <relation entityName="user" relationType="manyToOne" owningSide="false" />
+                <relation entityName="checkout" relationType="manyToOne" owningSide="false" />
+            </relations>
+        </entity>
+
+        <entity name="user" inheritanceType="none">
+            <attributes>
+                <attribute name="username" type="string" nullable="false" />
+                <attribute name="password" type="string" nullable="false" />
+                <attribute name="email" type="string" nullable="false" />
+                <attribute name="role" type="enum" nullable="false" enumName="userRole" />
+            </attributes>
+            <relations>
+                <relation entityName="checkout" relationType="oneToMany" owningSide="true" />
+                <relation entityName="fine" relationType="oneToMany" owningSide="true" />
+            </relations>
+        </entity>
+
+        <entity name="reservation" inheritanceType="none">
+            <attributes>
+                <attribute name="reservationDate" type="localDate" nullable="false" />
+                <attribute name="status" type="enum" nullable="false" enumName="reservationStatus" />
+            </attributes>
+            <relations>
+                <relation entityName="user" relationType="manyToOne" owningSide="false" />
+                <relation entityName="book" relationType="manyToOne" owningSide="false" />
+            </relations>
+        </entity>
+
+    </entities>
+
+    <enums>
+        <enum name="userRole">
+            <values>
+                <value>ADMIN</value>
+                <value>LIBRARIAN</value>
+                <value>MEMBER</value>
+            </values>
+        </enum>
+
+        <enum name="checkoutStatus">
+            <values>
+                <value>BORROWED</value>
+                <value>RETURNED</value>
+                <value>OVERDUE</value>
+            </values>
+        </enum>
+
+        <enum name="reservationStatus">
+            <values>
+                <value>PENDING</value>
+                <value>FULFILLED</value>
+                <value>CANCELLED</value>
+            </values>
+        </enum>
+    </enums>
 </app>
-
-

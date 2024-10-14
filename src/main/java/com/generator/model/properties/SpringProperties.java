@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
+import com.generator.Application;
+
 import lombok.Data;
 
 /*
@@ -27,12 +29,14 @@ public class SpringProperties {
 	private String datasourceUrl;
 	private String datasourceUsername;
 	private String datasourcePassword;
+	
+	private static List<String> defaultDependecies = Arrays.asList("lombok", "data-jpa", "validation", "web", "jdbc", "mysql", "security");
 
 	public SpringProperties(Properties properties) {
 		type = "maven-project";
 		language = "java";
 		packaging = "jar";
-		dependencies = Arrays.asList("lombok", "data-jpa", "validation", "web", "cloud-feign", "jdbc", "mysql", "security");
+		dependencies = defaultDependecies;
 		bootVersion = properties.getProperty("bootVersion", "3.1.4");
 		baseDir = properties.getProperty("baseDir", "myApp");
 		groupId = properties.getProperty("groupId", "com.myApp");
@@ -64,6 +68,15 @@ public class SpringProperties {
 		if (!getDependencies().isEmpty()) {
 			for (String dependency : getDependencies()) {
 				stringBuilder.append(dependency + ",");
+			}
+			if(Application.getGeneratorProperties().isGenerateSwaggerComponent()) {
+				
+			}
+			if(Application.getGeneratorProperties().isGenerateAuthorisationComponents()) {
+				
+			}
+			if(Application.getGeneratorProperties().isGenerateQuartzComponents()) {
+				
 			}
 		}
 		stringBuilder.deleteCharAt(stringBuilder.length() - 1);

@@ -1,0 +1,11 @@
+#GP(SPECIFICATION)
+
+#GI(JAVA_UTIL, "List")
+
+#GI(LOMBOK, "Data")
+
+@Data
+public class FilterGroup {
+    private LogicalOperator logicalOperator;
+    private List<SearchFilter> filters;
+}

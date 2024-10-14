@@ -12,8 +12,8 @@ import com.generator.model.properties.SpringProperties;
 
 public class Application {
 	private static final Logger logger = LogManager.getLogger(Application.class);
-	private static SpringProperties springProperties = new SpringProperties(loadProperties());
 	private static GeneratorProperties generatorProperties = loadGeneratorProperties();
+	private static SpringProperties springProperties = new SpringProperties(loadProperties());
 
 	public static void main(String[] args) {
 		try {

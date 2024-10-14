@@ -28,7 +28,7 @@ public class JavaControllerWriter implements DefaultWriter {
 		if (WriterUtils.fileExists(WriterUtils.getControllerPackagePath(false, entity.getName()), upperCaseName + "Controller.java")) {
 			return;
 		}
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getControllerPackagePath(false), upperCaseName + "Controller.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getControllerPackagePath(false, entity.getName()), upperCaseName + "Controller.java", false)) {
 			if (file.hasAlreadyExisted()) {
 				return;
 			}

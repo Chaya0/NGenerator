@@ -1,0 +1,5 @@
+#GP(SPECIFICATION)
+
+public enum LogicalOperator {
+    AND, OR
+}
