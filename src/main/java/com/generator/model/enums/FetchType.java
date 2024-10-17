@@ -1,9 +1,9 @@
 package com.generator.model.enums;
 
-public enum FetchType {
+public enum FetchType implements CodeEnum<FetchType> {
 	LAZY("lazy", "fetch =  FetchType.LAZY"),
 	EAGER("eager", "fetch =  FetchType.EAGER"),
-	NULL("","");
+	NULL("", "");
 
 	private String code;
 	private String generatorCode;
@@ -13,6 +13,7 @@ public enum FetchType {
 		this.generatorCode = generatorCode;
 	}
 
+	@Override
 	public String getCode() {
 		return code;
 	}
@@ -21,7 +22,8 @@ public enum FetchType {
 		return generatorCode;
 	}
 
-	public static FetchType fromCode(String code) {
+	@Override
+	public FetchType fromCode(String code) {
 		for (FetchType fetchType : FetchType.values()) {
 			if (fetchType.getCode().equals(code)) return fetchType;
 		}

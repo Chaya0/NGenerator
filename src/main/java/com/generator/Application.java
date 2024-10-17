@@ -7,6 +7,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.generator.model.enums.properties.SpringInitializerDependencyName;
 import com.generator.model.properties.GeneratorProperties;
 import com.generator.model.properties.SpringProperties;
 
@@ -43,8 +44,9 @@ public class Application {
 
 	static GeneratorProperties loadGeneratorProperties() {
 		logger.info("Loading application.properties...");
-		try (InputStream input = new FileInputStream("./application.properties")) {
+		try (InputStream input = new FileInputStream("./generator.properties")) {
 			GeneratorProperties generatorProperties = PropertiesLoader.loadProperties(input, GeneratorProperties.class);
+			System.out.println(generatorProperties);
 			logger.info("Application properties loaded successfuly!");
 			return generatorProperties;
 		} catch (Exception e) {
@@ -53,7 +55,7 @@ public class Application {
 			return null;
 		}
 	}
-
+	
 	public static SpringProperties getSpringProperties() {
 		return springProperties;
 	}

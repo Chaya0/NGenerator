@@ -1,0 +1,62 @@
+#GP(SECURITY)
+
+#GI(JAVA_IO, "IOException")
+
+#GI(SPRING_LANG, "NonNull")
+#GI(SPRING_SECURITY_AUTHENTICATION, "UsernamePasswordAuthenticationToken")
+#GI(SPRING_SECURITY_CORE_CONTEXT, "SecurityContextHolder")
+#GI(SPRING_SECURITY_CORE_USERDETAILS, "UserDetails")
+#GI(SPRING_SECURITY_WEB_AUTHENTICATION, "WebAuthenticationDetailsSource")
+#GI(SPRING_STEREOTYPE, "Component")
+#GI(SPRING_SECURITY_WEB_FILTER, "OncePerRequestFilter")
+
+#GI(APP_SERVICE, "user.UserService")
+
+#GI(SPRING_SERVLET, "FilterChain")
+#GI(SPRING_SERVLET, "ServletException")
+#GI(SPRING_SERVLET, "Cookie")
+#GI(SPRING_SERVLET_HTTP, "HttpServletRequest")
+#GI(SPRING_SERVLET_HTTP, "HttpServletResponse")
+
+@Component
+public class JwtFilter extends OncePerRequestFilter {
+    private final UserService userService;
+    private final JwtUtil jwtUtil;
+
+    public JwtFilter(UserService userService, JwtUtil jwtUtil) {
+        this.userService = userService;
+        this.jwtUtil = jwtUtil;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, @NonNull HttpServletResponse httpServletResponse, @NonNull FilterChain filterChain) throws ServletException, IOException {
+        final Cookie[] cookies = httpServletRequest.getCookies();
+        String jwt = null;
+        String username = null;
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("jwt")) {
+                    jwt = cookie.getValue();
+                    username = jwtUtil.extractUsername(jwt);
+                    break;
+                }
+            }
+        }
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userService.loadUserByUsername(username);
+
+            if (jwtUtil.validateToken(jwt, userDetails)) {
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            }
+        }
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        return request.getRequestURI().startsWith("/api/external");
+    }
+}

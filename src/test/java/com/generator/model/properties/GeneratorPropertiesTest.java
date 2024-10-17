@@ -7,11 +7,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.generator.model.enums.ApplicationStructureType;
-import com.generator.model.enums.AuthorisationType;
-import com.generator.model.enums.DatabaseType;
 import com.generator.model.enums.FrontendType;
-import com.generator.model.enums.ModelFileType;
+import com.generator.model.enums.properties.ApplicationStructureType;
+import com.generator.model.enums.properties.AuthenticationType;
+import com.generator.model.enums.properties.DatabaseType;
+import com.generator.model.enums.properties.ModelFileType;
 
 public class GeneratorPropertiesTest {
 
@@ -30,7 +30,7 @@ public class GeneratorPropertiesTest {
 		assertFalse(generatorProperties.isGenerateQuartzComponents());
 		assertFalse(generatorProperties.isGenerateFrontend());
 		assertEquals(DatabaseType.POSTGRES, generatorProperties.getDatabaseType());
-		assertEquals(AuthorisationType.JWT, generatorProperties.getAuthorisationType());
+		assertEquals(AuthenticationType.JWT, generatorProperties.getAuthenticationType());
 		assertEquals(FrontendType.ANGULAR, generatorProperties.getFrontendType());
 		assertEquals(ModelFileType.XML, generatorProperties.getModelFileType());
 		assertEquals(ApplicationStructureType.MONOLITHIC, generatorProperties.getApplicationStructureType());
@@ -65,8 +65,8 @@ public class GeneratorPropertiesTest {
 		generatorProperties.setDatabaseType(DatabaseType.MYSQL);
 		assertEquals(DatabaseType.MYSQL, generatorProperties.getDatabaseType());
 
-		generatorProperties.setAuthorisationType(AuthorisationType.JWT);
-		assertEquals(AuthorisationType.JWT, generatorProperties.getAuthorisationType());
+		generatorProperties.setAuthenticationType(AuthenticationType.JWT);
+		assertEquals(AuthenticationType.JWT, generatorProperties.getAuthenticationType());
 
 		generatorProperties.setFrontendType(FrontendType.NULL);
 		assertEquals(FrontendType.NULL, generatorProperties.getFrontendType());

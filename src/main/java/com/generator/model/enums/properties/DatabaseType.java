@@ -1,4 +1,4 @@
-package com.generator.model.enums;
+package com.generator.model.enums.properties;
 
 public enum DatabaseType {
 	MYSQL("MySQL8Dialect"), 

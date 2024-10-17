@@ -1,17 +1,18 @@
-package com.generator.writer.java.imports;
+package com.generator.writer.java.placeholders;
 
 import java.util.Arrays;
 
 import com.generator.writer.utils.WriterUtils;
 
-public enum PackageType {
+public enum JavaPackageType {
 	SPECIFICATION("specification"),
 	UTILS("utils"),
+	CONFIG("config"),
+	SECURITY("config.security"),
 	EXCEPTION("exceptions");
-
 	private String code;
 
-	private PackageType(String code) {
+	private JavaPackageType(String code) {
 		this.code = code;
 	}
 

@@ -71,6 +71,10 @@ public class GeneratorOutputFile implements AutoCloseable {
 	public void writeln(int indentLevel, String line) throws IOException {
 		_write(indentLevel, line, "\r\n");
 	}
+	
+	public void newLine() throws IOException {
+		writeln(0, "");
+	}
 
 	void write(int indentLevel, String lines) throws IOException {
 		_write(indentLevel, lines, "");

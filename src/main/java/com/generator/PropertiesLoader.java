@@ -44,7 +44,14 @@ public class PropertiesLoader {
 			return Double.parseDouble(propertyValue);
 		} else if (fieldType.equals(String.class)) {
 			return propertyValue;
-		}
+		} else if (fieldType.isEnum()) {
+			return convertToEnum(fieldType, propertyValue);
+        }
 		throw new IllegalArgumentException("Unsupported field type: " + fieldType.getName());
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <E extends Enum<E>> E convertToEnum(Class<?> fieldType, String propertyValue) {
+	    return Enum.valueOf((Class<E>) fieldType.asSubclass(Enum.class), propertyValue.toUpperCase());
 	}
 }

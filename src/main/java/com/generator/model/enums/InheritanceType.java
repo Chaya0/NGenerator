@@ -1,10 +1,10 @@
 package com.generator.model.enums;
 
-public enum InheritanceType {
+public enum InheritanceType implements CodeEnum<InheritanceType> {
 	JOINED("joined", "@Inheritance(strategy = InheritanceType.JOINED)"),
 	TABLE_PER_CLASS("tablePerClass", "@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)"),
 	SINGLE_TABLE("singleTable", "@Inheritance(strategy = InheritanceType.SINGLE_TABLE)"),
-	NULL("","");
+	NULL("", "");
 
 	private String code;
 	private String generatorCode;
@@ -14,6 +14,7 @@ public enum InheritanceType {
 		this.generatorCode = generatorCode;
 	}
 
+	@Override
 	public String getCode() {
 		return code;
 	}
@@ -22,7 +23,8 @@ public enum InheritanceType {
 		return generatorCode;
 	}
 
-	public static InheritanceType fromCode(String code) {
+	@Override
+	public InheritanceType fromCode(String code) {
 		for (InheritanceType inheritanceType : InheritanceType.values()) {
 			if (inheritanceType.getCode().equals(code)) return inheritanceType;
 		}

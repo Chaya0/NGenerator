@@ -1,0 +1,55 @@
+#GP(SECURITY)
+
+#GI(JAVA_IO, "IOException")
+
+#GI(SPRING_SECURITY_AUTHENTICATION, "UsernamePasswordAuthenticationToken")
+#GI(SPRING_SECURITY_CORE_CONTEXT, "SecurityContextHolder")
+#GI(SPRING_SECURITY_CORE_USERDETAILS, "UserDetails")
+#GI(SPRING_SECURITY_WEB_AUTHENTICATION, "WebAuthenticationDetailsSource")
+#GI(SPRING_STEREOTYPE, "Component")
+#GI(SPRING_SECURITY_WEB, "OncePerRequestFilter")
+
+#GI(APP_SERVICE, "UserService")
+#GI(APP_SECURITY, "JwtUtil")
+
+#GI(SPRING_SERVLET, "FilterChain")
+#GI(SPRING_SERVLET, "ServletException")
+#GI(SPRING_SERVLET, "HttpServletRequest")
+#GI(SPRING_SERVLET, "HttpServletResponse")
+
+
+@Component
+public class JwtFilter extends OncePerRequestFilter {
+	private final UserService userService;
+	private final JwtUtil jwtUtil;
+	
+	public JwtFilter(UserService userService, JwtUtil jwtUtil) {
+		this.userService = userService;
+		this.jwtUtil = jwtUtil;
+	}
+	
+	@Override
+	protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+		String authHeader = httpServletRequest.getHeader("Authorization");
+		String jwt = null;
+		String username = null;
+		
+		if(authHeader != null && authHeader.startsWith("Bearer ")) {
+			jwt = authHeader.substring(7);
+			username = jwtUtil.extractUsername(jwt);
+		}
+		
+		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			UserDetails userDetails = this.userService.loadUserByUsername(username);;
+			
+			if (jwtUtil.validateToken(jwt, userDetails)) {
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+					userDetails, null, userDetails.getAuthorities());
+				usernamePasswordAuthenticationToken
+					.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			}
+		}
+		filterChain.doFilter(httpServletRequest, httpServletResponse);
+	}
+}

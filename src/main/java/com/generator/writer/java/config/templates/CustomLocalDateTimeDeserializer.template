@@ -1,0 +1,18 @@
+#GP(CONFIG)
+
+#GP(JAVA_IO, "IOException")
+#GP(JAVA_TIME, "LocalDateTime")
+#GP(JAVA_TIME_FORMAT, "DateTimeFormatter")
+
+#GP(FASTERXML_JACKSON_CORE, "JsonParser")
+#GP(FASTERXML_JACKSON_DATABIND, "DeserializationContext")
+#GP(FASTERXML_JACKSON_DATABIND, "JsonDeserializer")
+
+public class CustomLocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
+
+    @Override
+    public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        String dateTimeString = jsonParser.getText();
+        return LocalDateTime.parse(dateTimeString, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+    }
+}

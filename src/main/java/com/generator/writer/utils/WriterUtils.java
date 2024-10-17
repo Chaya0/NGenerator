@@ -95,6 +95,13 @@ public class WriterUtils {
 		stringBuilder.append(getCorrectPath(Application.getSpringProperties().getPackageName()));
 		return stringBuilder.toString();
 	}
+	
+	public static String getProjectPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getSpringProperties().getProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getBaseDir());
+		return stringBuilder.toString();
+	}
 
 	/**
 	 * Retrieves the default package name for imports.
@@ -395,6 +402,14 @@ public class WriterUtils {
 	
 	public static String getSpecificationPackagePath() {
 		return getMainPackagePath() + "/specification";
+	}
+	
+	public static String getConfigurationPackagePath() {
+		return getMainPackagePath() + "/config";
+	}
+	
+	public static String getSecurityPackagePath() {
+		return getConfigurationPackagePath() + "/security";
 	}
 	
 	public static String getSpecificationPackageImportPath() {

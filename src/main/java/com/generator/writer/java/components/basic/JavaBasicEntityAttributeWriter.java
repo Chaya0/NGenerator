@@ -21,23 +21,24 @@ public class JavaBasicEntityAttributeWriter implements DefaultWriter {
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getServicePackagePath(false, entity.getName()), upperCaseName + "Attribute.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getServicePackagePath(false, entity.getName()), upperCaseName + "Attribute.java", true)) {
 
 			file.writeln(0, "package " + WriterUtils.getImportServicePackageName(false, entity.getName()) + ";");
 			file.writeln(0, "");
-			file.writeln(0, "import " + WriterUtils.getImportServicePackageName(false) + ";");
+			file.writeln(0, "import " + WriterUtils.getImportServicePackageName(false) + ".EntityAttribute;");
 			file.writeln(0, "");
-			file.writeln(0, "public enum " + upperCaseName + "implements EntityAttribute {");
+			file.writeln(0, "public enum " + upperCaseName + "Attribute implements EntityAttribute {");
 			for (Attribute attribute : entity.getAttributes()) {
-				file.writeln(1, StringUtils.camelToSnakeCase(attribute.getName()).toUpperCase() + "(" + attribute.getName() + ");");
+				file.writeln(1, StringUtils.camelToSnakeCase(attribute.getName()).toUpperCase() + "(\"" + attribute.getName() + "\"),");
 			}
 			for (Relation relation : entity.getRelations()) {
-				if (relation.getRelationName() != null || !relation.getRelationName().isEmpty() || relation.getRelationName().length() > 0) {
-					file.writeln(1, StringUtils.camelToSnakeCase(relation.getRelationName()).toUpperCase() + "(" + relation.getRelationName() + ");");
+				if (relation.getRelationName() != null && (!relation.getRelationName().isEmpty() || relation.getRelationName().length() > 0)) {
+					file.writeln(1, StringUtils.camelToSnakeCase(relation.getRelationName()).toUpperCase() + "(\"" + relation.getRelationName() + "\"),");
 				} else {
-					file.writeln(1, StringUtils.camelToSnakeCase(relation.getEntityName()).toUpperCase() + "(" + relation.getEntityName() + ");");
+					file.writeln(1, StringUtils.camelToSnakeCase(relation.getEntityName()).toUpperCase() + "(\"" + relation.getEntityName() + "\"),");
 				}
 			}
+			file.writeln(1, ";");
 			file.writeln(0, "");
 			file.writeln(1, "private final String name;");
 			file.writeln(0, "");

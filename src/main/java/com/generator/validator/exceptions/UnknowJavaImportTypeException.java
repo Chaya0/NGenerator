@@ -1,9 +1,9 @@
 package com.generator.validator.exceptions;
 
-public class UnknowPackageTypeException extends Exception {
+public class UnknowJavaImportTypeException extends Exception {
 	private static final long serialVersionUID = 1L;
 
-	public UnknowPackageTypeException(String message) {
+	public UnknowJavaImportTypeException(String message) {
 		super(message);
 	}
 

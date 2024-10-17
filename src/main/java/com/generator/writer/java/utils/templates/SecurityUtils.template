@@ -1,17 +1,17 @@
 #GP(UTILS)
 
 #GI(APP_MODEL, "User")
-#GI(APP_REPOSITORY, "UserRepository")
-#GI(APP_SERVICE, "Permissions")
+#GI(APP_REPOSITORY, "user.UserRepository")
+#GI(APP_SERVICE, "permission.Permission")
 #GI(SPRING_SECURITY_ACCESS, "AccessDeniedException")
 #GI(SPRING_SECURITY_CORE, "Authentication")
-#GI(SPRING_SECURITY_CORE_CONTECT, "SecurityContextHolder")
+#GI(SPRING_SECURITY_CORE_CONTEXT, "SecurityContextHolder")
 #GI(SPRING_SECURITY_CORE_USERDETAILS, "UserDetails")
 #GI(SPRING_STEREOTYPE, "Component")
 
 @Component
 public class SecurityUtils {
-    private static final UserRepository userRepository;
+    private final UserRepository userRepository;
 
 	public SecurityUtils(UserRepository userRepository){
 		super();

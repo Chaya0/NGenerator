@@ -1,10 +1,10 @@
 package com.generator.model.properties;
 
-import com.generator.model.enums.ApplicationStructureType;
-import com.generator.model.enums.AuthorisationType;
-import com.generator.model.enums.DatabaseType;
 import com.generator.model.enums.FrontendType;
-import com.generator.model.enums.ModelFileType;
+import com.generator.model.enums.properties.ApplicationStructureType;
+import com.generator.model.enums.properties.AuthenticationType;
+import com.generator.model.enums.properties.DatabaseType;
+import com.generator.model.enums.properties.ModelFileType;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
@@ -35,7 +35,7 @@ public class GeneratorProperties {
 	private DatabaseType databaseType = DatabaseType.POSTGRES;
 //	@XmlAttribute(name = "generationType")
 //	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
-	private AuthorisationType authorisationType = AuthorisationType.JWT;
+	private AuthenticationType authenticationType = AuthenticationType.JWT;
 //	@XmlAttribute(name = "generationType")
 //	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
 	private FrontendType frontendType = FrontendType.ANGULAR;

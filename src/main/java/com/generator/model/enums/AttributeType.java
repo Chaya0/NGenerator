@@ -1,6 +1,6 @@
 package com.generator.model.enums;
 
-public enum AttributeType {
+public enum AttributeType implements CodeEnum<AttributeType> {
 	STRING("string", "String", "string"),
 	INTEGER("integer", "Integer", "number"),
 	DOUBLE("double", "Double", "number"),
@@ -22,6 +22,7 @@ public enum AttributeType {
 		this.angularTypeCode = angularTypeCode;
 	}
 
+	@Override
 	public String getCode() {
 		return code;
 	}
@@ -34,7 +35,8 @@ public enum AttributeType {
 		return angularTypeCode;
 	}
 
-	public static AttributeType fromCode(String code) {
+	@Override
+	public AttributeType fromCode(String code) {
 		for (AttributeType attributeType : AttributeType.values()) {
 			if (attributeType.getCode().equals(code)) return attributeType;
 		}

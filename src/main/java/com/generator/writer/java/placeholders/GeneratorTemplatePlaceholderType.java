@@ -1,4 +1,4 @@
-package com.generator.writer.java.imports;
+package com.generator.writer.java.placeholders;
 
 public enum GeneratorTemplatePlaceholderType {
 	/**
@@ -8,7 +8,11 @@ public enum GeneratorTemplatePlaceholderType {
 	/**
 	 * Generator import.
 	 */
-	GI("#GI");
+	GI("#GI"),
+	/**
+	 * Generator component.
+	 */
+	GC("#GC");
 
 	private String code;
 

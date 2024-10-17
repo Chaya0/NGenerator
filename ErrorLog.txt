@@ -1,1 +1,1 @@
-Illegal character in query at index 158: https://start.spring.io/starter.zip?type=maven-project&language=java&bootVersion=3.3.4&baseDir=lms&groupId=com.lms&artifactId=lms&name=lms&description=Library Management System&packageName=com.lms.lms&packaging=jar&javaVersion=21&dependencies=lombok,data-jpa,validation,web,cloud-feign,jdbc,mysql,security
+Unexpected value: APP_NAME

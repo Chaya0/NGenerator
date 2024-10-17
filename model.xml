@@ -87,10 +87,9 @@
 
         <entity name="user" inheritanceType="none">
             <attributes>
-                <attribute name="username" type="string" nullable="false" />
+                <attribute name="username" type="string" nullable="false" unique="true" />
                 <attribute name="password" type="string" nullable="false" />
-                <attribute name="email" type="string" nullable="false" />
-                <attribute name="role" type="enum" nullable="false" enumName="userRole" />
+                <attribute name="email" type="string" nullable="false" unique="true" />
             </attributes>
             <relations>
                 <relation entityName="checkout" relationType="oneToMany" owningSide="true" />
@@ -112,14 +111,6 @@
     </entities>
 
     <enums>
-        <enum name="userRole">
-            <values>
-                <value>ADMIN</value>
-                <value>LIBRARIAN</value>
-                <value>MEMBER</value>
-            </values>
-        </enum>
-
         <enum name="checkoutStatus">
             <values>
                 <value>BORROWED</value>

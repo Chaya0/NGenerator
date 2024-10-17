@@ -1,0 +1,10 @@
+#GP(CONFIG)
+
+#GI(SWAGGER, "OpenAPIDefinition")
+#GI(SWAGGER_INFO, "Info")
+#GI(SPRING_CONTEXT_ANNOTATION, "Configuration")
+
+@Configuration
+@OpenAPIDefinition(info = @Info(title = "My API", version = "v1"))
+public class OpenApiConfiguration {
+}

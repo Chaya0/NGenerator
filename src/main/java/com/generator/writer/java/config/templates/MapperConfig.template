@@ -1,0 +1,20 @@
+#GP(CONFIG)
+
+#GI(JAVA_TIME, "LocalDateTime")
+
+
+#GI(FASTERXML_JACKSON_DATABIND, "ObjectMapper")
+#GI(FASTERXML_JACKSON_DATABIND_MODULE, "SimpleModule")
+
+public class MapperConfig {
+    private MapperConfig() {
+    }
+
+    public static ObjectMapper getObjectMapper() {
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(LocalDateTime.class, new CustomLocalDateTimeDeserializer());
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(module);
+        return mapper;
+    }
+}

@@ -43,7 +43,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 			file.writeln(0, "import org.springframework.http.ResponseEntity;");
 			// TODO FIX IMPORTS!!!
 			file.writeln(0, JavaImportUtil.getSearchDtoImport());
-			file.writeln(0, JavaImportUtil.getSecurityUtilsImport());
+			if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(0, JavaImportUtil.getSecurityUtilsImport());
 			file.writeln(0, "");
 			file.writeln(0, "public class " + upperCaseName + "ControllerBasic extends GenericController<" + upperCaseName + "> {");
 			file.writeln(1, "protected " + upperCaseName + "Service " + entity.getName() + "Service;");

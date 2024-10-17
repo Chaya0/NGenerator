@@ -1,5 +1,6 @@
 package com.generator.model.properties;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -30,13 +31,11 @@ public class SpringProperties {
 	private String datasourceUsername;
 	private String datasourcePassword;
 	
-	private static List<String> defaultDependecies = Arrays.asList("lombok", "data-jpa", "validation", "web", "jdbc", "mysql", "security");
-
 	public SpringProperties(Properties properties) {
 		type = "maven-project";
 		language = "java";
 		packaging = "jar";
-		dependencies = defaultDependecies;
+		dependencies = new ArrayList<String>(Arrays.asList("lombok", "data-jpa", "validation", "web", "jdbc", "mysql", "security"));
 		bootVersion = properties.getProperty("bootVersion", "3.1.4");
 		baseDir = properties.getProperty("baseDir", "myApp");
 		groupId = properties.getProperty("groupId", "com.myApp");
@@ -84,4 +83,9 @@ public class SpringProperties {
 		return stringBuilder.toString();
 	}
 
+	public void addDependency(String dependency) {
+		System.out.println(dependencies);
+		System.out.println(dependency);
+		dependencies.add(dependency);
+	}
 }

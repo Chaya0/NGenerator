@@ -10,11 +10,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.generator.validator.exceptions.UnknowImportTypeException;
-import com.generator.validator.exceptions.UnknowPackageTypeException;
-import com.generator.writer.java.imports.GeneratorTemplatePlaceholderType;
-import com.generator.writer.java.imports.ImportType;
-import com.generator.writer.java.imports.PackageType;
+import com.generator.validator.exceptions.UnknowJavaComponentTypeException;
+import com.generator.validator.exceptions.UnknowJavaImportTypeException;
+import com.generator.validator.exceptions.UnknowJavaPackageTypeException;
+import com.generator.writer.java.placeholders.GeneratorTemplatePlaceholderType;
+import com.generator.writer.java.placeholders.JavaComponentType;
+import com.generator.writer.java.placeholders.JavaImportType;
+import com.generator.writer.java.placeholders.JavaPackageType;
 
 public class JavaTemplateWriterUtil {
 
@@ -97,19 +99,11 @@ public class JavaTemplateWriterUtil {
 			return replaceImportPlaceholder(line);
 		} else if (line.startsWith(GeneratorTemplatePlaceholderType.GP.getCode())) {
 			return replacePackagePlaceholder(line);
+		} else if (line.contains(GeneratorTemplatePlaceholderType.GC.getCode())) {
+			return replaceComponentPlaceholder(line);
 		} else {
 			return line;
 		}
-	}
-
-	private static String replacePackagePlaceholder(String line) throws Exception {
-		String packageName = line.replace(GeneratorTemplatePlaceholderType.GP.getCode(), "").replace("(", "").replace(")", "").trim();
-		for (PackageType type : PackageType.values()) {
-			if (type.toString().equalsIgnoreCase(packageName)) {
-				return type.getPackageImport();
-			}
-		}
-		throw new UnknowPackageTypeException(packageName);
 	}
 	
 	private static String replacePlaceholders(String line, String packagePath) throws Exception {
@@ -117,24 +111,36 @@ public class JavaTemplateWriterUtil {
 			return replaceImportPlaceholder(line);
 		} else if (line.startsWith(GeneratorTemplatePlaceholderType.GP.getCode())) {
 			return replacePackagePlaceholder(line, packagePath);
+		} else if (line.contains(GeneratorTemplatePlaceholderType.GC.getCode())) {
+			return replaceComponentPlaceholder(line);
 		} else {
 			return line;
 		}
 	}
 
+	private static String replacePackagePlaceholder(String line) throws Exception {
+		String packageName = line.replace(GeneratorTemplatePlaceholderType.GP.getCode(), "").replace("(", "").replace(")", "").trim();
+		for (JavaPackageType type : JavaPackageType.values()) {
+			if (type.toString().equalsIgnoreCase(packageName)) {
+				return type.getPackageImport();
+			}
+		}
+		throw new UnknowJavaPackageTypeException(packageName);
+	}
+	
 	private static String replacePackagePlaceholder(String line, String packagePath) throws Exception {
 		String packageName = line.replace(GeneratorTemplatePlaceholderType.GP.getCode(), "").replace("(", "").replace(")", "").trim();
-		for (PackageType type : PackageType.values()) {
+		for (JavaPackageType type : JavaPackageType.values()) {
 			if (type.toString().equalsIgnoreCase(packageName)) {
 				return type.getPackageImport(packagePath);
 			}
 		}
-		throw new UnknowPackageTypeException(packageName);
+		throw new UnknowJavaPackageTypeException(packageName);
 	}
 
 	private static String replaceImportPlaceholder(String line) throws Exception {
 		String importName[] = line.replace(GeneratorTemplatePlaceholderType.GI.getCode(), "").replace("(", "").replace(")", "").trim().split(",");
-		for (ImportType type : ImportType.values()) {
+		for (JavaImportType type : JavaImportType.values()) {
 			if (type.toString().equalsIgnoreCase(importName[0])) {
 				if (importName.length > 1) {
 					return type.getImportCode(importName[1].replace("\"", "").trim());
@@ -143,7 +149,18 @@ public class JavaTemplateWriterUtil {
 				}
 			}
 		}
-		throw new UnknowImportTypeException();
+		throw new UnknowJavaImportTypeException(importName[0]);
+	}
+	
+	private static String replaceComponentPlaceholder(String line) throws Exception {
+		String modifiedLine = line.replace(GeneratorTemplatePlaceholderType.GC.getCode(), "").replace("(", "").replace(")", "").trim();
+		for (JavaComponentType type : JavaComponentType.values()) {
+			if (modifiedLine.contains(type.toString())) {
+				System.out.println(modifiedLine.replace(type.toString(), type.getCode()));
+				return modifiedLine.replace(type.toString(), type.getCode());
+			}
+		}
+		throw new UnknowJavaComponentTypeException(modifiedLine);
 	}
 
 }

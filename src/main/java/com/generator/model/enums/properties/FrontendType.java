@@ -1,6 +1,6 @@
-package com.generator.model.enums;
+package com.generator.model.enums.properties;
 
-public enum FrontendType implements CodeEnum<FrontendType> {
+public enum FrontendType {
 	ANGULAR("angular"),
 	NULL("");
 
@@ -10,7 +10,6 @@ public enum FrontendType implements CodeEnum<FrontendType> {
 		this.code = code;
 	}
 
-	@Override
 	public String getCode() {
 		return code;
 	}
@@ -19,8 +18,7 @@ public enum FrontendType implements CodeEnum<FrontendType> {
 		this.code = code;
 	}
 
-	@Override
-	public FrontendType fromCode(String code) {
+	public static FrontendType fromCode(String code) {
 		for (FrontendType frontendType : FrontendType.values()) {
 			if (frontendType.getCode().equals(code)) return frontendType;
 		}

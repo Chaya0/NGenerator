@@ -1,0 +1,9 @@
+#GP(CONFIG)
+
+#GI(SPRING_CONTEXT_ANNOTATION, "Configuration")
+#GI(SPRING_DATA_JPA_REPOSITORY_CONFIG, "EnableJpaAuditing")
+
+@Configuration
+@EnableJpaAuditing
+public class JpaConfig {
+}
