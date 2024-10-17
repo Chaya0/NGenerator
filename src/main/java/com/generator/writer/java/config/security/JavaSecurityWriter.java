@@ -6,14 +6,13 @@ import java.util.List;
 import com.generator.util.FileUtils;
 import com.generator.writer.TemplateWriter;
 import com.generator.writer.java.JavaTemplateWriterUtil;
-import com.generator.writer.java.specification.JavaSpecificationWriter;
 import com.generator.writer.utils.WriterUtils;
 
 public class JavaSecurityWriter implements TemplateWriter{
 
 	@Override
 	public void create() throws Exception {
-		for (File file : FileUtils.getSubFiles(JavaSpecificationWriter.class)) {
+		for (File file : FileUtils.getSubFiles(JavaSecurityWriter.class)) {
 			JavaTemplateWriterUtil.processFile(file, WriterUtils.getSecurityPackagePath());
 		}
 	}

@@ -87,6 +87,7 @@ public class JavaTemplateWriterUtil {
 	        String line;
 	        while ((line = reader.readLine()) != null) {
                 line = packagePath == null ? replacePlaceholders(line) : replacePlaceholders(line, packagePath);
+                System.out.println(file);
 	            writer.write(line);
 	            writer.newLine();
 	        }

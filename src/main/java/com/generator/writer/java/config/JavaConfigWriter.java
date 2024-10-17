@@ -13,7 +13,7 @@ public class JavaConfigWriter implements TemplateWriter{
 
 	@Override
 	public void create() throws Exception {
-		for (File file : FileUtils.getSubFiles(JavaSpecificationWriter.class)) {
+		for (File file : FileUtils.getSubFiles(JavaConfigWriter.class)) {
 			JavaTemplateWriterUtil.processFile(file, WriterUtils.getConfigurationPackagePath());
 		}
 	}

@@ -2,7 +2,7 @@
 
 #GI(APP_MODEL, "User")
 #GI(APP_REPOSITORY, "user.UserRepository")
-#GI(APP_SERVICE, "permission.Permission")
+#GI(APP_SERVICE, "permission.Permissions")
 #GI(SPRING_SECURITY_ACCESS, "AccessDeniedException")
 #GI(SPRING_SECURITY_CORE, "Authentication")
 #GI(SPRING_SECURITY_CORE_CONTEXT, "SecurityContextHolder")

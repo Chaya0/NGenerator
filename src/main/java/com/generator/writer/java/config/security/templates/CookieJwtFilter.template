@@ -8,13 +8,13 @@
 #GI(SPRING_SECURITY_CORE_USERDETAILS, "UserDetails")
 #GI(SPRING_SECURITY_WEB_AUTHENTICATION, "WebAuthenticationDetailsSource")
 #GI(SPRING_STEREOTYPE, "Component")
-#GI(SPRING_SECURITY_WEB_FILTER, "OncePerRequestFilter")
+#GI(SPRING_WEB_FILTER, "OncePerRequestFilter")
 
 #GI(APP_SERVICE, "user.UserService")
 
 #GI(SPRING_SERVLET, "FilterChain")
 #GI(SPRING_SERVLET, "ServletException")
-#GI(SPRING_SERVLET, "Cookie")
+#GI(SPRING_SERVLET_HTTP, "Cookie")
 #GI(SPRING_SERVLET_HTTP, "HttpServletRequest")
 #GI(SPRING_SERVLET_HTTP, "HttpServletResponse")
 

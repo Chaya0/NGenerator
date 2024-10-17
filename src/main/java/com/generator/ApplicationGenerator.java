@@ -28,12 +28,14 @@ import com.generator.writer.java.components.generic.JavaEnumWriter;
 import com.generator.writer.java.components.generic.JavaGenericControllerWriter;
 import com.generator.writer.java.components.generic.JavaGenericRepositoryWriter;
 import com.generator.writer.java.components.generic.JavaGenericServiceWriter;
+import com.generator.writer.java.config.JavaConfigWriter;
 import com.generator.writer.java.config.JavaSwaggerWriter;
 import com.generator.writer.java.config.quartz.JavaAutowiringSpringBeanJobFactoryWriter;
 import com.generator.writer.java.config.quartz.JavaQuartzConfigurationWriter;
 import com.generator.writer.java.config.security.JavaJwtFilterWriter;
 import com.generator.writer.java.config.security.JavaJwtUtilWriter;
 import com.generator.writer.java.config.security.JavaPermissionsWriter;
+import com.generator.writer.java.config.security.JavaSecurityWriter;
 import com.generator.writer.java.config.security.JavaSpringSecurityConfigWriter;
 import com.generator.writer.java.dto.JavaErrorResponseDTOWriter;
 import com.generator.writer.java.dto.JavaGenericResponseWriter;
@@ -83,6 +85,8 @@ public class ApplicationGenerator {
 		JavaApplicationPropertiesWriter javaPropertiesWriter = new JavaApplicationPropertiesWriter();
 		JavaUtilWriter javaUtilWriter = new JavaUtilWriter();
 		JavaExceptionWriter javaExceptionWriter = new JavaExceptionWriter();
+		JavaSecurityWriter javaSecurityWriter = new JavaSecurityWriter();
+		JavaConfigWriter javaConfigWriter = new JavaConfigWriter();
 
 		for (Writer writer : writers) {
 			try {
@@ -107,6 +111,8 @@ public class ApplicationGenerator {
 			javaUtilWriter.create();
 			javaPropertiesWriter.create();
 			javaExceptionWriter.create();
+			javaSecurityWriter.create();
+			javaConfigWriter.create();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

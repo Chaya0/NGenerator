@@ -404,6 +404,10 @@ public class WriterUtils {
 		return getMainPackagePath() + "/specification";
 	}
 	
+	public static String getSpecificationPackageImportPath() {
+		return getImportDefaultPackage() + ".specification";
+	}
+	
 	public static String getConfigurationPackagePath() {
 		return getMainPackagePath() + "/config";
 	}
@@ -412,9 +416,6 @@ public class WriterUtils {
 		return getConfigurationPackagePath() + "/security";
 	}
 	
-	public static String getSpecificationPackageImportPath() {
-		return getImportDefaultPackage() + ".specification";
-	}
 	
 	public static String getUtilsPackageImportPath() {
 		return getImportDefaultPackage() + ".utils";

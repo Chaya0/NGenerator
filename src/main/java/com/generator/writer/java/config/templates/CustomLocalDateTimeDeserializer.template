@@ -1,12 +1,12 @@
 #GP(CONFIG)
 
-#GP(JAVA_IO, "IOException")
-#GP(JAVA_TIME, "LocalDateTime")
-#GP(JAVA_TIME_FORMAT, "DateTimeFormatter")
+#GI(JAVA_IO, "IOException")
+#GI(JAVA_TIME, "LocalDateTime")
+#GI(JAVA_TIME_FORMAT, "DateTimeFormatter")
 
-#GP(FASTERXML_JACKSON_CORE, "JsonParser")
-#GP(FASTERXML_JACKSON_DATABIND, "DeserializationContext")
-#GP(FASTERXML_JACKSON_DATABIND, "JsonDeserializer")
+#GI(FASTERXML_JACKSON_CORE, "JsonParser")
+#GI(FASTERXML_JACKSON_DATABIND, "DeserializationContext")
+#GI(FASTERXML_JACKSON_DATABIND, "JsonDeserializer")
 
 public class CustomLocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 

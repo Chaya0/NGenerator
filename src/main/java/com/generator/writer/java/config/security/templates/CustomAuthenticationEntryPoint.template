@@ -1,1 +1,20 @@
 #GP(SECURITY)
+
+#GI(JAVA_IO, "IOException")
+
+#GI(SPRING_SECURITY_CORE, "AuthenticationException")
+#GI(SPRING_SECURITY_WEB, "AuthenticationEntryPoint")
+#GI(SPRING_STEREOTYPE, "Component")
+
+#GI(SPRING_SERVLET_HTTP, "HttpServletRequest")
+#GI(SPRING_SERVLET_HTTP, "HttpServletResponse")
+
+@Component
+public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
+    @Override
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        // Send a 401 response without the WWW-Authenticate header to prevent the browser from showing the popup
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+    }
+}
