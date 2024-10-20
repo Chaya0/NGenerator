@@ -96,6 +96,15 @@ public class WriterUtils {
 		return stringBuilder.toString();
 	}
 	
+	public static String getTestPackagePath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getSpringProperties().getProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getBaseDir());
+		stringBuilder.append("/src/test/java/");
+		stringBuilder.append(getCorrectPath(Application.getSpringProperties().getPackageName()));
+		return stringBuilder.toString();
+	}
+	
 	public static String getProjectPath() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getSpringProperties().getProjectPath());
@@ -157,6 +166,18 @@ public class WriterUtils {
 	public static String getControllerPackagePath(boolean generic, String entityName) {
 		return generic ? getMainPackagePath() + "/controller/generic/" + entityName.toLowerCase() : getMainPackagePath() + "/controller/" + entityName.toLowerCase();
 	}
+	public static String getUnitTestControllerPackagePath(String entityName) {
+		return getTestPackagePath() + "/unit/controller/" + entityName.toLowerCase();
+	}
+	public static String getIntegrationTestControllerPackagePath(String entityName) {
+		return getTestPackagePath() + "/integration/controller/" + entityName.toLowerCase();
+	}
+	public static String getUnitTestControllerPackageImport(String entityName) {
+		return getImportDefaultPackage() + ".unit.controller." + entityName.toLowerCase();
+	}
+	public static String getIntegrationTestControllerPackageImport(String entityName) {
+		return getImportDefaultPackage() + ".integration.controller." + entityName.toLowerCase();
+	}
 
 	/**
 	 * Constructs the path for the repository package based on whether a generic
@@ -170,6 +191,19 @@ public class WriterUtils {
 	public static String getRepositoryPackagePath(boolean generic, String entityName) {
 		return generic ? getMainPackagePath() + "/repository/generic/" + entityName.toLowerCase() : getMainPackagePath() + "/repository/" + entityName.toLowerCase();
 	}
+	
+	public static String getUnitTestRepositoryPackagePath(String entityName) {
+		return getTestPackagePath() + "/unit/repository/" + entityName.toLowerCase();
+	}
+	public static String getIntegrationTestRepositoryPackagePath(String entityName) {
+		return getTestPackagePath() + "/integration/repository/" + entityName.toLowerCase();
+	}
+	public static String getUnitTestRepositoryPackageImport(String entityName) {
+		return getImportDefaultPackage() + ".unit.repository." + entityName.toLowerCase();
+	}
+	public static String getIntegrationTestRepositoryPackageImport(String entityName) {
+		return getImportDefaultPackage() + ".integration.repository." + entityName.toLowerCase();
+	}
 
 	/**
 	 * Constructs the path for the service package based on whether a generic path
@@ -182,6 +216,19 @@ public class WriterUtils {
 	 */
 	public static String getServicePackagePath(boolean generic, String entityName) {
 		return generic ? getMainPackagePath() + "/service/generic/" + entityName.toLowerCase() : getMainPackagePath() + "/service/" + entityName.toLowerCase();
+	}
+	
+	public static String getUnitTestServicePackagePath(String entityName) {
+		return getTestPackagePath() + "/unit/service/" + entityName.toLowerCase();
+	}
+	public static String getIntegrationTestServicePackagePath(String entityName) {
+		return getTestPackagePath() + "/integration/service/" + entityName.toLowerCase();
+	}
+	public static String getUnitTestServicePackageImport(String entityName) {
+		return getImportDefaultPackage() + ".unit.service." + entityName.toLowerCase();
+	}
+	public static String getIntegrationTestServicePackageImport(String entityName) {
+		return getImportDefaultPackage() + ".integration.service." + entityName.toLowerCase();
 	}
 
 	/**
@@ -322,7 +369,9 @@ public class WriterUtils {
 	public static String getImportRepositoryPackageName(boolean generic, String entityName) {
 		return generic ? getImportDefaultPackage() + ".repository.generic." + entityName.toLowerCase() : getImportDefaultPackage() + ".repository." + entityName.toLowerCase();
 	}
-
+	public static String getImportSpecificationPackageName() {
+		return getImportDefaultPackage() + ".specification";
+	}
 	/**
 	 * Retrieves the import package name for the model.
 	 *
@@ -415,7 +464,6 @@ public class WriterUtils {
 	public static String getSecurityPackagePath() {
 		return getConfigurationPackagePath() + "/security";
 	}
-	
 	
 	public static String getUtilsPackageImportPath() {
 		return getImportDefaultPackage() + ".utils";

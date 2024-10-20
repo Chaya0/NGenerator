@@ -26,6 +26,8 @@ public class GeneratorProperties {
 	 * Only works if {@link generateAuthorisationComponents} is true.
 	 */
 	private boolean generatePermissionsOnEndpoints = false;
+	
+	private boolean generatePermissionsAndRoles = false;
 //	@XmlAttribute(name = "name", required = true)
 	private boolean generateQuartzComponents = false;
 //	@XmlAttribute(name = "name", required = true)
@@ -57,4 +59,8 @@ public class GeneratorProperties {
 	private boolean generateDTOs = true;
 	private boolean generateUserFrontSettings = true;
 	
+	
+	public boolean generatePermissionsOnEndpoints() {
+		return generateAuthorisationComponents && generatePermissionsAndRoles && generatePermissionsOnEndpoints;
+	}
 }

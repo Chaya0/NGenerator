@@ -28,15 +28,18 @@ import com.generator.writer.java.components.generic.JavaEnumWriter;
 import com.generator.writer.java.components.generic.JavaGenericControllerWriter;
 import com.generator.writer.java.components.generic.JavaGenericRepositoryWriter;
 import com.generator.writer.java.components.generic.JavaGenericServiceWriter;
+import com.generator.writer.java.components.tests.integration.JavaControllerIntegrationTestWriter;
+import com.generator.writer.java.components.tests.integration.JavaRepositoryIntegrationTestWriter;
+import com.generator.writer.java.components.tests.integration.JavaServiceIntegrationTestWriter;
+import com.generator.writer.java.components.tests.unit.JavaControllerUnitTestWriter;
+import com.generator.writer.java.components.tests.unit.JavaRepositoryUnitTestWriter;
+import com.generator.writer.java.components.tests.unit.JavaServiceUnitTestWriter;
 import com.generator.writer.java.config.JavaConfigWriter;
-import com.generator.writer.java.config.JavaSwaggerWriter;
 import com.generator.writer.java.config.quartz.JavaAutowiringSpringBeanJobFactoryWriter;
 import com.generator.writer.java.config.quartz.JavaQuartzConfigurationWriter;
-import com.generator.writer.java.config.security.JavaJwtFilterWriter;
-import com.generator.writer.java.config.security.JavaJwtUtilWriter;
 import com.generator.writer.java.config.security.JavaPermissionsWriter;
 import com.generator.writer.java.config.security.JavaSecurityWriter;
-import com.generator.writer.java.config.security.JavaSpringSecurityConfigWriter;
+import com.generator.writer.java.dto.JavaDTOWriter;
 import com.generator.writer.java.dto.JavaErrorResponseDTOWriter;
 import com.generator.writer.java.dto.JavaGenericResponseWriter;
 import com.generator.writer.java.exceptions.JavaApplicationExceptionWriter;
@@ -66,16 +69,20 @@ public class ApplicationGenerator {
 		 */
 		ComponentAffix.loadComponentAffixes();
 		JavaComponentType.loadProjectComponents();
+
 		extractAppIfItDoesntExists();
-		if(Application.getGeneratorProperties().isGenerateAuthorisationComponents()) {
-			//TODO napraviti logiku za dodavanje entiteta za autorizaciju i permisije
+
+		if (Application.getGeneratorProperties().isGenerateAuthorisationComponents()) {
+			AppModelUtil.addAdditionalEntitiesAndAttributes(appModel);
 		}
 		JavaAutowiringSpringBeanJobFactoryWriter autowiringSpringBeanJobFactoryWriter = new JavaAutowiringSpringBeanJobFactoryWriter();
 		JavaQuartzConfigurationWriter quartzWriter = new JavaQuartzConfigurationWriter();
-		JavaJwtFilterWriter jwtFilterWriter = new JavaJwtFilterWriter();
-		JavaJwtUtilWriter jwtUtilWriter = new JavaJwtUtilWriter();
-		JavaSpringSecurityConfigWriter javaSpringSecurityConfigWriter = new JavaSpringSecurityConfigWriter();
-		JavaSwaggerWriter swaggerWriter = new JavaSwaggerWriter();
+
+//		JavaJwtFilterWriter jwtFilterWriter = new JavaJwtFilterWriter();
+//		JavaJwtUtilWriter jwtUtilWriter = new JavaJwtUtilWriter();
+//		JavaSpringSecurityConfigWriter javaSpringSecurityConfigWriter = new JavaSpringSecurityConfigWriter();
+//		JavaSwaggerWriter swaggerWriter = new JavaSwaggerWriter();
+
 		JavaErrorResponseDTOWriter javaErrorResponseDTOWriter = new JavaErrorResponseDTOWriter();
 		JavaGenericResponseWriter javaGenericResponseWriter = new JavaGenericResponseWriter();
 		JavaExceptionHandlerWriter javaExceptionHandlerWriter = new JavaExceptionHandlerWriter();
@@ -87,7 +94,7 @@ public class ApplicationGenerator {
 		JavaExceptionWriter javaExceptionWriter = new JavaExceptionWriter();
 		JavaSecurityWriter javaSecurityWriter = new JavaSecurityWriter();
 		JavaConfigWriter javaConfigWriter = new JavaConfigWriter();
-
+		JavaDTOWriter javaDTOWriter = new JavaDTOWriter();
 		for (Writer writer : writers) {
 			try {
 				writer.create(appModel);
@@ -98,10 +105,10 @@ public class ApplicationGenerator {
 		try {
 			autowiringSpringBeanJobFactoryWriter.create();
 			quartzWriter.create();
-			jwtFilterWriter.create();
-			jwtUtilWriter.create();
-			javaSpringSecurityConfigWriter.create();
-			swaggerWriter.create();
+//			jwtFilterWriter.create();
+//			jwtUtilWriter.create();
+//			javaSpringSecurityConfigWriter.create();
+//			swaggerWriter.create();
 			javaErrorResponseDTOWriter.create();
 			javaGenericResponseWriter.create();
 			javaExceptionHandlerWriter.create();
@@ -113,6 +120,7 @@ public class ApplicationGenerator {
 			javaExceptionWriter.create();
 			javaSecurityWriter.create();
 			javaConfigWriter.create();
+			javaDTOWriter.create();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -134,12 +142,19 @@ public class ApplicationGenerator {
 		Writer javaEntityAttributeWriter = new JavaEntityAttributeWriter();
 		Writer javaBasicAttributeWriter = new JavaBasicEntityAttributeWriter();
 		Writer javaPermissionsWriter = new JavaPermissionsWriter();
+		Writer javaRepositoryIntegrationTestWriter = new JavaRepositoryIntegrationTestWriter();
+		Writer javaRepositoryUnitTestWriter = new JavaRepositoryUnitTestWriter();
+		Writer javaServiceIntegrationTestWriter = new JavaServiceIntegrationTestWriter();
+		Writer javaServiceUnitTestWriter = new JavaServiceUnitTestWriter();
+		Writer javaControllerIntegrationTestWriter = new JavaControllerIntegrationTestWriter();
+		Writer javaControllerUnitTestWriter = new JavaControllerUnitTestWriter();
 		return Arrays.asList(entityWriter, genControllerWriter, genRepositoryWriter, genServiceWriter, controllerWriter, repositoryWriter, serviceWriter, enumWriter, basicControllerWriter,
-				basicRepositoryWriter, basicServiceWriter, javaEntityAttributeWriter, javaBasicAttributeWriter, javaPermissionsWriter);
+				basicRepositoryWriter, basicServiceWriter, javaEntityAttributeWriter, javaBasicAttributeWriter, javaPermissionsWriter, javaRepositoryIntegrationTestWriter,
+				javaRepositoryUnitTestWriter, javaServiceIntegrationTestWriter, javaServiceUnitTestWriter, javaControllerIntegrationTestWriter, javaControllerUnitTestWriter);
 	}
 
 	private static void extractAppIfItDoesntExists() {
-		
+
 		String path = Application.getSpringProperties().getProjectPath() + Application.getSpringProperties().getBaseDir();
 		File file = new File(path);
 		if (!file.exists()) {
@@ -149,7 +164,8 @@ public class ApplicationGenerator {
 
 			try {
 				System.out.println("Adding missing dependencies");
-				if (Application.getGeneratorProperties().isGenerateSwaggerComponent()) PomEditorUtil.addDependencyToPom(WriterUtils.getProjectPath() + "/pom.xml", DependencyCode.SWAGGER.getCode("2.3.0"));
+				if (Application.getGeneratorProperties().isGenerateSwaggerComponent())
+					PomEditorUtil.addDependencyToPom(WriterUtils.getProjectPath() + "/pom.xml", DependencyCode.SWAGGER.getCode("2.3.0"));
 				if (Application.getGeneratorProperties().isGenerateAuthorisationComponents()) {
 					PomEditorUtil.addDependencyToPom(WriterUtils.getProjectPath() + "/pom.xml", DependencyCode.JWT.getCode("0.9.1"));
 				}
@@ -160,9 +176,9 @@ public class ApplicationGenerator {
 			logger.info("Application already exsists on path : " + path + ". Generic files will be overwritten!");
 		}
 	}
-	
+
 	private static void addMissingDependencies() {
-		if(Application.getGeneratorProperties().isGenerateQuartzComponents()) {
+		if (Application.getGeneratorProperties().isGenerateQuartzComponents()) {
 			Application.getSpringProperties().addDependency(SpringInitializerDependencyName.QUARTZ.getCode());
 		}
 	}

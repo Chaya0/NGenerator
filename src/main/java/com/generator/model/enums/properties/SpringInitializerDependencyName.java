@@ -2,7 +2,7 @@ package com.generator.model.enums.properties;
 
 public enum SpringInitializerDependencyName {
 	QUARTZ("quartz"),
-	JWT("jjwt");
+	;
 
 	private String code;
 

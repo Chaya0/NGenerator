@@ -7,7 +7,6 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.generator.model.enums.properties.SpringInitializerDependencyName;
 import com.generator.model.properties.GeneratorProperties;
 import com.generator.model.properties.SpringProperties;
 

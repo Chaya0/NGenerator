@@ -43,7 +43,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 			file.writeln(0, "import org.springframework.http.ResponseEntity;");
 			// TODO FIX IMPORTS!!!
 			file.writeln(0, JavaImportUtil.getSearchDtoImport());
-			if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(0, JavaImportUtil.getSecurityUtilsImport());
+			if (Application.getGeneratorProperties().generatePermissionsOnEndpoints()) file.writeln(0, JavaImportUtil.getSecurityUtilsImport());
 			file.writeln(0, "");
 			file.writeln(0, "public class " + upperCaseName + "ControllerBasic extends GenericController<" + upperCaseName + "> {");
 			file.writeln(1, "protected " + upperCaseName + "Service " + entity.getName() + "Service;");
@@ -82,7 +82,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 		file.writeln(1, "@Override");
 //		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> findAll() {");
-		if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
+		if (Application.getGeneratorProperties().generatePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.findAll();");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -97,7 +97,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 		file.writeln(1, "@Override");
 //		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> searchPost(SearchDTO request) throws " + WriterUtils.getApplicationExceptionName() + " {");
-		if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
+		if (Application.getGeneratorProperties().generatePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.searchPost(request);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -105,7 +105,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 		file.writeln(1, "@Override");
 //		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> searchPageablePost(SearchDTO request) throws " + WriterUtils.getApplicationExceptionName() + " {");
-		if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
+		if (Application.getGeneratorProperties().generatePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.searchPageablePost(request);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -115,7 +115,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 		file.writeln(1, "@Override");
 //		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_delete_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> delete(Long id) {");
-		if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_delete_" + snakeCaseName + "\");");
+		if (Application.getGeneratorProperties().generatePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_delete_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.delete(id);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -125,7 +125,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 		file.writeln(1, "@Override");
 //		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_view_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> getById(Long id) {");
-		if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
+		if (Application.getGeneratorProperties().generatePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_view_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.getById(id);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -135,7 +135,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 		file.writeln(1, "@Override");
 //		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_update_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> update(@Valid " + upperCaseName + " object) throws " + WriterUtils.getApplicationExceptionName() + " {");
-		if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_update_" + snakeCaseName + "\");");
+		if (Application.getGeneratorProperties().generatePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_update_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.update(object);");
 		file.writeln(1, "}");
 		file.writeln(0, "");
@@ -145,7 +145,7 @@ public class JavaBasicControllerWriter implements DefaultWriter {
 		file.writeln(1, "@Override");
 //		file.writeln(1, "@PreAuthorize(\"hasAuthority('" + "can_create_" + snakeCaseName + "')\")");
 		file.writeln(1, "public ResponseEntity<?> insert(@Valid " + upperCaseName + " object) throws " + WriterUtils.getApplicationExceptionName() + " {");
-		if (Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_create_" + snakeCaseName + "\");");
+		if (Application.getGeneratorProperties().generatePermissionsOnEndpoints()) file.writeln(2, "SecurityUtils.checkAuthority(\"can_create_" + snakeCaseName + "\");");
 		file.writeln(2, "return super.insert(object);");
 		file.writeln(1, "}");
 		file.writeln(0, "");

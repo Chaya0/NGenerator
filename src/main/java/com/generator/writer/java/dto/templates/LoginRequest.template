@@ -1,0 +1,19 @@
+#GP(DTO)
+
+#GI(SPRING_VALIDATION_CONSTRAINTS, "NotBlank")
+
+#GI(LOMBOK, "Data")
+#GI(LOMBOK, "ToString")
+#GI(LOMBOK, "NoArgsConstructor")
+#GI(LOMBOK, "AllArgsConstructor")
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+public class LoginRequest {
+	@NotBlank
+    private String username;
+	@NotBlank
+    private String password;
+}

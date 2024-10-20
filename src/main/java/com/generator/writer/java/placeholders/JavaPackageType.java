@@ -7,6 +7,8 @@ import com.generator.writer.utils.WriterUtils;
 public enum JavaPackageType {
 	SPECIFICATION("specification"),
 	UTILS("utils"),
+	DTO("dto"),
+	CONTROLLER("controller"),
 	CONFIG("config"),
 	SECURITY("config.security"),
 	EXCEPTION("exceptions");

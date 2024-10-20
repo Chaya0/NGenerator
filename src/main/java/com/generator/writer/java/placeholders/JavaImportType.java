@@ -26,6 +26,7 @@ public enum JavaImportType {
 	SPRING_PERSISTENCE_CRITERIA("jakarta.persistence.criteria"),
 	SPRING_PERSISTENCE_METAMODEL("jakarta.persistence.metamodel"),
 	SPRING_VALIDATION("jakarta.validation"),
+	SPRING_VALIDATION_CONSTRAINTS("jakarta.validation.constraints"),
 	SPRING_SERVLET("jakarta.servlet"),
 	SPRING_SERVLET_HTTP("jakarta.servlet.http"),
 	SPRING_DATA_DOMAIN("org.springframework.data.domain"),
@@ -76,6 +77,7 @@ public enum JavaImportType {
 	JWT("io.jsonwebtoken"),
 	
 	APP_SERVICE("service"),
+	APP_DTO("dto"),
 	APP_REPOSITORY("repository"),
 	APP_MODEL("model"),
 	APP_EXCEPTION("exceptions"),

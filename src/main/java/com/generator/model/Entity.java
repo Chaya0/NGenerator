@@ -68,6 +68,20 @@ public class Entity {
 		return enumsForImport;
 	}
 
+	public Attribute getAttributeByAttributeName(String attributeName) {
+		for (Attribute attribute : attributes) {
+			if (attribute.getName().equals(attributeName)) return attribute;
+		}
+		return null;
+	}
+	
+	public Relation getRelationByRelationName(String relationName) {
+		for (Relation relation : relations) {
+			if (relation.getEntityName().equals(relationName)) return relation;
+		}
+		return null;
+	}
+
 	@Override
 	public String toString() {
 		return "Entity [name=" + name + ", inherits=" + inherits + ", inheritanceType=" + inheritanceType + ", generationType=" + generationType + ", relations=" + relations + ", attributes="

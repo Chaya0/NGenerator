@@ -26,10 +26,16 @@ public class AppModel {
 //	@XmlElement(name = "properties")
 //	private GeneratorProperties generatorProperties;
 
-
 	public Entity getEntityByName(String entityName) {
 		for (Entity entity : entities) {
 			if (entity.getName().equals(entityName)) return entity;
+		}
+		return null;
+	}
+
+	public EnumModel getEnumModelByName(String name) {
+		for (EnumModel enumModel : enums) {
+			if (enumModel.getName().equals(name)) return enumModel;
 		}
 		return null;
 	}

@@ -2,6 +2,7 @@ package com.generator.writer.java.components.generic;
 
 import org.jsoup.internal.StringUtil;
 
+import com.generator.Application;
 import com.generator.annotations.GenericComponent;
 import com.generator.annotations.WriterVersion;
 import com.generator.model.AppModel;
@@ -45,8 +46,10 @@ public class JavaEntityWriter implements DefaultWriter {
 			file.writeln(0, "import com.fasterxml.jackson.annotation.JsonIgnore;");
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "import java.time.*;");
-			if (entity.getName().equalsIgnoreCase("permission")) {
+			if (entity.getName().equalsIgnoreCase("permission") || entity.getName().equalsIgnoreCase("role")) {
+				file.writeln(0, "import java.util.stream.*;");
 				file.writeln(0, "import org.springframework.security.core.GrantedAuthority;");
+				if(entity.getName().equalsIgnoreCase("role")) file.writeln(0, "import org.springframework.security.core.authority.SimpleGrantedAuthority;");
 			}
 			for (String enumToImort : entity.getEnumsForImport()) {
 				file.writeln(0, "import " + WriterUtils.getImportModelEnumsPackageName() + "." + enumToImort + ";");
@@ -65,7 +68,7 @@ public class JavaEntityWriter implements DefaultWriter {
 				file.writeln(0, "public class " + upperCaseName + " extends " + StringUtils.uppercaseFirst(entity.getInherits()) + " {");
 				file.writeln(0, "");
 			} else {
-				if (entity.getName().equalsIgnoreCase("permission")) {
+				if (entity.getName().equalsIgnoreCase("permission") && Application.getGeneratorProperties().isGeneratePermissionsAndRoles()) {
 					file.writeln(0, "public class " + upperCaseName + " implements GrantedAuthority{");
 				} else {
 					file.writeln(0, "public class " + upperCaseName + " {");
@@ -78,11 +81,18 @@ public class JavaEntityWriter implements DefaultWriter {
 
 			writeAttributes(file, entity);
 			writeRelations(file, entity);
-			if (entity.getName().equalsIgnoreCase("permission")) {
+			if (entity.getName().equalsIgnoreCase("permission") && Application.getGeneratorProperties().isGeneratePermissionsAndRoles()) {
 				file.writeln(0, "");
 				file.writeln(1, "@Override");
 				file.writeln(1, "public String getAuthority() {");
-				file.writeln(2, "return null;");
+				file.writeln(2, "return name;");
+				file.writeln(1, "}");
+			}
+			if (entity.getName().equalsIgnoreCase("role") && Application.getGeneratorProperties().isGeneratePermissionsAndRoles()) {
+				file.writeln(0, "");
+				file.writeln(1, "@JsonIgnore");
+				file.writeln(1, "public List<GrantedAuthority> getAuthorities() {");
+				file.writeln(2, "return permissionList.stream().map(permission -> new SimpleGrantedAuthority(permission.getName())).collect(Collectors.toList());");
 				file.writeln(1, "}");
 			}
 			file.writeln(0, "");
@@ -116,7 +126,7 @@ public class JavaEntityWriter implements DefaultWriter {
 			if (closeBracket) {
 				annotation.append(")");
 			}
-			
+
 			file.writeln(1, annotation.toString());
 			if (attribute.getType().equals(AttributeType.ENUM)) {
 				if (attribute.getEnumName().isEmpty()) throw new Exception("Attribute defined as Enum but enum name wasn't provided.");
@@ -157,7 +167,7 @@ public class JavaEntityWriter implements DefaultWriter {
 					file.writeln(1, "@JsonIgnore");
 					file.writeln(1, "@JoinTable(name = \"" + entity.getName() + "_" + relation.getEntityName() + "\",");
 					file.writeln(2, "joinColumns = @JoinColumn(name = \"" + entity.getName() + "\", referencedColumnName = \"id\"),");
-					file.writeln(1, "inverseJoinColumns = @JoinColumn(name = \"" + relation.getEntityName() + "\", referencedColumnName = \"id\"))");
+					file.writeln(2, "inverseJoinColumns = @JoinColumn(name = \"" + relation.getEntityName() + "\", referencedColumnName = \"id\"))");
 					file.writeln(1, "private List<" + StringUtils.uppercaseFirst(relation.getEntityName()) + "> " + relationName + "List;");
 					file.writeln(0, "");
 				} else {

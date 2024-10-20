@@ -1,0 +1,15 @@
+#GP(DTO)
+
+#GI(JAVA_UTIL, "List")
+
+#GI(LOMBOK, "Data")
+#GI(LOMBOK, "NoArgsConstructor")
+#GI(LOMBOK, "AllArgsConstructor")
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class UserDataDTO {
+	private String username;
+	private List<String> permissions;
+}

@@ -11,7 +11,7 @@ import com.generator.writer.utils.WriterUtils;
 public class JavaPermissionsWriter implements DefaultWriter {
 	@Override
 	public void create(AppModel model) throws Exception {
-		if(Application.getGeneratorProperties().isGenerateAuthorisationComponents() && Application.getGeneratorProperties().isGeneratePermissionsOnEndpoints())
+		if(Application.getGeneratorProperties().isGenerateAuthorisationComponents() && Application.getGeneratorProperties().isGeneratePermissionsAndRoles())
 		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getServicePackagePath(false, "permission"), "Permissions.java", true)) {
 			file.writeln(0, "package " + WriterUtils.getImportServicePackageName(false, "permission") + ";");
 			file.writeln(0, "");

@@ -72,7 +72,7 @@ public class GeneratorOutputFile implements AutoCloseable {
 		_write(indentLevel, line, "\r\n");
 	}
 	
-	public void newLine() throws IOException {
+	public void breakLine() throws IOException {
 		writeln(0, "");
 	}
 

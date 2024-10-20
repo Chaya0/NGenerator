@@ -2,8 +2,8 @@ package com.generator.model.enums.properties;
 
 public enum AuthenticationType {
 	JWT("jwt"),
-	JWT_COOKIE("jwt_cookie"),
-	JWT_COOKIE_SECURE(""),
+	JWT_COOKIE("jwtCookie"),
+	JWT_COOKIE_SECURE("jwtCookieSecure"),
 	NULL(""), 
 	;
 

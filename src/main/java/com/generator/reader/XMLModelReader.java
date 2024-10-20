@@ -14,6 +14,7 @@ import jakarta.xml.bind.Unmarshaller;
 
 public class XMLModelReader {
 	private static final Logger logger = LogManager.getLogger(XMLModelReader.class);
+
 	public static AppModel readModel() {
 		try {
 			logger.info("Starting model reading...");
@@ -24,6 +25,7 @@ public class XMLModelReader {
 			AppModel appModel = (AppModel) jaxbUnmarshaller.unmarshal(model);
 			Validator<AppModel> validator = new AppModelValidator();
 			validator.validate(appModel);
+
 			logger.info("Model read successfuly");
 			return appModel;
 		} catch (Exception e) {
@@ -31,4 +33,5 @@ public class XMLModelReader {
 		}
 		return null;
 	}
+
 }

@@ -50,50 +50,47 @@ public class JavaTemplateWriterUtil {
 //			}
 //		}
 //	}
-	
+
 	public static void processFile(File file, String path) throws Exception {
-        processFileInternal(file, path, null);
-    }
-
-    public static void processFile(File file, String path, String packagePath) throws Exception {
-        processFileInternal(file, path, packagePath);
-    }
-	
-	public static void processFileInternal(File file, String path, String packagePath) throws Exception {
-	    // Log the provided path and file details for debugging
-	    System.out.println("Output Path: " + path);
-	    System.out.println("Template File: " + file.getAbsolutePath());
-	    
-	    // Prepare the output Java file path
-	    String javaFilePath = path + "/" + file.getName().replace(".template", ".java");
-	    File javaFile = new File(javaFilePath.replace("/", "\\"));
-
-	    // Ensure the parent directories exist
-	    Path parentDir = Paths.get(javaFile.getParent());
-	    if (!Files.exists(parentDir)) {
-	        Files.createDirectories(parentDir);  // Create all necessary parent directories
-	    }
-
-	    // Check if the file already exists before creating it
-	    if (!javaFile.exists()) {
-	        System.out.println("Creating new file: " + javaFile.getPath());
-	        javaFile.createNewFile(); // Create the new file
-	    }
-
-	    System.out.println("Processing file to the location: " + javaFile);
-
-	    try (BufferedReader reader = new BufferedReader(new FileReader(file));
-	    		BufferedWriter writer = new BufferedWriter(new FileWriter(javaFile))) {
-	        String line;
-	        while ((line = reader.readLine()) != null) {
-                line = packagePath == null ? replacePlaceholders(line) : replacePlaceholders(line, packagePath);
-                System.out.println(file);
-	            writer.write(line);
-	            writer.newLine();
-	        }
-	    }
+		processFileInternal(file, path, null);
 	}
 
+	public static void processFile(File file, String path, String packagePath) throws Exception {
+		processFileInternal(file, path, packagePath);
+	}
+
+	public static void processFileInternal(File file, String path, String packagePath) throws Exception {
+		// Log the provided path and file details for debugging
+		System.out.println("Output Path: " + path);
+		System.out.println("Template File: " + file.getAbsolutePath());
+
+		// Prepare the output Java file path
+		String javaFilePath = path + "/" + file.getName().replace(".template", ".java");
+		File javaFile = new File(javaFilePath.replace("/", "\\"));
+
+		// Ensure the parent directories exist
+		Path parentDir = Paths.get(javaFile.getParent());
+		if (!Files.exists(parentDir)) {
+			Files.createDirectories(parentDir); // Create all necessary parent directories
+		}
+
+		// Check if the file already exists before creating it
+		if (!javaFile.exists()) {
+			System.out.println("Creating new file: " + javaFile.getPath());
+			javaFile.createNewFile(); // Create the new file
+		}
+
+		System.out.println("Processing file to the location: " + javaFile);
+
+		try (BufferedReader reader = new BufferedReader(new FileReader(file)); BufferedWriter writer = new BufferedWriter(new FileWriter(javaFile))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				line = packagePath == null ? replacePlaceholders(line) : replacePlaceholders(line, packagePath);
+				writer.write(line);
+				writer.newLine();
+			}
+		}
+	}
 
 	private static String replacePlaceholders(String line) throws Exception {
 		if (line.startsWith(GeneratorTemplatePlaceholderType.GI.getCode())) {
@@ -106,7 +103,7 @@ public class JavaTemplateWriterUtil {
 			return line;
 		}
 	}
-	
+
 	private static String replacePlaceholders(String line, String packagePath) throws Exception {
 		if (line.startsWith(GeneratorTemplatePlaceholderType.GI.getCode())) {
 			return replaceImportPlaceholder(line);
@@ -121,14 +118,24 @@ public class JavaTemplateWriterUtil {
 
 	private static String replacePackagePlaceholder(String line) throws Exception {
 		String packageName = line.replace(GeneratorTemplatePlaceholderType.GP.getCode(), "").replace("(", "").replace(")", "").trim();
+		String additionalData = null;
+		if (packageName.contains(",")) {
+			String[] splitData = packageName.split(",");
+			packageName = splitData[0];
+			additionalData = splitData[1].replace("\"", "").trim();
+		}
 		for (JavaPackageType type : JavaPackageType.values()) {
 			if (type.toString().equalsIgnoreCase(packageName)) {
-				return type.getPackageImport();
+				if (additionalData != null) {
+					return type.getPackageImport(type.getCode() + "." + additionalData);
+				} else {
+					return type.getPackageImport();
+				}
 			}
 		}
 		throw new UnknowJavaPackageTypeException(packageName);
 	}
-	
+
 	private static String replacePackagePlaceholder(String line, String packagePath) throws Exception {
 		String packageName = line.replace(GeneratorTemplatePlaceholderType.GP.getCode(), "").replace("(", "").replace(")", "").trim();
 		for (JavaPackageType type : JavaPackageType.values()) {
@@ -152,16 +159,14 @@ public class JavaTemplateWriterUtil {
 		}
 		throw new UnknowJavaImportTypeException(importName[0]);
 	}
-	
+
 	private static String replaceComponentPlaceholder(String line) throws Exception {
-		String modifiedLine = line.replace(GeneratorTemplatePlaceholderType.GC.getCode(), "").replace("(", "").replace(")", "").trim();
 		for (JavaComponentType type : JavaComponentType.values()) {
-			if (modifiedLine.contains(type.toString())) {
-				System.out.println(modifiedLine.replace(type.toString(), type.getCode()));
-				return modifiedLine.replace(type.toString(), type.getCode());
+			if (line.contains(type.toString())) {
+				return line.replace(GeneratorTemplatePlaceholderType.GC.getCode() + "(" + type.toString() + ")", type.getCode());
 			}
 		}
-		throw new UnknowJavaComponentTypeException(modifiedLine);
+		throw new UnknowJavaComponentTypeException(line);
 	}
 
 }
