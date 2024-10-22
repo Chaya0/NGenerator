@@ -38,7 +38,7 @@ public class AuthController {
         }
 
         String refreshedToken = jwtUtil.refreshToken(refreshToken);
-        ResponseCookie cookie = ResponseCookie.from("jwt", refreshedToken).httpOnly(true).secure(false).path("/").maxAge(jwtUtil.getJwtExpiration() / 1000).build();
+        ResponseCookie cookie = ResponseCookie.from("jwt", refreshedToken).httpOnly(true).secure(true).path("/").maxAge(jwtUtil.getJwtExpiration() / 1000).build();
 
         response.addHeader("Set-Cookie", cookie.toString());
         User user = service.findByUsername(jwtUtil.extractUsername(refreshedToken));
@@ -61,8 +61,8 @@ public class AuthController {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String jwt = jwtUtil.generateToken(userDetails.getUsername());
         String refreshToken = jwtUtil.generateRefreshToken(userDetails.getUsername());
-        ResponseCookie cookie = ResponseCookie.from("jwt", jwt).httpOnly(true).secure(false).path("/").maxAge(jwtUtil.getJwtExpiration() / 1000).build();
-        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken).httpOnly(true).secure(false).path("/auth/").maxAge(jwtUtil.getRefreshTokenExpiration() / 1000).build();
+        ResponseCookie cookie = ResponseCookie.from("jwt", jwt).httpOnly(true).secure(true).path("/").maxAge(jwtUtil.getJwtExpiration() / 1000).build();
+        ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken).httpOnly(true).secure(true).path("/auth/").maxAge(jwtUtil.getRefreshTokenExpiration() / 1000).build();
 
         response.addHeader("Set-Cookie", cookie.toString());
         response.addHeader("Set-Cookie", refreshCookie.toString());
@@ -73,11 +73,11 @@ public class AuthController {
     public ResponseEntity<?> logout(HttpServletResponse response, @CookieValue(name = "jwt", required = false) String jwtCookie,
                                     @CookieValue(name = "refreshToken", required = false) String refreshTokenCookie) {
         if (jwtCookie != null) {
-            ResponseCookie cookie = ResponseCookie.from("jwt", null).httpOnly(true).secure(false).path("/").maxAge(0).build();
+            ResponseCookie cookie = ResponseCookie.from("jwt", null).httpOnly(true).secure(true).path("/").maxAge(0).build();
             response.addHeader("Set-Cookie", cookie.toString());
         }
         if (refreshTokenCookie != null) {
-            ResponseCookie cookie = ResponseCookie.from("refreshToken", null).httpOnly(true).secure(false).path("/auth/").maxAge(0).build();
+            ResponseCookie cookie = ResponseCookie.from("refreshToken", null).httpOnly(true).secure(true).path("/auth/").maxAge(0).build();
             response.addHeader("Set-Cookie", cookie.toString());
         }
 
@@ -109,7 +109,7 @@ public class AuthController {
         }
         if (jwtCookie == null) {
             String refreshedToken = jwtUtil.refreshToken(refreshToken);
-            ResponseCookie cookie = ResponseCookie.from("jwt", refreshedToken).httpOnly(true).secure(false).path("/").maxAge(jwtUtil.getJwtExpiration() / 1000).build();
+            ResponseCookie cookie = ResponseCookie.from("jwt", refreshedToken).httpOnly(true).secure(true).path("/").maxAge(jwtUtil.getJwtExpiration() / 1000).build();
             response.addHeader("Set-Cookie", cookie.toString());
 
             User user = service.findByUsername(jwtUtil.extractUsername(refreshedToken));

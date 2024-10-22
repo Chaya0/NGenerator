@@ -1,5 +1,6 @@
 package com.generator.model.properties;
 
+import com.generator.Application;
 import com.generator.model.enums.FrontendType;
 import com.generator.model.enums.properties.ApplicationStructureType;
 import com.generator.model.enums.properties.AuthenticationType;
@@ -48,6 +49,9 @@ public class GeneratorProperties {
 //	@XmlJavaTypeAdapter(GenerationTypeXmlAdapter.class)
 	private ApplicationStructureType applicationStructureType = ApplicationStructureType.MONOLITHIC;
 	
+	private String sslCertificateCity = Application.getSpringProperties().getName() +"City";
+	private String sslCertificateState = Application.getSpringProperties().getName() +"State";
+	private String sslCertificateCountry = Application.getSpringProperties().getName() +"Country";
 	private boolean generateBasicRepository = true;
 	private boolean generateBasicService = true;
 	private boolean generateBasicController = true;

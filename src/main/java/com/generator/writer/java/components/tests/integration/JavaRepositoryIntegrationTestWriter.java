@@ -2,6 +2,7 @@ package com.generator.writer.java.components.tests.integration;
 
 import java.io.IOException;
 
+import com.generator.Application;
 import com.generator.model.AppModel;
 import com.generator.model.Attribute;
 import com.generator.model.Entity;
@@ -25,10 +26,7 @@ public class JavaRepositoryIntegrationTestWriter implements DefaultWriter {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getIntegrationTestRepositoryPackagePath(entity.getName()), upperCaseName + "RepositoryIntegrationTest.java", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getIntegrationTestRepositoryPackagePath(entity.getName()), upperCaseName + "RepositoryIntegrationTest.java", true)) {
 
 			file.writeln(0, "package " + WriterUtils.getIntegrationTestRepositoryPackageImport(entity.getName()) + ";");
 			file.writeln(0, "");
@@ -37,26 +35,53 @@ public class JavaRepositoryIntegrationTestWriter implements DefaultWriter {
 			file.writeln(0, "import org.springframework.beans.factory.annotation.Autowired;");
 			file.writeln(0, "import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;");
 			file.writeln(0, "import org.springframework.test.annotation.DirtiesContext;");
+			file.writeln(0, "import org.springframework.test.context.ActiveProfiles;");
+			file.writeln(0, "import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;");
 			file.writeln(0, "import static org.assertj.core.api.Assertions.assertThat;");
 			file.writeln(0, "");
 			file.writeln(0, "import " + WriterUtils.getImportRepositoryPackageName(false, entity.getName()) + "." + upperCaseName + "Repository;");
 			file.writeln(0, "import " + WriterUtils.getImportModelPackageName() + "." + upperCaseName + ";");
 			file.writeln(0, "");
+			if (Application.getGeneratorProperties().isGeneratePermissionsAndRoles() && (entity.getName().equals("role") || entity.getName().equals("permission"))) {
+				file.writeln(0, "import " + WriterUtils.getImportRepositoryPackageName(false, "user") + ".UserRepository;");
+				if (entity.getName().equals("permission")) {
+					file.writeln(0, "import " + WriterUtils.getImportRepositoryPackageName(false, "role") + ".RoleRepository;");
+				}
+			}
 			for (String enumToImort : entity.getEnumsForImport()) {
 				file.writeln(0, "import " + WriterUtils.getImportModelEnumsPackageName() + "." + enumToImort + ";");
 			}
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "import java.time.*;");
 			file.writeln(0, "");
+			file.writeln(0, "@ActiveProfiles(\"test\")");
 			file.writeln(0, "@DataJpaTest");
+			file.writeln(0, "@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)");
 			file.writeln(0, "@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)");
 			file.writeln(0, "class " + upperCaseName + "RepositoryIntegrationTest {");
 			file.writeln(0, "");
 			file.writeln(1, "@Autowired");
 			file.writeln(1, "private " + upperCaseName + "Repository repository;");
 			file.breakLine();
+			if (Application.getGeneratorProperties().isGeneratePermissionsAndRoles() && (entity.getName().equals("role") || entity.getName().equals("permission"))) {
+				file.writeln(1, "@Autowired");
+				file.writeln(1, "private UserRepository userRepository;");
+				file.breakLine();
+				if (entity.getName().equals("permission")) {
+					file.writeln(1, "@Autowired");
+					file.writeln(1, "private RoleRepository roleRepository;");
+					file.breakLine();
+				}
+			}
 			file.writeln(1, "@BeforeEach");
 			file.writeln(1, "void setUp() {");
+			if (Application.getGeneratorProperties().isGeneratePermissionsAndRoles() && (entity.getName().equals("role") || entity.getName().equals("permission"))) {
+				file.writeln(1, "userRepository.deleteAll();");
+				if (entity.getName().equals("permission")) {
+					file.writeln(1, "roleRepository.deleteAll();");
+				}
+			}
+			file.writeln(1, "repository.deleteAll();");
 			writeMockedEntity(file, entity, "entity1", upperCaseName, "1");
 			file.breakLine();
 			writeMockedEntity(file, entity, "entity2", upperCaseName, "2");
@@ -100,7 +125,7 @@ public class JavaRepositoryIntegrationTestWriter implements DefaultWriter {
 
 		file.writeln(1, "@Test");
 		file.writeln(1, "void testFindById() {");
-		file.writeln(2, "Optional<" + upperCaseName + "> entity = repository.findById(1L);");
+		file.writeln(2, "Optional<" + upperCaseName + "> entity = repository.findById(repository.findAll().get(0).getId());");
 		file.writeln(2, "assertThat(entity).isPresent();");
 		file.writeln(1, "}");
 		file.breakLine();
@@ -173,7 +198,11 @@ public class JavaRepositoryIntegrationTestWriter implements DefaultWriter {
 			}
 		}
 		case BOOLEAN: {
-			return "true";
+			if (objectNumber.equals("1")) {
+				return "true";
+			} else {
+				return "false";
+			}
 		}
 		case ENUM: {
 			EnumModel enumModel = appModel.getEnumModelByName(attribute.getEnumName());

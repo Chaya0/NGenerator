@@ -7,14 +7,14 @@ import com.generator.Application;
 import com.generator.util.FileUtils;
 import com.generator.writer.TemplateWriter;
 import com.generator.writer.java.JavaTemplateWriterUtil;
+import com.generator.writer.utils.SSLCertificateGenerator;
 import com.generator.writer.utils.WriterUtils;
 
 public class JavaSecurityWriter implements TemplateWriter {
 
 	@Override
 	public void create() throws Exception {
-		
-		System.out.println("aaaaaaaa");
+		if (!Application.getGeneratorProperties().isGenerateAuthorisationComponents()) return;
 		for (File file : FileUtils.getSubFiles(JavaSecurityWriter.class)) {
 			String[] fileParts = file.getName().split("\\.");
 			if (fileParts.length > 2) {
@@ -37,6 +37,7 @@ public class JavaSecurityWriter implements TemplateWriter {
 					if (file.getName().contains("jwtCookieSecure")) {
 						File targetFile = FileUtils.findFileInFolderByFileName(FileUtils.getTemplateFolder(JavaSecurityWriter.class), fileParts[0] + ".template");
 						FileUtils.copyFile(file, targetFile);
+						createCertificate();
 					}
 					break;
 				}
@@ -56,6 +57,17 @@ public class JavaSecurityWriter implements TemplateWriter {
 				}
 			}
 		}
+	}
+
+	private void createCertificate() {
+		try {
+			SSLCertificateGenerator.generateSelfSignedCertificate(WriterUtils.getProjectPath(), Application.getSpringProperties().getName() + "-alias",
+					Application.getSpringProperties().getName() + "-password", Application.getSpringProperties().getName() + "-keystore-password");
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override

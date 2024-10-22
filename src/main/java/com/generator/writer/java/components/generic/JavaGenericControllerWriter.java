@@ -139,7 +139,7 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 	}
 
 	private void writeDeleteByIdEndpoint(GeneratorOutputFile file) throws IOException {
-		file.writeln(1, "@DeleteMapping(value = \"/delete/{id}\")");
+		file.writeln(1, "@DeleteMapping(value = \"/{id}\")");
 		file.writeln(1, "public ResponseEntity<?> delete(@PathVariable(\"id\") Long id) {");
 		file.writeln(2, "Optional<T> optional = service.findById(id);");
 		file.writeln(2, "if (optional.isPresent()) {");
@@ -164,7 +164,7 @@ public class JavaGenericControllerWriter implements DefaultWriter {
 	}
 
 	private void writeUpdateEndpoint(GeneratorOutputFile file) throws IOException {
-		file.writeln(1, "@PutMapping(value = \"/update\", produces = MediaType.APPLICATION_JSON_VALUE)");
+		file.writeln(1, "@PutMapping(value = \"\", produces = MediaType.APPLICATION_JSON_VALUE)");
 		file.writeln(1, "public ResponseEntity<?> update(@Valid @RequestBody T object) throws " + WriterUtils.getApplicationExceptionName() + " {");
 //		file.writeln(2, "Optional<T> optional = service.findById(id);");
 //		file.writeln(2, "if (optional.isPresent()) {");

@@ -10,6 +10,7 @@ import com.generator.model.Attribute;
 import com.generator.model.Entity;
 import com.generator.model.Relation;
 import com.generator.model.enums.AttributeType;
+import com.generator.model.enums.CascadeType;
 import com.generator.model.enums.ComponentType;
 import com.generator.model.enums.FetchType;
 import com.generator.model.enums.InheritanceType;
@@ -49,7 +50,7 @@ public class JavaEntityWriter implements DefaultWriter {
 			if (entity.getName().equalsIgnoreCase("permission") || entity.getName().equalsIgnoreCase("role")) {
 				file.writeln(0, "import java.util.stream.*;");
 				file.writeln(0, "import org.springframework.security.core.GrantedAuthority;");
-				if(entity.getName().equalsIgnoreCase("role")) file.writeln(0, "import org.springframework.security.core.authority.SimpleGrantedAuthority;");
+				if (entity.getName().equalsIgnoreCase("role")) file.writeln(0, "import org.springframework.security.core.authority.SimpleGrantedAuthority;");
 			}
 			for (String enumToImort : entity.getEnumsForImport()) {
 				file.writeln(0, "import " + WriterUtils.getImportModelEnumsPackageName() + "." + enumToImort + ";");
@@ -108,7 +109,17 @@ public class JavaEntityWriter implements DefaultWriter {
 			boolean closeBracket = false;
 			if (!attribute.isNullable()) {
 				annotation.append("(");
-				file.writeln(1, attribute.getType().equals(AttributeType.ENUM) ? "@NotNull" : "@NotEmpty");
+				switch (attribute.getType()) {
+				case STRING: {
+					file.writeln(1, "@NotEmpty");
+					break;
+				}
+				case ENUM, BOOLEAN, DATE, LOCAL_DATE, LOCAL_DATE_IME, LONG, DOUBLE, INTEGER:
+					file.writeln(1, "@NotNull");
+					break;
+				default:
+					throw new IllegalArgumentException("Unexpected value: " + attribute.getType());
+				}
 				annotation.append("nullable = false");
 				closeBracket = true;
 				addComma = true;
@@ -163,8 +174,11 @@ public class JavaEntityWriter implements DefaultWriter {
 				break;
 			case MANY_TO_MANY:
 				if (relation.isOwningSide()) {
-					file.writeln(1, relation.getRelationType().getGeneratorCode() + (relation.getFetchType().equals(FetchType.NULL) ? "" : ("(" + relation.getFetchType().getGeneratorCode() + ")")));
-					file.writeln(1, "@JsonIgnore");
+					file.writeln(1, relation.getRelationType().getGeneratorCode() + ((relation.getFetchType().equals(FetchType.NULL) && relation.getCascadeType().equals(CascadeType.NULL)) ? ""
+							: ("(" + relation.getFetchType().getGeneratorCode() + (relation.getFetchType().equals(FetchType.NULL) ? "" : (relation.getCascadeType().equals(CascadeType.NULL) ? "" :", ")) + relation.getCascadeType().getGeneratorCode() + ")")));
+					if (!entity.getName().equals("permission")) {
+						file.writeln(1, "@JsonIgnore");
+					}
 					file.writeln(1, "@JoinTable(name = \"" + entity.getName() + "_" + relation.getEntityName() + "\",");
 					file.writeln(2, "joinColumns = @JoinColumn(name = \"" + entity.getName() + "\", referencedColumnName = \"id\"),");
 					file.writeln(2, "inverseJoinColumns = @JoinColumn(name = \"" + relation.getEntityName() + "\", referencedColumnName = \"id\"))");

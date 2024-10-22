@@ -28,6 +28,7 @@ public class SpringProperties {
 	private String javaVersion;
 	private String projectPath;
 	private String datasourceUrl;
+	private String testDatasourceUrl;
 	private String datasourceUsername;
 	private String datasourcePassword;
 	
@@ -46,6 +47,7 @@ public class SpringProperties {
 		javaVersion = properties.getProperty("javaVersion", "11");
 		projectPath = properties.getProperty("projectPath");
 		datasourceUrl = properties.getProperty("datasourceUrl", "");
+		testDatasourceUrl = properties.getProperty("testDatasourceUrl", "");
 		datasourceUsername = properties.getProperty("datasourceUsername", "");
 		datasourcePassword = properties.getProperty("datasourcePassword", "");
 	}

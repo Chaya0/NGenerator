@@ -39,6 +39,8 @@ public enum JavaImportType {
 	SPRING_DAO("org.springframework.dao"),
 	SPRING_HTTP("org.springframework.http"),
 	SPRING_WEB("org.springframework.web"),
+	SPRING_WEB_CORS("org.springframework.web.cors"),
+	SPRING_WEB_CORS_REACTIVE("org.springframework.web.cors.reactive"),
 	SPRING_WEB_BIND_ANNOTATION("org.springframework.web.bind.annotation"),
 	SPRING_WEB_FILTER("org.springframework.web.filter"),
 	SPRING_CONTEXT("org.springframework.context"),

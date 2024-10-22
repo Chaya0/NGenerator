@@ -68,9 +68,12 @@ public class JavaServiceUnitTestWriter implements DefaultWriter {
 			file.breakLine();
 			file.writeln(1, "@BeforeEach");
 			file.writeln(1, "void setUp() {");
+			file.writeln(2, "MockitoAnnotations.openMocks(this);");
 			writeMockedEntity(file, entity, "entity1", upperCaseName, "1");
+			file.writeln(2, "entity1.setId(1L);");
 			file.breakLine();
 			writeMockedEntity(file, entity, "entity2", upperCaseName, "2");
+			file.writeln(2, "entity2.setId(2L);");
 			file.breakLine();
 			file.writeln(1, "}");
 			writeBasicServiceTests(file, entity);

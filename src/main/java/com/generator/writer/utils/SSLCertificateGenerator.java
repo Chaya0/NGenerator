@@ -19,18 +19,22 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.operator.ContentSigner;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 
+import com.generator.Application;
+import com.generator.util.StringUtils;
+
 public class SSLCertificateGenerator {
 	// Method to generate and store self-signed certificate to a given path
-	public static void generateSelfSignedCertificate(String targetAppPath, String alias, String password) throws Exception {
+	public static void generateSelfSignedCertificate(String targetAppPath, String alias, String password, String keystorePasswrod) throws Exception {
 		Security.addProvider(new BouncyCastleProvider());
 
 		// Generate a key pair (public and private key)
 		KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA", "BC");
 		keyPairGenerator.initialize(2048);
 		KeyPair keyPair = keyPairGenerator.generateKeyPair();
-
+		String appName = StringUtils.uppercaseFirst(Application.getSpringProperties().getName()).isBlank() ? "App" : StringUtils.uppercaseFirst(Application.getSpringProperties().getName());
 		// Create the certificate builder
-		X500Name issuer = new X500Name("CN=MyApp, OU=MyOrgUnit, O=MyOrganization, L=MyCity, ST=MyState, C=MyCountry");
+		X500Name issuer = new X500Name("CN=" + appName + "App, OU=" + appName + "OrgUnit, O=" + appName + "Organization, L=" + Application.getGeneratorProperties().getSslCertificateCity() + ", ST="
+				+ Application.getGeneratorProperties().getSslCertificateState() + ", C=" + Application.getGeneratorProperties().getSslCertificateCountry() + "");
 		BigInteger serial = BigInteger.valueOf(System.currentTimeMillis());
 		Date startDate = new Date();
 		Date endDate = new Date(startDate.getTime() + 3650L * 24 * 60 * 60 * 1000); // Valid for 10 years
@@ -58,7 +62,7 @@ public class SSLCertificateGenerator {
 
 		// Save the keystore to the specified file
 		try (FileOutputStream fos = new FileOutputStream(keystorePath)) {
-			keyStore.store(fos, password.toCharArray());
+			keyStore.store(fos, keystorePasswrod.toCharArray());
 		}
 
 		System.out.println("Self-signed certificate generated and saved in " + keystorePath);

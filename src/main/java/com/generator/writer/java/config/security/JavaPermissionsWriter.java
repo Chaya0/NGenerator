@@ -26,6 +26,7 @@ public class JavaPermissionsWriter implements DefaultWriter {
 			}
 			file.writeln(0, "}");
 		}
+		createPermissionUtils(model);
 	}
 
 	@Override
@@ -54,4 +55,32 @@ public class JavaPermissionsWriter implements DefaultWriter {
 		file.writeln(1, "}");
 		file.writeln(0, "");
 	}
+	
+	public void createPermissionUtils(AppModel model) throws Exception {
+		if(Application.getGeneratorProperties().isGenerateAuthorisationComponents() && Application.getGeneratorProperties().isGeneratePermissionsAndRoles())
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getServicePackagePath(false, "permission"), "PermissionUtils.java", true)) {
+			file.writeln(0, "package " + WriterUtils.getImportServicePackageName(false, "permission") + ";");
+			file.writeln(0, "");
+			file.writeln(0, "import java.util.ArrayList;");
+			file.writeln(0, "import java.util.List;");
+			file.writeln(0, "");
+			file.writeln(0, "public class PermissionUtils {");
+			file.writeln(0, "");
+			file.writeln(1, "public static List<String> getAllPermissionNames() {");
+			file.writeln(2, "List<String> permissionNames = new ArrayList<>();");
+			file.breakLine();
+			for (Entity entity : model.getEntities()) {
+				String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
+				file.writeln(2, "for(Permissions." + upperCaseName + " permission : Permissions." + upperCaseName + ".values()) {");
+				file.writeln(3, "permissionNames.add(permission.getName());");
+				file.writeln(2, "}");
+				file.breakLine();
+			}
+			file.writeln(2, "return permissionNames;");
+			file.writeln(1, "}");
+			file.writeln(0, "");
+			file.writeln(0, "}");
+		}
+	}
+
 }

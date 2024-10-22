@@ -2,6 +2,7 @@ package com.generator.writer.java.components.tests.integration;
 
 import java.io.IOException;
 
+import com.generator.Application;
 import com.generator.model.AppModel;
 import com.generator.model.Attribute;
 import com.generator.model.Entity;
@@ -25,19 +26,27 @@ public class JavaServiceIntegrationTestWriter implements DefaultWriter {
 	@Override
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getIntegrationTestServicePackagePath(entity.getName()), upperCaseName + "ServiceIntegrationTest.java", false)) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getIntegrationTestServicePackagePath(entity.getName()), upperCaseName + "ServiceIntegrationTest.java", true)) {
 
 			file.writeln(0, "package " + WriterUtils.getIntegrationTestServicePackageImport(entity.getName()) + ";");
 			file.writeln(0, "");
 			file.writeln(0, "import org.junit.jupiter.api.BeforeEach;");
 			file.writeln(0, "import org.junit.jupiter.api.Test;");
+			file.writeln(0, "import org.junit.jupiter.api.TestInstance;");
 			file.writeln(0, "import org.springframework.beans.factory.annotation.Autowired;");
 			file.writeln(0, "import org.springframework.boot.test.context.SpringBootTest;");
+			file.writeln(0, "import org.springframework.test.context.ActiveProfiles;");
 			file.writeln(0, "import org.springframework.test.annotation.DirtiesContext;");
 			file.writeln(0, "import org.springframework.transaction.annotation.Transactional;");
 			file.writeln(0, "import static org.assertj.core.api.Assertions.assertThat;");
 			file.writeln(0, "");
 			file.writeln(0, "import " + WriterUtils.getImportRepositoryPackageName(false, entity.getName()) + "." + upperCaseName + "Repository;");
+			if (Application.getGeneratorProperties().isGeneratePermissionsAndRoles() && (entity.getName().equals("role") || entity.getName().equals("permission"))) {
+				file.writeln(0, "import " + WriterUtils.getImportRepositoryPackageName(false, "user") + ".UserRepository;");
+				if (entity.getName().equals("permission")) {
+					file.writeln(0, "import " + WriterUtils.getImportRepositoryPackageName(false, "role") + ".RoleRepository;");
+				}
+			}
 			file.writeln(0, "import " + WriterUtils.getImportServicePackageName(false, entity.getName()) + "." + upperCaseName + "Service;");
 			file.writeln(0, "import " + WriterUtils.getImportModelPackageName() + "." + upperCaseName + ";");
 			for (String enumToImort : entity.getEnumsForImport()) {
@@ -47,22 +56,43 @@ public class JavaServiceIntegrationTestWriter implements DefaultWriter {
 			file.writeln(0, "import java.util.*;");
 			file.writeln(0, "import java.time.*;");
 			file.writeln(0, "");
+			file.writeln(0, "@ActiveProfiles(\"test\")");
 			file.writeln(0, "@SpringBootTest  // This starts the full Spring Boot context for service integration tests");
 			file.writeln(0, "@Transactional   // Ensures that each test is rolled back automatically");
 			file.writeln(0, "@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)");
+			file.writeln(0, "@TestInstance(TestInstance.Lifecycle.PER_CLASS)");
 			file.writeln(0, "class " + upperCaseName + "ServiceIntegrationTest {");
 			file.writeln(0, "");
 			file.writeln(1, "@Autowired");
 			file.writeln(1, "private " + upperCaseName + "Repository repository;");
 			file.breakLine();
+			if (Application.getGeneratorProperties().isGeneratePermissionsAndRoles() && (entity.getName().equals("role") || entity.getName().equals("permission"))) {
+				file.writeln(1, "@Autowired");
+				file.writeln(1, "private UserRepository userRepository;");
+				file.breakLine();
+				if (entity.getName().equals("permission")) {
+					file.writeln(1, "@Autowired");
+					file.writeln(1, "private RoleRepository roleRepository;");
+					file.breakLine();
+				}
+			}
 			file.writeln(1, "@Autowired");
 			file.writeln(1, "private " + upperCaseName + "Service service;");
 			file.breakLine();
 			file.writeln(1, "@BeforeEach");
 			file.writeln(1, "void setUp() {");
+			if (Application.getGeneratorProperties().isGeneratePermissionsAndRoles() && (entity.getName().equals("role") || entity.getName().equals("permission"))) {
+				file.writeln(1, "userRepository.deleteAll();");
+				if (entity.getName().equals("permission")) {
+					file.writeln(1, "roleRepository.deleteAll();");
+				}
+			}
+			file.writeln(1, "repository.deleteAll();");
 			writeMockedEntity(file, entity, "entity1", upperCaseName, "1");
+			file.writeln(2, "entity1.setId(1L);");
 			file.breakLine();
 			writeMockedEntity(file, entity, "entity2", upperCaseName, "2");
+			file.writeln(2, "entity2.setId(2L);");
 			file.breakLine();
 			file.writeln(2, "repository.save(entity1);");
 			file.writeln(2, "repository.save(entity2);");
@@ -103,7 +133,7 @@ public class JavaServiceIntegrationTestWriter implements DefaultWriter {
 
 		file.writeln(1, "@Test");
 		file.writeln(1, "void testFindById() {");
-		file.writeln(2, "Optional<" + upperCaseName + "> entity = service.findById(1L);");
+		file.writeln(2, "Optional<" + upperCaseName + "> entity = service.findById(repository.findAll().get(0).getId());");
 		file.writeln(2, "assertThat(entity).isPresent();");
 		file.writeln(1, "}");
 		file.breakLine();
@@ -175,7 +205,11 @@ public class JavaServiceIntegrationTestWriter implements DefaultWriter {
 			}
 		}
 		case BOOLEAN: {
-			return "true";
+			if (objectNumber.equals("1")) {
+				return "true";
+			} else {
+				return "false";
+			}
 		}
 		case ENUM: {
 			EnumModel enumModel = appModel.getEnumModelByName(attribute.getEnumName());

@@ -164,10 +164,12 @@ public class ApplicationGenerator {
 
 			try {
 				System.out.println("Adding missing dependencies");
+				PomEditorUtil.addDependencyToPom(WriterUtils.getProjectPath() + "/pom.xml", DependencyCode.JACKSON_DATATYPE.getCode());
 				if (Application.getGeneratorProperties().isGenerateSwaggerComponent())
 					PomEditorUtil.addDependencyToPom(WriterUtils.getProjectPath() + "/pom.xml", DependencyCode.SWAGGER.getCode("2.3.0"));
 				if (Application.getGeneratorProperties().isGenerateAuthorisationComponents()) {
 					PomEditorUtil.addDependencyToPom(WriterUtils.getProjectPath() + "/pom.xml", DependencyCode.JWT.getCode("0.9.1"));
+					PomEditorUtil.addDependencyToPom(WriterUtils.getProjectPath() + "/pom.xml", DependencyCode.JAVAX_API.getCode("2.3.1"));
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
