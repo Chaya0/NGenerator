@@ -1,9 +1,9 @@
 import {Component, inject, OnDestroy} from '@angular/core';
 import {Observable, Subscription} from "rxjs";
-import {SearchDTO} from "../../core/entity-utils/search-dto";
-import {Page} from "../../core/entity-utils/page";
-import {ApiService} from "../../core/services/api.service";
-import {AppUtils} from "../utils/app-utils";
+import {SearchDTO} from "../../entity-utils/search-dto";
+import {Page} from "../../entity-utils/page";
+import {ApiService} from "../../services/api.service";
+import {AppUtils} from "../../../shared/utils/app-utils";
 
 @Component({
   selector: 'app-root',

@@ -29,18 +29,22 @@ public class AngularEntityWriter {
 				String kebabCaseNameImport = StringUtils.camelToKebabCase(relation.getEntityName());
 				file.writeln(0, "import { " + StringUtils.uppercaseFirst(relation.getEntityName()) + " } from '../" + kebabCaseNameImport + "/" + kebabCaseNameImport +  "';");
 			}
+			for(Attribute attribute : entity.getAttributes()) {
+				file.writeln(0, "import { " + StringUtils.uppercaseFirst(attribute.getEnumName()) + " } from '../enums.model;");
+
+			}
 			file.writeln(0, "");
 			file.writeln(0, "export class " + upperCaseName + " {");
 			for (Attribute attribute : entity.getAttributes()) {
 				if (attribute.getType().equals(AttributeType.ENUM)) {
-					file.writeln(1, "// " +  attribute.getName() + "?: " + attribute.getEnumName() + ";");
+					file.writeln(1, "// " +  attribute.getName() + "!: " + StringUtils.uppercaseFirst(attribute.getEnumName()) + ";");
 				} else {
-					file.writeln(1, attribute.getName() + "?: " + attribute.getType().getAngularTypeCode() + ";");
+					file.writeln(1, attribute.getName() + "!: " + attribute.getType().getAngularTypeCode() + ";");
 				}
 			}
 			for (Relation relation : entity.getRelations()) {
 				if(relation.getRelationType().equals(RelationType.ONE_TO_MANY) || relation.getRelationType().equals(RelationType.MANY_TO_MANY)) continue;
-				file.writeln(1, (relation.getRelationName() == null ? relation.getEntityName() : relation.getRelationName()) + "?: " + StringUtils.uppercaseFirst(relation.getEntityName()) + ";");
+				file.writeln(1, (relation.getRelationName() == null ? relation.getEntityName() : relation.getRelationName()) + "!: " + StringUtils.uppercaseFirst(relation.getEntityName()) + ";");
 			}
 			file.writeln(0, "}");
 

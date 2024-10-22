@@ -443,6 +443,12 @@ public class WriterUtils {
 		return StringUtils.uppercaseFirst(Application.getSpringProperties().getName()) + "Exception";
 	}
 
+	public static String getFrontendApplicationPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getGeneratorProperties().getFrontendProjectPath());
+//		stringBuilder.append(Application.getSpringProperties().getName() + "-frontend");
+		return stringBuilder.toString();
+	}
 	/**
 	 * Constructs the root package path for the frontend application.
 	 *
@@ -450,7 +456,7 @@ public class WriterUtils {
 	 */
 	public static String getFrontendRootPackagePath() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(Application.getSpringProperties().getProjectPath());
+		stringBuilder.append(Application.getGeneratorProperties().getFrontendProjectPath());
 		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "-frontend");
 		stringBuilder.append("/src/app/");
 		return stringBuilder.toString();

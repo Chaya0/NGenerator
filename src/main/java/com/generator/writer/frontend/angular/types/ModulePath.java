@@ -1,4 +1,4 @@
-package com.generator.writer.frontend.angular.enums;
+package com.generator.writer.frontend.angular.types;
 
 public enum ModulePath {
 	ANGULAR_CORE("@angular/core"),

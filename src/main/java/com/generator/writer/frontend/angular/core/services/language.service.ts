@@ -18,8 +18,6 @@ export interface Language {
 export class LanguageService {
   static readonly languages: Language[] = [
     {code: 'en', shortName: 'EN', fullName: 'English', flag: 'fi fi-gb'},
-    {code: 'sr_lat', shortName: 'SRB', fullName: 'Srpski', flag: 'fi fi-rs'},
-    {code: 'sr_cyr', shortName: 'СРБ', fullName: 'Српски', flag: 'fi fi-rs'},
   ];
   translationService = inject(TranslationService);
   protected http: HttpClient = inject(HttpClient);

@@ -52,6 +52,7 @@ public class GeneratorProperties {
 	private String sslCertificateCity = Application.getSpringProperties().getName() +"City";
 	private String sslCertificateState = Application.getSpringProperties().getName() +"State";
 	private String sslCertificateCountry = Application.getSpringProperties().getName() +"Country";
+	private String frontendProjectPath;
 	private boolean generateBasicRepository = true;
 	private boolean generateBasicService = true;
 	private boolean generateBasicController = true;

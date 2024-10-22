@@ -6,7 +6,6 @@ import java.util.List;
 import com.generator.model.AppModel;
 import com.generator.reader.XMLModelReader;
 import com.generator.writer.frontend.ComponentWriter;
-import com.generator.writer.frontend.angular.components.AngularDeleteActionComponentWriter;
 import com.generator.writer.frontend.angular.components.AngularInsertFormComponentWriter;
 import com.generator.writer.frontend.angular.components.AngularSearchFormComponentWriter;
 import com.generator.writer.frontend.angular.components.AngularTableViewComponentWriter;
@@ -17,7 +16,6 @@ import com.generator.writer.frontend.angular.components.pages.AngularSearchEntit
 import com.generator.writer.frontend.angular.model.AngularEntitiesWriter;
 import com.generator.writer.frontend.angular.model.AngularEntityStructureWriter;
 import com.generator.writer.frontend.angular.model.AngularEntityWriter;
-import com.generator.writer.frontend.angular.utils.LocalizationWriter;
 
 public class FrontendApplicationGenerator {
 	private static AppModel appModel = XMLModelReader.readModel();
@@ -38,8 +36,7 @@ public class FrontendApplicationGenerator {
 //		}
 		try {
 			List<ComponentWriter> writers = Arrays.asList(new AngularCreateEntityPageWriter(), new AngularEditEntityPageWriter(), new AngularSearchEntityPageWriter(),
-					new AngularDeleteActionComponentWriter(), new AngularInsertFormComponentWriter(), new AngularSearchFormComponentWriter(), new AngularTableViewComponentWriter(),
-					new AngularUpdateFormComponentWriter());
+					new AngularInsertFormComponentWriter(), new AngularSearchFormComponentWriter(), new AngularTableViewComponentWriter(), new AngularUpdateFormComponentWriter());
 			AngularEntityWriter angularEntityWriter = new AngularEntityWriter();
 			AngularEntitiesWriter angularEntitiesWriter = new AngularEntitiesWriter();
 			AngularEntityStructureWriter angularEntityStructureWriter = new AngularEntityStructureWriter();
@@ -53,7 +50,7 @@ public class FrontendApplicationGenerator {
 //			LocalizationWriter writer = new LocalizationWriter();
 //			writer.create(appModel);
 			System.out.println("Frontend components generated successfully!");
-		}catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

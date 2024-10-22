@@ -34,7 +34,7 @@ public class AngularCreateEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "@Component({");
 			file.writeln(1, "selector: 'app-" + kebabCase + "-create-page',");
 			file.writeln(1, "standalone: true,");
-			file.writeln(1, "imports: [" + upperCaseName + "InsertFormComponent],");
+			file.writeln(1, "imports: [" + upperCaseName + "InsertFormComponent, BreadcrumbComponent],");
 			file.writeln(1, "templateUrl: './"+ kebabCase + "-create-page.component.html',");
 			file.writeln(1, "styleUrl: './" + kebabCase + "-create-page.component.css'");
 			file.writeln(0, "})");

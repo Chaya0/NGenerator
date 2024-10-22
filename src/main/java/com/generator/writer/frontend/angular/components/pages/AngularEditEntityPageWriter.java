@@ -35,7 +35,7 @@ public class AngularEditEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "@Component({");
 			file.writeln(1, "selector: 'app-" + kebabCase + "-edit-page',");
 			file.writeln(1, "standalone: true,");
-			file.writeln(1, "imports: [" + upperCaseName + "UpdateFormComponent],");
+			file.writeln(1, "imports: [" + upperCaseName + "UpdateFormComponent, BreadcrumbComponent],");
 			file.writeln(1, "templateUrl: './" + kebabCase + "-edit-page.component.html',");
 			file.writeln(1, "styleUrl: './" + kebabCase + "-edit-page.component.css'");
 			file.writeln(0, "})");

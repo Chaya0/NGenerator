@@ -30,7 +30,7 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "import {RouterLink, RouterOutlet} from \"@angular/router\";");
 			file.writeln(0, "import { NgIf } from \"@angular/common\";");
 			file.writeln(0, "import {MenuItem} from \"primeng/api\";");
-			file.writeln(0, "import { AppUtils } from \"../../../shared/prime/prime.module\";");
+			file.writeln(0, "import { PrimeModule } from \"../../../shared/prime/prime.module\";");
 			file.writeln(0, "import { SearchService } from \"../../../core/services/search.service\";");
 			file.writeln(0, "import { TranslationService } from \"../../../core/services/translation.service\";");
 			file.writeln(0, "import { " + upperCaseName + " } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "';");
@@ -45,7 +45,8 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(1, "imports: [");
 			file.writeln(2, upperCaseName + "TableViewComponent,");
 			file.writeln(2, upperCaseName + "SearchFormComponent,");
-			file.writeln(2, "MaterialModule,");
+			file.writeln(2, "BreadcrumbComponent,");
+			file.writeln(2, "PrimeModule,");
 			file.writeln(2, "RouterLink,");
 			file.writeln(2, "RouterOutlet,");
 			file.writeln(2, "NgIf");
@@ -99,7 +100,7 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(2, "</div>");
 			file.writeln(2, "<div class=\"card px-6 py-6\"");
 			file.writeln(2, "<div class=\"mb-4\">");
-			file.writeln(0, "<app-" + kebabCase + "-table-view [structure]=\"structure\"></app-" + kebabCase + "-table-view>");
+			file.writeln(0, "<app-" + kebabCase + "-search-form [structure]=\"structure\"></app-" + kebabCase + "-search-form>");
 			file.writeln(2, "</div>");
 			file.writeln(0, "<app-" + kebabCase + "-table-view [structure]=\"structure\"></app-" + kebabCase + "-table-view>");
 			file.writeln(2, "</div>");

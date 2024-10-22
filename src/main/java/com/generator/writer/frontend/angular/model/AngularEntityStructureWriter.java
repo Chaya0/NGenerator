@@ -12,14 +12,13 @@ import com.generator.writer.utils.GeneratorOutputFile;
 import com.generator.writer.utils.WriterUtils;
 
 public class AngularEntityStructureWriter {
-	
-	public void create(AppModel appModel) throws Exception{
-		for(Entity entity : appModel.getEntities()) {
+
+	public void create(AppModel appModel) throws Exception {
+		for (Entity entity : appModel.getEntities()) {
 			create(entity);
 		}
 	}
-	
-	
+
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + StringUtils.camelToKebabCase(entity.getName()),
@@ -29,6 +28,8 @@ public class AngularEntityStructureWriter {
 			}
 			file.writeln(0, "import {Attribute} from \"../../../core/entity-utils/attribute\";");
 			file.writeln(0, "import {Structure} from \"../structure\";");
+			file.writeln(0, "import {SearchField} from \"../../../core/entity-utils/search-field\";");
+			file.writeln(0, "import {InputField} from \"../../../core/entity-utils/input-field\";");
 			file.writeln(0, "");
 			file.writeln(0, "export class " + upperCaseName + "Structure implements Structure {");
 			file.writeln(0, "");
@@ -58,39 +59,49 @@ public class AngularEntityStructureWriter {
 			file.writeln(2, "new Attribute(");
 			file.writeln(3, "'" + attribute.getName() + "',");
 			file.writeln(3, "'" + attribute.getType().getCode() + "',");
-			file.writeln(3, "null,");
-			file.writeln(3, "null,");
-			file.writeln(3, attribute.isNullable() + ",");
-			file.writeln(3, attribute.isUnique() + ",");
-			file.writeln(3, attribute.getEnumName() == null ? "false" : "true" + "");
+			file.writeln(3, "SearchField" + getDisplayTypeForAttribute(attribute, false));
+			file.writeln(3, "InputField" + getDisplayTypeForAttribute(attribute, true));
 			file.writeln(2, "),");
 		}
-		file.writeln(2, "new Attribute(");
-		file.writeln(3, "'id',");
-		file.writeln(3, "'primaryKey',");
-		file.writeln(3, "null,");
-		file.writeln(3, "null,");
-		file.writeln(3, "false,");
-		file.writeln(3, "true,");
-		file.writeln(3, "false");
-		file.writeln(2, ")");
-		file.writeln(1, "];");
-		file.writeln(0, "}");
 	}
 
 	private void writeRelationsAttributes(Entity entity, GeneratorOutputFile file) throws IOException {
 		for (Relation relation : entity.getRelations()) {
-			if(relation.getRelationType().equals(RelationType.ONE_TO_MANY) || relation.getRelationType().equals(RelationType.MANY_TO_MANY)) continue;
+			if (relation.getRelationType().equals(RelationType.ONE_TO_MANY) || relation.getRelationType().equals(RelationType.MANY_TO_MANY)) continue;
 			file.writeln(2, "new Attribute(");
 			file.writeln(3, "'" + (relation.getRelationName() == null ? relation.getEntityName() : relation.getRelationName()) + "',");
 			file.writeln(3, "'" + StringUtils.uppercaseFirst(relation.getEntityName()) + "',");
-			file.writeln(3, "null,");
-			file.writeln(3, "null,");
-			file.writeln(3, "true,");
-			file.writeln(3, "false,");
-			file.writeln(3, "false");
+			file.writeln(3, "SearchField.DROPDOWN(),");
+			file.writeln(3, "InputField.DROPDOWN()");
 			file.writeln(2, "),");
 		}
 	}
 
+	private String getDisplayTypeForAttribute(Attribute attribute, boolean inputField) {
+		String value ="";
+		switch (attribute.getType()) {
+		case STRING, DOUBLE, INTEGER, LONG, NULL: {
+			value = ".INPUT()";
+			break;
+		}
+		case DATE, LOCAL_DATE, LOCAL_DATE_IME: {
+			value =  ".CALENDAR().maxLength(new Date())";
+			break;
+		}
+		case ENUM: {
+			value =  ".DROPDOWN()";
+			break;
+		}
+		case BOOLEAN: {
+			value =  ".CHECKBOX()";
+			break;
+		}
+		default:
+			value =  ".INPUT()";
+			break;
+		}
+		if(!attribute.isNullable() && inputField) value += ".required(true)";
+		if(!inputField) value+=",";
+		return value;
+	}
 }
