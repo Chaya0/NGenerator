@@ -3,8 +3,6 @@ import {TranslationService} from './translation.service';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {BehaviorSubject, Observable} from "rxjs";
-import {Settings, SettingsService} from "../../features/services/settings.service";
-
 export interface Language {
   code: string;
   shortName: string;
@@ -18,38 +16,30 @@ export interface Language {
 export class LanguageService {
   static readonly languages: Language[] = [
     {code: 'en', shortName: 'EN', fullName: 'English', flag: 'fi fi-gb'},
+    {code: 'sr_lat', shortName: 'SRB', fullName: 'Srpski', flag: 'fi fi-rs'},
+    {code: 'sr_cyr', shortName: 'СРБ', fullName: 'Српски', flag: 'fi fi-rs'},
   ];
   translationService = inject(TranslationService);
   protected http: HttpClient = inject(HttpClient);
-  protected settingsService = inject(SettingsService);
   protected apiUrl = environment.apiUrl + 'api/settings';
-  private languageSubject: BehaviorSubject<Language> = new BehaviorSubject<Language>(<Language>this.getLanguageFromMemory());
-  public currentLanguage$: Observable<Language> = this.languageSubject.asObservable();
+  private defaultLanguage = environment.defaultLanguage;
 
   getLanguages(): Language[] {
     return LanguageService.languages;
   }
 
   changeLanguage(languageCode: string) {
-    this.settingsService.updateSetting("language", languageCode);
     this.setLanguage(languageCode);
   }
 
+	//Add your logic of loading languge for user
   loadLanguage() {
-    this.http.get<any>(`${this.apiUrl}`).subscribe((data: Settings[]) => {
-      this.setLanguage(data.find(e => e.key === 'language')?.value ?? 'en');
-    });
+    this.setLanguage(this.defaultLanguage)
   }
 
-  private setLanguage(language: string) {
-    this.translationService.setLanguage(language);
+  private async setLanguage(language: string) {
+    await this.translationService.setLanguage(language);
     let obj = LanguageService.languages.filter(e => e.code === language)[0];
-    this.languageSubject.next(obj);
   }
 
-  private getLanguageFromMemory(): Language | null {
-    let code = this.settingsService.getSettingsFromMemory()?.find(e => e.key === 'language')?.value;
-    if (!code) return null;
-    return LanguageService.languages.filter(e => e.code === code)[0];
-  }
 }

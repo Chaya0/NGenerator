@@ -4,6 +4,8 @@ import {Attribute} from "../../core/entity-utils/attribute";
 import {Structure} from "../../features/entities/structure";
 
 export class AppUtils {
+  public static readonly DEFAULT_PAGE_SIZE: string = '10';
+
   /**
    * Converts the first letter of the given string to lowercase.
    * @param str - The string to convert.
@@ -24,32 +26,12 @@ export class AppUtils {
   }
 
   /**
-   * Checks if a variable is a string or date.
-   * @param value - Type of the variable.
-   * @returns true if it is a string or date.
-   */
-  public static isRegularInput(value: string): boolean {
-    return value === 'string' || value === 'number';
-  }
-
-  /**
    * Checks if a variable is a date.
    * @param value - Type of the variable.
    * @returns true if it is a date.
    */
   public static isDateInput(value: string): boolean {
     return value === 'date';
-  }
-
-
-  /**
-   * //TODO UNUSED
-   * Checks if a variable is a date range
-   * @param value - Type of the variable.
-   * @returns true if it is a date range.
-   */
-  public static isDateRangeInput(value: string): boolean {
-    return value === 'datetime-local';
   }
 
   /**
@@ -71,23 +53,12 @@ export class AppUtils {
   }
 
   /**
-   * Checks if a variable is a enum.
+   * Checks if a variable is an enum.
    * @param value - Type of the variable.
-   * @returns true if it is a enum.
+   * @returns true if it is an enum.
    */
   public static isEnum(value: string): boolean {
     return value === 'enum';
-  }
-
-
-  /**
-   * Checks if an attribute is a foreign key by attribute's name.
-   * @param name - name of the attribute.
-   * @param attributes - attribute list.
-   * @returns true if it is a foreign key.
-   */
-  public static isAttributeForeignKey(name: string, attributes: Attribute[]): boolean {
-    return AppUtils.isForeignKey(this.getAttributeType(name, attributes));
   }
 
   public static getAttributeType(name: string, attributes: Attribute[]): string {
@@ -116,15 +87,24 @@ export class AppUtils {
       if (!displayValue) displayValue = "";
       displayValue = displayValue + " " + object[key];
     }
-    return displayValue;
+    return displayValue?.trim();
   }
 
   public static getEntityViewValue(obj: any, type: string, delimiter: string = " "): string {
-    const keys = this.getFkSearchAttribute(type);
-    return keys
-      .map(key => obj[key]?.trim())
-      .filter(value => value)
-      .join(delimiter);
+    if (!obj) return '';
+    const formatEntity = (entity: any): string => {
+      const keys = this.getFkSearchAttribute(type);
+      return keys
+        .map(key => entity[key]?.trim())
+        .filter(value => value)
+        .join(delimiter);
+    };
+
+    if (Array.isArray(obj)) {
+      return obj.map(item => formatEntity(item)).join(', '); // Use comma as delimiter for array
+    } else {
+      return formatEntity(obj); // Handle single object
+    }
   }
 
   public static findEnumByName(enumName: string): any {

@@ -4,15 +4,21 @@ import java.io.IOException;
 
 import com.generator.Application;
 import com.generator.writer.Utils;
+import com.generator.writer.frontend.angular.assets.AngularStyleClassWriter;
 import com.generator.writer.utils.GeneratorOutputFile;
 
 public class AngularInitializationWriter {
-	private void create() {
-
+	
+	public void create() throws IOException, Exception {
+		AngularAppComponentWriter angularAppComponentWriter = new AngularAppComponentWriter();
+		AngularStyleClassWriter angularStyleClassWriter = new AngularStyleClassWriter();
+		angularAppComponentWriter.create();
+		angularStyleClassWriter.create();
+		writeIndexHtml();
 	}
 
 	private void writeIndexHtml() throws IOException, Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendSourceDirectoryPath(), "index.html", false)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendSourceDirectoryPath(), "index.html", true)) {
 			file.writeln(0, "<!doctype html>");
 			file.writeln(0, "<html lang=\"en\">");
 			file.writeln(0, "<head>");
@@ -35,10 +41,6 @@ public class AngularInitializationWriter {
 		}
 	}
 
-	private void writeAppComponent() throws IOException, Exception {
-
-	}
-	
 	private void copyStyles() {
 		
 	}

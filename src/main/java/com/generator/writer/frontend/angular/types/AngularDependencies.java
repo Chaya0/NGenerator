@@ -9,6 +9,7 @@ public enum AngularDependencies {
     NGX_TRANSLATE_HTTP_LOADER("@ngx-translate/http-loader"),
 //    CHART_JS("chart.js"),
 //    NGX_CHARTS("@swimlane/ngx-charts"),
+    ANGULAR_CDK("angular/cdk"),
     MOMENT("moment"),
     DATE_FNS_TZ("date-fns-tz"),
     NGX_COOKIE_SERVICE("ngx-cookie-service"),

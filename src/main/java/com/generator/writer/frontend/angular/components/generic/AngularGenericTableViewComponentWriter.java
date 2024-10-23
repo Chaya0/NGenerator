@@ -11,15 +11,16 @@ public class AngularGenericTableViewComponentWriter implements ComponentWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
+		boolean overwrite = false;
 		for (Entity entity : model.getEntities()) {
-			writeScript(entity);
-			writeStyles(entity);
-			writeHTML(entity);
+			writeScript(entity, overwrite);
+			writeStyles(entity, overwrite);
+			writeHTML(entity, overwrite);
 		}
 	}
 
 	@Override
-	public void writeScript(Entity entity) throws Exception {
+	public void writeScript(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.ts", false)) {
@@ -45,7 +46,7 @@ public class AngularGenericTableViewComponentWriter implements ComponentWriter {
 	}
 
 	@Override
-	public void writeStyles(Entity entity) throws Exception {
+	public void writeStyles(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.css", false)) {
 			if (file.hasAlreadyExisted()) {
@@ -56,7 +57,7 @@ public class AngularGenericTableViewComponentWriter implements ComponentWriter {
 	}
 
 	@Override
-	public void writeHTML(Entity entity) throws Exception {
+	public void writeHTML(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.html", false)) {
 			if (file.hasAlreadyExisted()) {

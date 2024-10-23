@@ -34,12 +34,6 @@ export class AppComponent {
   }
 
   constructor() {
-    this.languageService.currentLanguage$.subscribe(data => {
-      if (data) {
-        this.translationService.setLanguage(data.code);
-      } else {
-        this.languageService.loadLanguage();
-      }
-    });
+    this.languageService.loadLanguage();
   }
 }

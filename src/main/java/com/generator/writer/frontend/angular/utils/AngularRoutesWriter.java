@@ -11,7 +11,7 @@ import com.generator.writer.utils.GeneratorOutputFile;
 public class AngularRoutesWriter {
 
 	public void createRoutes(AppModel appModel) throws Exception {
-		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendEnvironmentPath(), "app.routes.ts", false)) {
+		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendRootPackagePath(), "app.routes.ts", true)) {
 			file.writeln(0, "import {Routes} from '@angular/router';");
 			// TODO add logic for handling imports when authorization is enabled
 			file.writeln(0, "import { LoginComponent } from './pages/login/login.component';");

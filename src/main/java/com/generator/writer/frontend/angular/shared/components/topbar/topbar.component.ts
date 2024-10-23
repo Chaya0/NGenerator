@@ -1,14 +1,15 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from '../layout/layout.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { PrimeModule } from '../../prime/prime.modules';
+import { PrimeModule } from '../../modules/prime.module';
 import { LanguageService } from '../../../core/services/language.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { ConfigComponent } from "../config/config.component";
 import { TranslationService } from '../../../core/services/translation.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-topbar',
@@ -17,9 +18,11 @@ import { TranslationService } from '../../../core/services/translation.service';
   templateUrl: './topbar.component.html',
   styleUrl: './topbar.component.scss'
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent implements OnInit, OnDestroy {
   languageMenuItems!: MenuItem[];
   userMenuItems!: MenuItem[];
+  menuOpen: boolean = true;
+  translationSubscription!: Subscription;
 
   languageService = inject(LanguageService)
   authService = inject(AuthService)
@@ -27,9 +30,22 @@ export class TopbarComponent implements OnInit {
   router = inject(Router)
 
   ngOnInit() {
+    this.updateMenuItems();
+    this.languageMenuItems = this.createLanguageMenuItems()
+    if(this.layoutService.isOverlay()){
+      this.menuOpen = false;
+    }
+  }
+
+  ngOnDestroy(): void {
+    if(this.translationSubscription)
+    this.translationSubscription.unsubscribe();
+  }
+
+  updateMenuItems() {
     this.userMenuItems = [
       {
-        label: this.authService.getUsername(),
+        label: this.authService.getUsername(), // Username is not translated, can remain static
         items: [
           {
             separator: true,
@@ -45,13 +61,12 @@ export class TopbarComponent implements OnInit {
             label: this.translationService.translate('logout'),
             icon: 'pi pi-sign-out',
             command: () => {
-              this.authService.logout();
+              this.authService.logout(true);
             }
           }
         ]
       }
     ];
-    this.languageMenuItems = this.createLanguageMenuItems()
   }
 
   createLanguageMenuItems(): MenuItem[] {
@@ -79,7 +94,8 @@ export class TopbarComponent implements OnInit {
 
   @ViewChild('topbarmenu') menu!: ElementRef;
 
-  constructor(public layoutService: LayoutService) { }
+  constructor(public layoutService: LayoutService, public el: ElementRef) { }
+  
 
 }
 

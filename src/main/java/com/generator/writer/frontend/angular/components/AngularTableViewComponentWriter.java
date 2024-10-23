@@ -11,23 +11,21 @@ public class AngularTableViewComponentWriter implements ComponentWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
+		boolean overwrite = true;
 		for (Entity entity : model.getEntities()) {
-			writeScript(entity);
-			writeStyles(entity);
-			writeHTML(entity);
+			writeScript(entity, overwrite);
+			writeStyles(entity, overwrite);
+			writeHTML(entity, overwrite);
 		}
 	}
 
 	@Override
-	public void writeScript(Entity entity) throws Exception {
+	public void writeScript(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.ts", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.ts", overwrite)) {
 			file.writeln(0, "import { Component, Input } from '@angular/core';");
-			file.writeln(0, "import { GenericTableViewComponent } from \"../../../../shared/components/generic-table-view/generic-table-view.component\";");
+			file.writeln(0, "import { GenericTableViewComponent } from '../../../../core/components/generic-table-view/generic-table-view.component';");
 			file.writeln(0, "import { Structure } from \"../../structure\";");
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
@@ -45,23 +43,17 @@ public class AngularTableViewComponentWriter implements ComponentWriter {
 	}
 
 	@Override
-	public void writeStyles(Entity entity) throws Exception {
+	public void writeStyles(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.css", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.css", overwrite)) {
 			file.writeln(0, "");
 		}
 	}
 
 	@Override
-	public void writeHTML(Entity entity) throws Exception {
+	public void writeHTML(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.html", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-table-view", StringUtils.camelToKebabCase(entity.getName()) + "-table-view.component.html", overwrite)) {
 			file.writeln(0, "<app-generic-table-view [structure]=\"structure\"></app-generic-table-view>");
 		}
 	}

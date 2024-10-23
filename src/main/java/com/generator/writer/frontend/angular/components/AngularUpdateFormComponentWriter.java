@@ -11,23 +11,21 @@ public class AngularUpdateFormComponentWriter implements ComponentWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
+		boolean overwrite = true;
 		for (Entity entity : model.getEntities()) {
-			writeScript(entity);
-			writeStyles(entity);
-			writeHTML(entity);
+			writeScript(entity, overwrite);
+			writeStyles(entity, overwrite);
+			writeHTML(entity, overwrite);
 		}
 	}
 
 	@Override
-	public void writeScript(Entity entity) throws Exception {
+	public void writeScript(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-update-form", StringUtils.camelToKebabCase(entity.getName()) + "-update-form.component.ts", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-update-form", StringUtils.camelToKebabCase(entity.getName()) + "-update-form.component.ts", overwrite)) {
 			file.writeln(0, "import { Component } from '@angular/core';");
-			file.writeln(0, "import { GenericUpdateFormComponent } from \"../../../../shared/components/generic-update-form/generic-update-form.component\";");
+			file.writeln(0, "import { GenericUpdateFormComponent } from '../../../../core/components/generic-update-form/generic-update-form.component';");
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
 			file.writeln(1, "selector: 'app-" + kebabCase + "-update-form',");
@@ -43,23 +41,17 @@ public class AngularUpdateFormComponentWriter implements ComponentWriter {
 	}
 
 	@Override
-	public void writeStyles(Entity entity) throws Exception {
+	public void writeStyles(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-update-form", StringUtils.camelToKebabCase(entity.getName()) + "-update-form.component.css", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-update-form", StringUtils.camelToKebabCase(entity.getName()) + "-update-form.component.css", overwrite)) {
 			file.writeln(0, "");
 		}
 	}
 
 	@Override
-	public void writeHTML(Entity entity) throws Exception {
+	public void writeHTML(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-update-form", StringUtils.camelToKebabCase(entity.getName()) + "-update-form.component.html", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + kebabCase + "/" + kebabCase + "-update-form", StringUtils.camelToKebabCase(entity.getName()) + "-update-form.component.html", overwrite)) {
 			file.writeln(0, "<app-generic-update-form [structure]=\"structure\" [id]=\"id\"></app-generic-update-form>");
 		}
 	}

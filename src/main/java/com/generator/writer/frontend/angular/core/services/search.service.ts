@@ -5,11 +5,14 @@ import {Subject} from "rxjs";
   providedIn: 'root'
 })
 export class SearchService {
-  private eventSubject = new Subject<any>();
+ private eventSubject = new Subject<any>();
   event$ = this.eventSubject.asObservable();
   
   private loadingEventSubject = new Subject<any>();
   loadingEvent$ = this.loadingEventSubject.asObservable();
+
+  private clearEventSubject = new Subject<any>();
+  clearEvent$ = this.clearEventSubject.asObservable();
   
   emitEvent(data: any) {
     this.eventSubject.next(data);
@@ -19,4 +22,7 @@ export class SearchService {
     this.loadingEventSubject.next(loading)
   }
 
+  emitClearEvent(){
+    this.clearEventSubject.next(true);
+  }
 }

@@ -1,6 +1,6 @@
 import {Component, inject, Input} from '@angular/core';
 import {LayoutService} from '../layout/layout.service';
-import {PrimeModule} from '../../prime/prime.modules';
+import {PrimeModule} from '../../modules/prime.module';
 import {FormsModule} from '@angular/forms';
 
 @Component({

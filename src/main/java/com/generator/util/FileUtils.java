@@ -2,12 +2,29 @@ package com.generator.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 public class FileUtils {
+
+	public static String getClassPackagePath(Class<?> clazz) {
+		try {
+			URL packageURL = clazz.getClassLoader().getResource(clazz.getPackage().getName().replace('.', '/'));
+			File directory = Paths.get(packageURL.toURI()).toFile();
+			return directory.getAbsolutePath();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public static String getDiscPackagePath(Class<?> clazz) {
+		return getClassPackagePath(clazz).replace("target\\classes", "src\\main\\java");
+	}
+
 	public static File[] getSubFiles(Class<?> clazz) {
 		try {
 			// Get the package name of the class and convert it to a path
@@ -32,7 +49,6 @@ public class FileUtils {
 		return new File[0]; // Return an empty array if an error occurs or no files found
 	}
 
-	
 	public static File getTemplateFolder(Class<?> clazz) {
 		try {
 			// Get the package name of the class and convert it to a path
@@ -44,7 +60,7 @@ public class FileUtils {
 			if (packageURL != null) {
 				// Convert URL to a File object
 				File directory = Paths.get(packageURL.toURI()).toFile();
-				File file =  new File(directory.getAbsolutePath().replace("target\\classes", "src\\main\\java"));
+				File file = new File(directory.getAbsolutePath().replace("target\\classes", "src\\main\\java"));
 				return file;
 			} else {
 				System.out.println("Package directory not found.");

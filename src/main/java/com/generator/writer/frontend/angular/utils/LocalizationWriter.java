@@ -10,7 +10,6 @@ import com.generator.writer.Utils;
 import com.generator.writer.utils.GeneratorOutputFile;
 
 public class LocalizationWriter {
-
 	public void create(AppModel appModel) throws Exception {
 		try (GeneratorOutputFile file = Utils.getOutputResource(Utils.getFrontendLocalizationPath(), "en.json", true)) {
 //			if (file.hasAlreadyExisted()) {
@@ -47,5 +46,4 @@ public class LocalizationWriter {
 			file.writeln(0, "}");
 		}
 	}
-
 }

@@ -8,19 +8,16 @@ import com.generator.writer.utils.WriterUtils;
 
 public class AngularEntitiesWriter {
 	public void create(AppModel appModel) throws Exception {
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath(), "entities.ts")) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
-			for(Entity entity : appModel.getEntities()) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath(), "entities.ts", true)) {
+			for (Entity entity : appModel.getEntities()) {
 				String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 				String kebabCaseName = StringUtils.camelToKebabCase(entity.getName());
 				file.writeln(0, "import { " + upperCaseName + "Structure } from \"./" + kebabCaseName + "/" + kebabCaseName + "-structure\";");
 				file.writeln(0, "import { " + upperCaseName + " } from \"./" + kebabCaseName + "/" + kebabCaseName + "\";");
 			}
-			file.writeln(0,"");
+			file.writeln(0, "");
 			file.writeln(0, "export const entities = [ ");
-			for(Entity entity : appModel.getEntities()) {
+			for (Entity entity : appModel.getEntities()) {
 				String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 				file.writeln(1, "{");
 				file.writeln(2, "name: \"" + upperCaseName + "\",");

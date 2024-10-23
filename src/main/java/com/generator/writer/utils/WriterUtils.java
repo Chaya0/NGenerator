@@ -454,6 +454,14 @@ public class WriterUtils {
 		stringBuilder.append(Application.getSpringProperties().getName() + "-frontend/");
 		return stringBuilder.toString();
 	}
+	
+	public static String getFrontendSrcPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getGeneratorProperties().getFrontendProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getName() + "-frontend/");
+		stringBuilder.append("/src/");
+		return stringBuilder.toString();
+	}
 	/**
 	 * Constructs the root package path for the frontend application.
 	 *

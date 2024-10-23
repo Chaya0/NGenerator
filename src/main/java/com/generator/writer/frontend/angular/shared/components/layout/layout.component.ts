@@ -6,7 +6,7 @@ import {CommonModule} from '@angular/common';
 import {SidebarComponent} from "../sidebar/sidebar.component";
 import {ConfigComponent} from "../config/config.component";
 import {LayoutService} from './layout.service';
-import {PrimeModule} from '../../prime/prime.modules';
+import { PrimeModule } from '../../modules/prime.module';
 
 @Component({
     selector: 'app-layout',

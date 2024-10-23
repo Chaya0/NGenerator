@@ -5,14 +5,13 @@ import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideHttpClient, withInterceptors} from '@angular/common/http';
 import {authInterceptor} from './core/interceptors/auth.interceptor';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
-import {loadingInterceptor} from "./core/interceptors/loading.interceptor";
 import {LocationStrategy, PathLocationStrategy} from '@angular/common';
 import {ToastService} from './core/services/toast.service';
 import {ConfirmationService, MessageService} from "primeng/api";
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideHttpClient(withInterceptors([authInterceptor, loadingInterceptor ])),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideAnimations(),

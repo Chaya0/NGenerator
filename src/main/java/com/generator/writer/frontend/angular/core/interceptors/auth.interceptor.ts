@@ -6,10 +6,12 @@ import { AuthService } from "../services/auth.service";
 import { ToastService } from "../services/toast.service";
 import { Router } from '@angular/router';
 import { SearchService } from '../services/search.service';
+import { TranslationService } from '../services/translation.service';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const toastService = inject(ToastService);
+  const translationService = inject(TranslationService);
   const router = inject(Router)
   const searchService = inject(SearchService)
 
@@ -31,6 +33,13 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         errorMessage = `Server Error: ${error.status}\nMessage: ${error.message}`;
         switch (error.status) {
           case 400:
+            if(error.error.localizationKey) {
+              let attr = error.error.details?.entity + "." + error.error.details?.attribute;
+              console.log(translationService.translate(attr))
+              errorMessage = (attr ? translationService.translate(attr) : "") + " " + translationService.translate(error.error.localizationKey)
+              toastService.showError(errorMessage)
+              break;
+            }
             errorMessage = 'Bad Request: The server could not understand the request.';
             toastService.showError(error.error.message ? error.error.message : errorMessage)
             break;
@@ -46,28 +55,52 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
               }),
               catchError((refreshError) => {
                 console.log(refreshError)
-                authService.logout();
-                errorMessage = 'Session expired. Please log in again.';
+                authService.logout(false);
+                if(error.error.localizationKey) {
+                  errorMessage = translationService.translate(error.error.localizationKey)
+                }else{
+                  errorMessage = 'Session expired. Please log in again.';
+                }
                 router.navigate(['/login']);
                 // window.location.reload();
                 return throwError(() => new Error(errorMessage));
               })
             );
           case 403:
+            if(error.error.localizationKey) {
+              errorMessage = translationService.translate(error.error.localizationKey)
+              toastService.showError(errorMessage)
+              break;
+            }
             errorMessage = 'Forbidden: You do not have the necessary permissions to access this resource.';
             toastService.showError(error.error.message ? error.error.message : errorMessage)
             break;
           case 404:
+            if(error.error.localizationKey) {
+              errorMessage = translationService.translate(error.error.localizationKey)
+              toastService.showError(errorMessage)
+              break;
+            }
             errorMessage = 'Not Found: The requested resource could not be found.';
             toastService.showError(error.error.message ? error.error.message : errorMessage)
             router.navigate(['/']); // Redirect to a not found page
             break;
           case 500:
+            if(error.error.localizationKey) {
+              errorMessage = translationService.translate(error.error.localizationKey)
+              toastService.showError(errorMessage)
+              break;
+            }
             errorMessage = 'Internal Server Error: An unexpected error occurred on the server.';
             console.log(error)
             toastService.showError(error.error.message ? error.error.message : errorMessage)
             break;
           default:
+            if(error.error.localizationKey) {
+              errorMessage = translationService.translate(error.error.localizationKey)
+              toastService.showError(errorMessage)
+              break;
+            }
             errorMessage = `Unexpected Error: ${error.message}`;
             toastService.showError(error.error.message ? error.error.message : errorMessage)
         }

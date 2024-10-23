@@ -22,4 +22,8 @@ export class QueryService {
   public saveToStorage(name: string, dto: SearchDTO): void {
     localStorage.setItem(name, JSON.stringify(dto));
   }
+  
+  public deleteFromStorage(name: string){
+    localStorage.removeItem(name);
+  }
 }

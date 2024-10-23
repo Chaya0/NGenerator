@@ -4,7 +4,8 @@ import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {TranslatePipe} from "../../../core/pipes/translate.pipe";
 import {routes} from "../../../app.routes";
 import {filter, map} from "rxjs/operators";
-import { PrimeModule } from '../../prime/prime.modules';
+import {BreadcrumbModule} from "primeng/breadcrumb";
+import {MenuItem} from "primeng/api";
 
 interface Breadcrumb {
   label: string;
@@ -20,7 +21,7 @@ interface Breadcrumb {
     NgIf,
     NgClass,
     TranslatePipe,
-    PrimeModule
+    BreadcrumbModule
   ],
   templateUrl: './breadcrumb.component.html',
   styleUrl: './breadcrumb.component.scss'

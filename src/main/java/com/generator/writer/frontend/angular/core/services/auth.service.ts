@@ -12,7 +12,6 @@ import {User} from "../../features/entities/user/user";
   providedIn: 'root'
 })
 export class AuthService {
-
   private apiUrl = environment.apiUrl + 'auth';
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   authEvent$ = this.isAuthenticatedSubject.asObservable();
@@ -56,14 +55,14 @@ export class AuthService {
       );
   }
 
-  logout(): void {
+  logout(showLogoutMessage: boolean): void {
     this.isAuthenticatedSubject.next(false);
     this.permissionService.clearPermissions();
     this.sessionValidationResult = false;
     this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true })
     .pipe(
       map((response: any) => {
-        this.toastService.showInfo(response.data || 'Logged out successfully!');
+        if(showLogoutMessage) this.toastService.showInfo(response.data || 'Logged out successfully!');
         this.router.navigate(['/login']);
         }),
         catchError((error) => {

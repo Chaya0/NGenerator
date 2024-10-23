@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItemComponent} from "../menu-item/menu-item.component";
+import {MenuItemComponent} from "../menuitem/menu-item.component";
 import {CommonModule} from '@angular/common';
-import {PrimeModule} from '../../prime/prime.modules';
+import { PrimeModule } from '../../modules/prime.module';
 
 @Component({
   selector: 'app-menu-wrapper',

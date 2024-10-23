@@ -8,7 +8,7 @@ import com.generator.writer.utils.WriterUtils;
 
 public class AngularEnumWriter {
 	public void create(AppModel appModel) throws Exception {
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath(), "enum.model.ts")) {
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath(), "enums.model.ts", true)) {
 			for (EnumModel enumModel : appModel.getEnums()) {
 				file.writeln(0, "export enum " + StringUtils.uppercaseFirst(enumModel.getName()) + " {");
 				for (String value : enumModel.getValues()) {

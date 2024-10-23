@@ -22,10 +22,7 @@ public class AngularEntityStructureWriter {
 	public void create(Entity entity) throws Exception {
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
 		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendFeaturesEntitiesPath() + StringUtils.camelToKebabCase(entity.getName()),
-				StringUtils.camelToKebabCase(entity.getName()) + "-structure.ts", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+				StringUtils.camelToKebabCase(entity.getName()) + "-structure.ts", true)) {
 			file.writeln(0, "import {Attribute} from \"../../../core/entity-utils/attribute\";");
 			file.writeln(0, "import {Structure} from \"../structure\";");
 			file.writeln(0, "import {SearchField} from \"../../../core/entity-utils/search-field\";");
@@ -50,7 +47,9 @@ public class AngularEntityStructureWriter {
 			file.writeln(1, "attributes: Attribute[] = [");
 			writeRelationsAttributes(entity, file);
 			writeEntityAttributes(entity, file);
-
+			file.writeln(1, "];");
+			file.breakLine();
+			file.writeln(0, "}");
 		}
 	}
 
@@ -78,30 +77,30 @@ public class AngularEntityStructureWriter {
 	}
 
 	private String getDisplayTypeForAttribute(Attribute attribute, boolean inputField) {
-		String value ="";
+		String value = "";
 		switch (attribute.getType()) {
 		case STRING, DOUBLE, INTEGER, LONG, NULL: {
 			value = ".INPUT()";
 			break;
 		}
 		case DATE, LOCAL_DATE, LOCAL_DATE_IME: {
-			value =  ".CALENDAR().maxLength(new Date())";
+			value = ".CALENDAR().maxLength(new Date())";
 			break;
 		}
 		case ENUM: {
-			value =  ".DROPDOWN()";
+			value = ".DROPDOWN()";
 			break;
 		}
 		case BOOLEAN: {
-			value =  ".CHECKBOX()";
+			value = ".CHECKBOX()";
 			break;
 		}
 		default:
-			value =  ".INPUT()";
+			value = ".INPUT()";
 			break;
 		}
-		if(!attribute.isNullable() && inputField) value += ".required(true)";
-		if(!inputField) value+=",";
+		if (!attribute.isNullable() && inputField) value += ".required(true)";
+		if (!inputField) value += ",";
 		return value;
 	}
 }

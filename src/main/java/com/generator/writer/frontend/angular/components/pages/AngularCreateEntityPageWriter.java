@@ -11,21 +11,19 @@ public class AngularCreateEntityPageWriter implements ComponentWriter {
 
 	@Override
 	public void create(AppModel model) throws Exception {
+		boolean overwrite = true;
 		for (Entity entity : model.getEntities()) {
-			writeScript(entity);
-			writeStyles(entity);
-			writeHTML(entity);
+			writeScript(entity, overwrite);
+			writeStyles(entity, overwrite);
+			writeHTML(entity, overwrite);
 		}
 	}
 
 	@Override
-	public void writeScript(Entity entity) throws Exception {
+	public void writeScript(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
 		String upperCaseName = StringUtils.uppercaseFirst(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.ts", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.ts", overwrite)) {
 			file.writeln(0, "import { Component } from '@angular/core';");
 			file.writeln(0, "import { " + upperCaseName + "InsertFormComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-insert-form/" +  kebabCase + "-insert-form.component';");
 			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
@@ -46,29 +44,23 @@ public class AngularCreateEntityPageWriter implements ComponentWriter {
 	}
 
 	@Override
-	public void writeStyles(Entity entity) throws Exception {
+	public void writeStyles(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.css", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.css", overwrite)) {
 			file.writeln(0, "");
 		}
 	}
 
 	@Override
-	public void writeHTML(Entity entity) throws Exception {
+	public void writeHTML(Entity entity, boolean overwrite) throws Exception {
 		String kebabCase = StringUtils.camelToKebabCase(entity.getName());
-		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.html", false)) {
-			if (file.hasAlreadyExisted()) {
-				return;
-			}
+		try (GeneratorOutputFile file = WriterUtils.getOutputResource(WriterUtils.getFrontendPagesPath() + kebabCase + "/" + kebabCase + "-create-page", StringUtils.camelToKebabCase(entity.getName()) + "-create-page.component.html", overwrite)) {
 			file.writeln(0, "<div class=\"grid\">");
 			file.writeln(1, "<div class=\"col-12\">");
 			file.writeln(2, "<div class=\"card px-2 py-0 mb-4 flex flex-row justify-content-between align-items-center\">");
 			file.writeln(3, "<app-breadcrumb></app-breadcrumb>");
 			file.writeln(2, "</div>");
-			file.writeln(2, "<div class=\"card px-6 py-6\"");
+			file.writeln(2, "<div class=\"card px-6 py-6\">");
 			file.writeln(3, "<app-" + kebabCase + "-insert-form [structure]=\"structure\"></app-" + kebabCase + "-insert-form>");
 			file.writeln(2, "</div>");
 			file.writeln(1, "</div>");

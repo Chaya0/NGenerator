@@ -4,8 +4,8 @@ import {NavigationEnd, Route, Router, RouterModule} from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CommonModule} from '@angular/common';
 import {filter, Subscription} from 'rxjs';
-import {MenuService} from '../menu-wrapper/app.menu.service';
-import {PrimeModule} from '../../prime/prime.modules';
+import { MenuService } from '../menuwrapper/menu.service';
+import { PrimeModule } from '../../modules/prime.module';
 import {MenuItem} from 'primeng/api';
 import {PermissionService} from '../../../core/services/permission.service';
 
