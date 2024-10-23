@@ -16,6 +16,12 @@ public class LocalizationWriter {
 //			if (file.hasAlreadyExisted()) {
 //				return;
 //			}
+			file.writeln(0, "{");
+			for (DefaultLocalizationType localizationType : DefaultLocalizationType.values()) {
+				file.writeln(1, localizationType.getJsonLocalizationValue());
+			}
+
+			System.out.println(Utils.getFrontendLocalizationPath());
 			Iterator<Entity> entityIterator = appModel.getEntities().iterator();
 			while (entityIterator.hasNext()) {
 				Entity entity = entityIterator.next();
@@ -38,6 +44,7 @@ public class LocalizationWriter {
 					file.writeln(1, "}");
 				}
 			}
+			file.writeln(0, "}");
 		}
 	}
 

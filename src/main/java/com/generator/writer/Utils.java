@@ -192,17 +192,24 @@ public class Utils {
 	}
 	public static String getFrontendSourceDirectoryPath() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(Application.getSpringProperties().getProjectPath());
-		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "-frontend");
+		stringBuilder.append(Application.getGeneratorProperties().getFrontendProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getName() + "-frontend");
 		stringBuilder.append("/src/");
 		return stringBuilder.toString();
 	}
 
 	public static String getFrontendRootPackagePath() {
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append(Application.getSpringProperties().getProjectPath());
-		stringBuilder.append(Application.getSpringProperties().getBaseDir() + "-frontend");
+		stringBuilder.append(Application.getGeneratorProperties().getFrontendProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getName() + "-frontend");
 		stringBuilder.append("/src/app/");
+		return stringBuilder.toString();
+	}
+	public static String getFrontendEnvironmentPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getGeneratorProperties().getFrontendProjectPath());
+		stringBuilder.append(Application.getSpringProperties().getName() + "-frontend");
+		stringBuilder.append("/src/environments/");
 		return stringBuilder.toString();
 	}
 

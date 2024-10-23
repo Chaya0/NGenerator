@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 
 import com.generator.util.StringUtils;
+import com.generator.writer.Utils;
 import com.generator.writer.frontend.angular.types.AngularDependencies;
 import com.generator.writer.utils.GFolder;
 
@@ -32,6 +33,10 @@ public class AngularBashUtil {
 
 	public static void createConfig(String path, String configName) {
 		String command = AngularBashCommand.GENERATE_CONFIG.getCommand() + StringUtils.camelToKebabCase(configName);
+		executeCommand(path, command);
+	}
+	public static void createEnvironments(String path) {
+		String command = AngularBashCommand.GENERATE_ENVIRONMENTS.getCommand();
 		executeCommand(path, command);
 	}
 
@@ -63,6 +68,8 @@ public class AngularBashUtil {
 		// Create the Angular app
 		String command = AngularBashCommand.NEW_APP.getCommand() + StringUtils.camelToKebabCase(appName) + "-frontend --routing --style=scss --skip-install";
 		executeCommand(path, command);
+		createEnvironments(Utils.getFrontendSourceDirectoryPath());
+		
 		installModules(path + "/" + StringUtils.camelToKebabCase(appName) + "-frontend");
 		System.out.println("All moduels installed successfully!");
 	}

@@ -443,10 +443,15 @@ public class WriterUtils {
 		return StringUtils.uppercaseFirst(Application.getSpringProperties().getName()) + "Exception";
 	}
 
+	public static String getFrontendApplicationNewAppPath() {
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(Application.getGeneratorProperties().getFrontendProjectPath());
+		return stringBuilder.toString();
+	}
 	public static String getFrontendApplicationPath() {
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append(Application.getGeneratorProperties().getFrontendProjectPath());
-//		stringBuilder.append(Application.getSpringProperties().getName() + "-frontend");
+		stringBuilder.append(Application.getSpringProperties().getName() + "-frontend/");
 		return stringBuilder.toString();
 	}
 	/**
