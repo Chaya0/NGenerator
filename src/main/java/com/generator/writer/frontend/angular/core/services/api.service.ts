@@ -9,7 +9,6 @@ import {environment} from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ApiService {
-  //TODO konstante
   protected apiUrl = environment.apiUrl + 'api';
   protected http: HttpClient = inject(HttpClient);
 

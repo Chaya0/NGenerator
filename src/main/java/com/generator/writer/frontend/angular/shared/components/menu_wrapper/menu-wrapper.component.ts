@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuItemComponent} from "../menuitem/menu-item.component";
+import {MenuItemComponent} from "../menu-item/menu-item.component";
 import {CommonModule} from '@angular/common';
-import { PrimeModule } from '../../modules/prime.module';
+import {PrimeModule} from '../../prime/prime.modules';
 
 @Component({
   selector: 'app-menu-wrapper',
@@ -36,7 +36,7 @@ export class MenuWrapperComponent implements OnInit {
           {label: 'permissions', icon: 'pi pi-fw pi-key', routerLink: ['/permission']},
           {label: 'shifts', icon: 'pi pi-fw pi-replay', routerLink: ['/shift']},
         ]
-      }
+      },
     ];
   }
 }

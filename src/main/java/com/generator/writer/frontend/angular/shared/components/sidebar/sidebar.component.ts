@@ -1,7 +1,8 @@
 import {Component, ElementRef} from '@angular/core';
-import {MenuItemComponent} from "../menuitem/menu-item.component";
-import {MenuWrapperComponent} from "../menuwrapper/menu-wrapper.component";
-import { PrimeModule } from '../../modules/prime.module';
+import {MenuItemComponent} from "../menu-item/menu-item.component";
+import {PrimeModule} from '../../prime/prime.modules';
+import {MenuWrapperComponent} from "../menu-wrapper/menu-wrapper.component";
+
 @Component({
   selector: 'app-sidebar',
   standalone: true,

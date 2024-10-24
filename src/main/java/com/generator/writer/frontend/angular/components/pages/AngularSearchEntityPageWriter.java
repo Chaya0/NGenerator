@@ -28,14 +28,14 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(0, "import {RouterLink, RouterOutlet} from \"@angular/router\";");
 			file.writeln(0, "import { NgIf } from \"@angular/common\";");
 			file.writeln(0, "import {MenuItem} from \"primeng/api\";");
-			file.writeln(0, "import { PrimeModule } from \"../../../shared/modules/prime.module\";");
+			file.writeln(0, "import {PrimeModule} from '../../../shared/prime/prime.modules';");
 			file.writeln(0, "import { BreadcrumbComponent } from '../../../shared/components/breadcrumb/breadcrumb.component';");
 			file.writeln(0, "import { SearchService } from \"../../../core/services/search.service\";");
 			file.writeln(0, "import { TranslationService } from \"../../../core/services/translation.service\";");
 			file.writeln(0, "import { " + upperCaseName + " } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "';");
-			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
 			file.writeln(0, "import { " + upperCaseName + "TableViewComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-table-view/" + kebabCase + "-table-view.component';");
 			file.writeln(0, "import { " + upperCaseName + "SearchFormComponent } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-search-form/" + kebabCase + "-search-form.component';");
+			file.writeln(0, "import { " + upperCaseName + "Structure } from '../../../features/entities/" + kebabCase + "/" + kebabCase + "-structure';");
 			file.writeln(0, "");
 			file.writeln(0, "@Component({");
 			file.writeln(1, "selector: 'app-" + kebabCase + "-search-page',");
@@ -94,6 +94,7 @@ public class AngularSearchEntityPageWriter implements ComponentWriter {
 			file.writeln(3, "<div class=\"mb-4\">");
 			file.writeln(4, "<app-" + kebabCase + "-search-form [structure]=\"structure\"></app-" + kebabCase + "-search-form>");
 			file.writeln(3, "</div>");
+			file.writeln(3, "<app-" + kebabCase + "-table-view [structure]=\"structure\"></app-" + kebabCase + "-table-view>");
 			file.writeln(2, "</div>");
 			file.writeln(1, "</div>");
 			file.writeln(0, "</div>");

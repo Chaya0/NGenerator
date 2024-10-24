@@ -1,6 +1,6 @@
 import {Component, inject, Input} from '@angular/core';
 import {LayoutService} from '../layout/layout.service';
-import {PrimeModule} from '../../modules/prime.module';
+import {PrimeModule} from '../../prime/prime.modules';
 import {FormsModule} from '@angular/forms';
 
 @Component({
@@ -25,6 +25,7 @@ export class ConfigComponent {
   }
 
   get scale(): number {
+     
     return this.layoutService.config().scale;
   }
 

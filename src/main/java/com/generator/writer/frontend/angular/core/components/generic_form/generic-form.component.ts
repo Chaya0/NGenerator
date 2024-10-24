@@ -1,10 +1,10 @@
 import {Component, inject, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
-import { RootComponent } from '../root/root.component';
-import {Attribute} from "../../../core/entity-utils/attribute";
+import {RootComponent} from "../root/root.component";
+import {Attribute} from "../../entity-utils/attribute";
 import {AppUtils} from "../../../shared/utils/app-utils";
 import {Structure} from "../../../features/entities/structure";
-import {TranslationService} from "../../../core/services/translation.service";
+import {TranslationService} from "../../services/translation.service";
 import {FormUtils} from "../../../shared/utils/form-utils";
 
 @Component({

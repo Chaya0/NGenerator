@@ -1,22 +1,24 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+import { PrimeNGConfig } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TranslationService {
   private translations: any = {};
-  private currentLang: string = 'en';
+  private translationSubject = new BehaviorSubject<any>(this.translations); 
 
   private http = inject(HttpClient);
+  protected primengConfig = inject(PrimeNGConfig);
 
   loadTranslations(lang: string): Observable<any> {
     return this.http.get(`/assets/i18n/${lang}.json`).pipe(
       map((translations: any) => {
         this.translations = translations;
-        this.currentLang = lang;
+        this.translationSubject.next(this.translations); 
         return translations;
       }),
       catchError(() => of({}))
@@ -32,7 +34,17 @@ export class TranslationService {
     return result?.replace("${}", replace) || key;
   }
 
-  setLanguage(lang: string) {
-    this.loadTranslations(lang).subscribe();
+  async setLanguage(lang: string) {
+    this.loadTranslations(lang).subscribe(locale => {
+      this.loadPrimeNgCalendarLocale(locale);
+    });
+  }
+  
+  private loadPrimeNgCalendarLocale(locale: any) {
+    this.primengConfig.setTranslation(locale);
+  }
+
+  getTranslationChanges(): Observable<any> {
+    return this.translationSubject.asObservable(); // Expose translation changes as Observable
   }
 }

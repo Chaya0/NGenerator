@@ -4,10 +4,10 @@ import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {GenericFormComponent} from "../generic-form/generic-form.component";
 import {AppUtils} from "../../../shared/utils/app-utils";
 import {Router, RouterLink} from "@angular/router";
-import {TranslatePipe} from "../../../core/pipes/translate.pipe";
-import {PrimeModule} from "../../../shared/modules/prime.module";
-import {ToastService} from "../../../core/services/toast.service";
-import {Attribute} from "../../../core/entity-utils/attribute";
+import {TranslatePipe} from "../../pipes/translate.pipe";
+import {PrimeModule} from "../../../shared/prime/prime.modules";
+import {ToastService} from "../../services/toast.service";
+import {Attribute} from "../../entity-utils/attribute";
 import {FormUtils} from "../../../shared/utils/form-utils";
 import {AppDate} from "../../../shared/utils/app-date";
 

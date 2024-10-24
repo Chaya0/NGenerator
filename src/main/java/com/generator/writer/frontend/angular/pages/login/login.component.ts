@@ -4,7 +4,7 @@ import {AuthService} from "../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import {ToastService} from "../../core/services/toast.service";
-import {PrimeModule} from "../../shared/modules/prime.module";
+import {PrimeModule} from "../../shared/prime/prime.modules";
 import {PasswordModule} from "primeng/password";
 import { TranslationService } from '../../core/services/translation.service';
 

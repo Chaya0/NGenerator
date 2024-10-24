@@ -4,8 +4,8 @@ import {NavigationEnd, Route, Router, RouterModule} from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {CommonModule} from '@angular/common';
 import {filter, Subscription} from 'rxjs';
-import { MenuService } from '../menuwrapper/menu.service';
-import { PrimeModule } from '../../modules/prime.module';
+import {MenuService} from '../menu-wrapper/menu.service';
+import {PrimeModule} from '../../prime/prime.modules';
 import {MenuItem} from 'primeng/api';
 import {PermissionService} from '../../../core/services/permission.service';
 
@@ -139,7 +139,22 @@ export class MenuItemComponent implements OnInit, OnDestroy {
       if (menuRoute) {
         return this.permissionService.hasPermissionForRoute(menuRoute)
       }
-
+      return false;
+    }
+    if(menuItem.items){
+      for(const item of menuItem.items){
+        let menuRoute: Route | undefined;
+        if (item.routerLink[0].startsWith('/'))
+          menuRoute = this.getRouteByPath(item.routerLink[0].slice(1))
+        else {
+          menuRoute = this.getRouteByPath(item.routerLink[0])
+        }
+        if (menuRoute) {
+          if(this.permissionService.hasPermissionForRoute(menuRoute)){
+            return true;
+          }
+        }
+      }
       return false;
     }
     return true

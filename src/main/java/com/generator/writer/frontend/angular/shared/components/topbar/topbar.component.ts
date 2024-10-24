@@ -3,7 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { LayoutService } from '../layout/layout.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { PrimeModule } from '../../modules/prime.module';
+import { PrimeModule } from '../../prime/prime.modules';
 import { LanguageService } from '../../../core/services/language.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
@@ -30,6 +30,10 @@ export class TopbarComponent implements OnInit, OnDestroy {
   router = inject(Router)
 
   ngOnInit() {
+    // Subscribe to language change
+    this.translationSubscription = this.translationService.getTranslationChanges().subscribe(() => {
+      this.updateMenuItems();
+    });
     this.updateMenuItems();
     this.languageMenuItems = this.createLanguageMenuItems()
     if(this.layoutService.isOverlay()){

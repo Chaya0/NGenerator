@@ -1,25 +1,25 @@
 import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Input, OnInit, ViewChild} from '@angular/core';
 import {NgForOf, NgIf} from "@angular/common";
 import {RootComponent} from "../root/root.component";
-import {Attribute} from "../../../core/entity-utils/attribute";
-import {Page} from "../../../core/entity-utils/page";
-import {ApiService} from "../../../core/services/api.service";
-import {Order} from "../../../core/entity-utils/order";
+import {Attribute} from "../../entity-utils/attribute";
+import {Page} from "../../entity-utils/page";
+import {ApiService} from "../../services/api.service";
+import {Order} from "../../entity-utils/order";
 import {AppUtils} from "../../../shared/utils/app-utils";
 import {Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {SearchService} from "../../../core/services/search.service";
-import {SearchDTO} from "../../../core/entity-utils/search-dto";
+import {SearchService} from "../../services/search.service";
+import {SearchDTO} from "../../entity-utils/search-dto";
 import {FormsModule} from '@angular/forms';
-import {PrimeModule} from '../../../shared/modules/prime.module';
+import {PrimeModule} from '../../../shared/prime/prime.modules';
 import {Observable, take} from "rxjs";
 import {Structure} from "../../../features/entities/structure";
 import {ConfirmationService, SortEvent} from 'primeng/api';
-import {ToastService} from '../../../core/services/toast.service';
-import {TranslationService} from '../../../core/services/translation.service';
-import {PermissionService} from '../../../core/services/permission.service';
-import {QueryService} from "../../../core/services/query.service";
+import {ToastService} from '../../services/toast.service';
+import {TranslationService} from '../../services/translation.service';
+import {PermissionService} from '../../services/permission.service';
+import {QueryService} from "../../services/query.service";
 import {ConfirmDialogModule} from "primeng/confirmdialog";
-import {OrderDirection} from "../../../core/entity-utils/order-direction";
+import {OrderDirection} from "../../entity-utils/order-direction";
 
 @Component({
   selector: 'app-generic-table-view',
@@ -74,6 +74,8 @@ export class GenericTableViewComponent extends RootComponent implements OnInit, 
     if (!this.disableActions) this.displayedColumns.push('actions');
     this.attributes.filter(e => AppUtils.isForeignKey(e.type)).forEach(e => this.foreignKeys.set(e.attr_name, e.type));
 
+    this.pageSize = this.findPageSize();
+
     this.populateWithKnownQuery();
   }
 
@@ -99,6 +101,8 @@ export class GenericTableViewComponent extends RootComponent implements OnInit, 
 
     this.queryService.saveToStorage(this.tableName, searchDto);
 
+      searchDto.pageSize = this.findPageSize();
+      this.tableChangeSearch(searchDto, this.entity);
   }
 
   transformContent(dataSource: any[]) {
@@ -151,6 +155,10 @@ export class GenericTableViewComponent extends RootComponent implements OnInit, 
     this.search(dto, entity, (data: Page) => {
       this.updateData(data);
     });
+  }
+
+  public findPageSize(): number {
+    return Number.parseInt(AppUtils.DEFAULT_PAGE_SIZE);
   }
 
   onDelete(event: Event, object: any): void {

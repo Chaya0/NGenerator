@@ -36,6 +36,12 @@ public class AngularEntityStructureWriter {
 			file.writeln(1, "title: string = '" + StringUtils.camelToSnakeCase(entity.getName()) + "';");
 			file.writeln(1, "fkSearchAttribute: string[] = [''];");
 			file.writeln(0, "");
+			file.writeln(1, "attributes: Attribute[] = [");
+			writeRelationsAttributes(entity, file);
+			writeEntityAttributes(entity, file);
+			file.writeln(1, "];");
+			file.breakLine();
+			file.writeln(0, "");
 			file.writeln(1, "private constructor() {}");
 			file.writeln(1, "public static get instance(): " + upperCaseName + "Structure {");
 			file.writeln(2, "if(!" + upperCaseName + "Structure.#instance) {");
@@ -43,12 +49,6 @@ public class AngularEntityStructureWriter {
 			file.writeln(2, "}");
 			file.writeln(2, "return " + upperCaseName + "Structure.#instance;");
 			file.writeln(1, "}");
-			file.writeln(0, "");
-			file.writeln(1, "attributes: Attribute[] = [");
-			writeRelationsAttributes(entity, file);
-			writeEntityAttributes(entity, file);
-			file.writeln(1, "];");
-			file.breakLine();
 			file.writeln(0, "}");
 		}
 	}

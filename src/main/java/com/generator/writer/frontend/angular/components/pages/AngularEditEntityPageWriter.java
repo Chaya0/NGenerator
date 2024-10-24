@@ -70,7 +70,7 @@ public class AngularEditEntityPageWriter implements ComponentWriter {
 			file.writeln(3, "<app-breadcrumb></app-breadcrumb>");
 			file.writeln(2, "</div>");
 			file.writeln(2, "<div class=\"card px-6 py-6\">");
-			file.writeln(0, "<app-" + kebabCase + "-update-form [structure]=\"structure\" [id]=\"id\" ></app-" + kebabCase + "-update-form>");
+			file.writeln(3, "<app-" + kebabCase + "-update-form [structure]=\"structure\" [id]=\"id\" ></app-" + kebabCase + "-update-form>");
 			file.writeln(2, "</div>");
 			file.writeln(1, "</div>");
 			file.writeln(0, "</div>");

@@ -1,5 +1,5 @@
 import {effect, Injectable, signal} from '@angular/core';
-import { Subject } from 'rxjs';
+import {Subject} from 'rxjs';
 
 export interface AppConfig {
   inputStyle: string;
@@ -40,12 +40,12 @@ export class LayoutService {
   };
   private configUpdate = new Subject<AppConfig>();
   private overlayOpen = new Subject<any>();
+  configUpdate$ = this.configUpdate.asObservable();
   overlayOpen$ = this.overlayOpen.asObservable();
 
   constructor() {
     effect(() => {
       const config = this.config();
-
       this.changeTheme();
       this.changeScale(config.scale);
       this.onConfigUpdate();
@@ -59,20 +59,17 @@ export class LayoutService {
   }
 
   onMenuToggle() {
+    // States are changed via [(ngModel)] in topbar component.
     if (this.isOverlay()) {
-      this.state.overlayMenuActive = !this.state.overlayMenuActive;
+      // this.state.overlayMenuActive = !this.state.overlayMenuActive;
       if (this.state.overlayMenuActive) {
         this.overlayOpen.next(null);
       }
     }
-
     if (this.isDesktop()) {
-      this.state.staticMenuDesktopInactive =
-        !this.state.staticMenuDesktopInactive;
+      // this.state.staticMenuDesktopInactive = !this.state.staticMenuDesktopInactive;
     } else {
-      this.state.staticMenuMobileActive =
-        !this.state.staticMenuMobileActive;
-
+      // this.state.staticMenuMobileActive = !this.state.staticMenuMobileActive;
       if (this.state.staticMenuMobileActive) {
         this.overlayOpen.next(null);
       }
@@ -97,7 +94,6 @@ export class LayoutService {
   isDesktop() {
     return window.innerWidth > 991;
   }
-
   onConfigUpdate() {
     this._config = {...this.config()};
     this.configUpdate.next(this.config());
@@ -134,5 +130,15 @@ export class LayoutService {
 
   changeScale(value: number) {
     document.documentElement.style.fontSize = `${value}px`;
+  }
+
+  updateFromLocalStorage(styleConfig: any) {
+    this.config.update((config) => ({
+      ...config,
+      scale: styleConfig.scale ? styleConfig.scale : config.scale,
+      inputStyle: styleConfig.inputStyle ? styleConfig.inputStyle : config.inputStyle,
+      darkMode: styleConfig.darkMode ? styleConfig.darkMode : config.darkMode,
+      menuMode: styleConfig.menuMode ? styleConfig.menuMode : config.menuMode,
+    }));
   }
 }

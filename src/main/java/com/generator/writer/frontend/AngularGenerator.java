@@ -12,7 +12,6 @@ import com.generator.writer.frontend.angular.AngularBashUtil;
 import com.generator.writer.frontend.angular.components.AngularFetureWriter;
 import com.generator.writer.frontend.angular.components.pages.AngularPagesWriter;
 import com.generator.writer.frontend.angular.core.AngularCoreComponentsWriter;
-import com.generator.writer.frontend.angular.initialization.AngularAppComponentWriter;
 import com.generator.writer.frontend.angular.initialization.AngularInitializationWriter;
 import com.generator.writer.frontend.angular.model.AngularEntityModelWriter;
 import com.generator.writer.frontend.angular.pages.AngularTemplatePagesWriter;
